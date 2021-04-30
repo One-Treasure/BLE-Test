@@ -10,7 +10,7 @@ Page({
    */
   data: {
     ssid: '',
-    pass: '',
+    pass: 'xhmh8888',
     logs: [],
     deviceArray: [],
     currDeviceID: '请选择...'
@@ -50,7 +50,7 @@ Page({
   },
   searchBleEvent: function (ret) {
     var ssid = this.data.ssid;
-    var pass = 'xhmh8888';
+    var pass = this.data.pass;
     console.log('searchBleEvent wifi信息', ssid, pass);
     if (util.isEmpty(ssid) || util.isEmpty(pass)) {
       util.toastError('请输入WiFi名称及密码');
@@ -220,6 +220,7 @@ Page({
       deviceId: deviceId,
       success: function (res) {
         console.log('getBLEDeviceServices', res);
+        console.log("file: index.js - line 236 - services", services)
         var services = res.services;
         if (services.length <= 0) {
           that.printLog("未找到主服务列表")
@@ -232,9 +233,6 @@ Page({
           that.getBLECharactedId(deviceId, service.uuid);
         } else { //多个主服务
           //TODO
-          var service = services[0];
-          that.printLog("服务UUID:[" + service.uuid + "] Primary:" + service.isPrimary);
-          that.getBLECharactedId(deviceId, service.uuid);
         }
       },
       fail: function (res) {
@@ -361,13 +359,13 @@ Page({
   printLog: function (msg) {
     var logs = this.data.logs;
     logs.push(msg);
-    this.setData({ logs: logs })
-    wx.createSelectorQuery().select('.bottom').boundingClientRect(function (rect) {
+    this.setData({ logs: logs, scrollH: logs.length * 400 })
+    /* wx.createSelectorQuery().select('.bottom').boundingClientRect(function (rect) {
       // 使页面滚动到底部
       wx.pageScrollTo({
         scrollTop: rect.bottom
       })
-    }).exec()
+    }).exec() */
   },
   /**
    * 将字符串转换成ArrayBufer

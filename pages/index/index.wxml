@@ -22,28 +22,26 @@
         <label class="weui-label">设备</label>
       </view>
       <view class="weui-cell__bd">
-      <picker bindchange="bindPickerChange" value="{{index}}" range="{{deviceArray}}">
-        <view class="picker" >
-          {{currDeviceID}}
-        </view>
-      </picker>
+        <picker bindchange="bindPickerChange" value="{{index}}" range="{{deviceArray}}">
+          <view class="picker">{{currDeviceID}}</view>
+        </picker>
       </view>
     </view>
   </view>
-  
   <button bindtap="searchBleEvent" class='btn'>
     <view>搜索蓝牙设备</view>
   </button>
-
   <button bindtap="bleConfigEvent" class='btn'>
     <view>蓝牙设备配网</view>
   </button>
-
-
-  <view class="container log-list" style="font-size: 10px; justify-content: left;">
+  <scroll-view class="scroll" scroll-y="{{true}}" scroll-top="{{scrollH}}">
+    <!-- <view class="container log-list" style="font-size: 10px; justify-content: left;"> -->
     <block wx:for="{{logs}}" wx:for-item="log" wx:key="index">
-      <text class="log-item">{{log}}</text>
+      <view class="log-list" style="font-size: 10px; justify-content: left;">
+        <text class="log-item">{{log}}</text>
+      </view>
     </block>
-  </view>
+    <!-- </view> -->
+  </scroll-view>
   <view class="bottom"></view>
 </view>
