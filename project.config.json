@@ -39,7 +39,7 @@
     "minifyWXSS": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.0.4",
+  "libVersion": "2.9.5",
   "projectname": "wxcode_h5test",
   "debugOptions": {
     "hidedInDevtools": []
