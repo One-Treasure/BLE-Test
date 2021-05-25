@@ -1,9 +1,13 @@
 {
   "pages":[
+    "pages/base64/base64",
+    "pages/webgl/webgl",
+    "pages/image/image",
     "pages/canvastest/canvastest",
     "pages/camera/camera",
     "pages/canvas/canvas",
     "pages/index/index",
+    "pages/bluetooth/bluetooth",
     "pages/logs/logs"
   ],
   "window":{

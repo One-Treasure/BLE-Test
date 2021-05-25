@@ -1,0 +1,18 @@
+<!-- <view class="div1">
+    <view class="div2">HELLO</view>
+</view> -->
+<!-- <view class="war">
+    <view class="img"></view>
+    <view class="img"></view>
+    <view class="img"></view>
+    <view class="img"></view>
+    <view class="img"></view>
+    <view class="img"></view>
+    <view class="img"></view>
+    <view class="img"></view>
+</view> -->
+<view class='rotateCtn' bindtap='rotateFn'>
+    <view class='frame'>
+        <image src="/icon/1.jpg" animation="{{ani}}"></image>
+    </view>
+</view>
