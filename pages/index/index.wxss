@@ -1,0 +1,275 @@
+/* 全局样式 */
+page {
+    background-color: #f8f8f8;
+}
+
+/* 个人信息模块样式 */
+.data {
+    width: 694rpx;
+    height: 188rpx;
+    background: #FFFFFF;
+    opacity: 1;
+    border-radius: 30rpx;
+    margin: 28rpx;
+    display: flex;
+}
+
+/* 个人信息左侧区域样式 */
+.data-left {
+    width: 134rpx;
+    height: 100%;
+}
+
+/* 用户头像样式 */
+.data-left-avatar {
+    position: absolute;
+    width: 118rpx;
+    height: 118rpx;
+    background: #FFFFFF;
+    border: 2rpx solid #fff;
+    border-radius: 50%;
+    opacity: 1;
+    margin: 36rpx 0 34rpx 16rpx;
+    overflow:hidden;
+    display: block;
+}
+
+/* 个人信息中间区域样式 */
+.data-center{
+    width: 494rpx;
+    height: 100%;
+}
+
+/* 用户昵称样式 */
+.data-center-username {
+    height: 40rpx;
+    font-size: 28rpx;
+    font-family: PingFang SC;
+    font-weight: 500;
+    line-height: 40rpx;
+    color: #333333;
+    opacity: 1;
+    margin-top: 52rpx;
+    margin-left: 16rpx;
+}
+
+/* 用户设备序列号样式 */
+.data-center-code {
+    height: 34rpx;
+    font-size: 24rpx;
+    font-family: PingFang SC;
+    font-weight: 400;
+    line-height: 34rpx;
+    color: #777777;
+    opacity: 1;
+    margin-top: 16rpx;
+    margin-left: 16rpx;
+}
+
+/* 个人信息右侧区域样式 */
+.data-right {
+    width: 92rpx;
+    height: 100%;
+}
+
+/* 设置icon区域样式 */
+.data-right-set {
+    width: 50rpx;
+    height: 50rpx;
+    margin: 70rpx 16rpx 68rpx 26rpx;
+}
+
+/* 设置icon区域图片样式 */
+.data-right-set image {
+    width: 50rpx;
+    height: 50rpx;
+}
+
+/* 天气情况区域样式 */
+.weather {
+    width: 694rpx;
+    height: 270rpx;
+    background: #FFFFFF;
+    box-shadow: 0rpx 6rpx 12rpx rgba(255, 148, 148, 0.06);
+    opacity: 1;
+    border-radius: 30rpx;
+    margin: 0 28rpx 0 28rpx;
+    display: flex;
+}
+
+/* 滚动视图区域样式 */
+/* .weather-scroll{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+ */
+/* 天气区域单个模块样式 */
+.weather-scroll-item {
+    width: 140rpx;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 天气区域单个图形区域样式 */
+.weather-scroll-item-view {
+    width: 140rpx;
+    height: 140rpx;
+    border-radius: 50%;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 图形区域icon样式 */
+.weather-scroll-item-view-icon {
+    width: 40rpx;
+    height: 40rpx;
+    margin-top: 10rpx;
+}
+
+/* 图形区域icon图片样式 */
+.weather-scroll-item-view-icon image {
+    width: 40rpx;
+    height: 40rpx;
+}
+
+/* 图形区域名称样式 */
+.weather-scroll-item-view-name {
+    height: 28rpx;
+    font-size: 20rpx;
+    font-family: PingFang SC;
+    font-weight: 400;
+    line-height: 34rpx;
+    color: #FFFFFF;
+    opacity: 1;
+    margin-top: 6rpx;
+}
+
+/* 图形区域数据样式 */
+.weather-scroll-item-view-data {
+    height: 36rpx;
+    font-size: 26rpx;
+    font-family: PingFang SC;
+    font-weight: bold;
+    line-height: 32rpx;
+    color: #FFFFFF;
+    opacity: 1;
+    margin-top: 10rpx;
+}
+
+/* 标题区域样式 */
+.weather-scroll-item-title {
+    height: 34rpx;
+    font-size: 24rpx;
+    font-family: PingFang SC;
+    font-weight: 400;
+    line-height: 34rpx;
+    color: #333333;
+    opacity: 1;
+    margin-top: 16rpx;
+    text-align: center;
+}
+
+/* 状态区域样式 */
+.weather-scroll-item-state {
+    font-size: 20rpx;
+    font-family: PingFang SC;
+    font-weight: 400;
+    line-height: 28rpx;
+    color: #777777;
+    opacity: 1;
+    text-align: center;
+}
+
+/* 温度模块样式 */
+.temp {
+    margin-left: 24rpx;
+}
+
+/* 温度图形模块样式 */
+.temp-view {
+    background: linear-gradient(180deg, #FFDC9F 0%, #F9BE56 100%);
+    box-shadow: 0px 6rpx 12rpx rgba(66, 112, 196, 0.26);
+}
+
+/* 紫外线模块样式 */
+.radiation {
+    margin-left: 28rpx;
+}
+
+/* 紫外线图形区域样式 */
+.radiation-view {
+    background: linear-gradient(180deg, #FFAEF7 0%, #FF9FF0 100%);
+    box-shadow: 0px 6rpx 12rpx rgba(204, 94, 190, 0.29);
+}
+
+/* 湿度模块样式 */
+.humidity {
+    margin-left: 30rpx;
+}
+
+/* 湿度图形区域样式 */
+.humidity-view {
+    background: linear-gradient(180deg, #B1E9FF 0%, #78E4FF 100%);
+    box-shadow: 0px 6rpx 12rpx rgba(148, 216, 239, 0.24);
+}
+
+/* PM2.5模块样式 */
+.pm {
+    margin-left: 28rpx;
+}
+
+/* PM2.5图形区域样式 */
+.pm-view {
+    background: linear-gradient(180deg, #9FBFFF 0%, #639AFF 100%);
+    box-shadow: 0px 6rpx 12rpx rgba(66, 112, 196, 0.26);
+}
+
+/* 皮肤分析区域样式 */
+.analysis {
+    width: 694rpx;
+    height: 964rpx;
+    background: #FFFFFF;
+    opacity: 1;
+    border-radius: 30rpx;
+    margin: 28rpx;
+}
+
+/* 皮肤分析标题区域样式 */
+.analysis-title {
+    height: 44rpx;
+    display: flex;
+    align-items: center;
+}
+
+/* 皮肤分析标题文字样式 */
+.anlysis-title-text {
+    width: 192rpx;
+    height: 44rpx;
+    font-size: 32rpx;
+    font-family: PingFang SC;
+    font-weight: 500;
+    line-height: 44rpx;
+    color: #333333;
+    opacity: 1;
+    margin-top: 16rpx;
+    margin-left: 16rpx;
+}
+
+/* 皮肤分析标题右边框样式 */
+.anlysis-title-border {
+    width: 8rpx;
+    height: 32rpx;
+    background: #FF75A0;
+    opacity: 1;
+    border-radius: 4rpx;
+    margin-top: 16rpx;
+    margin-left: 4rpx;
+}

@@ -1,0 +1,114 @@
+<!-- 个人信息模块 -->
+<view class="data">
+    <!-- 个人信息左侧区域 -->
+    <view class="data-left">
+        <!-- 头像显示区域 -->
+        <view class="data-left-avatar">
+            <open-data type="userAvatarUrl"></open-data>
+        </view>
+    </view>
+    <!-- 个人信息中间区域 -->
+    <view class="data-center">
+        <!-- 昵称显示区域 -->
+        <view class="data-center-username">
+            <open-data type="userNickName"></open-data>
+        </view>
+        <!-- 序列号显示区域 -->
+        <view class="data-center-code">序列号：293819</view>
+    </view>
+    <!-- 个人信息右侧区域 -->
+    <view class="data-right">
+        <!-- 设置icon显示区域 -->
+        <view class="data-right-set">
+            <image src="/icon/set.png"></image>
+        </view>
+    </view>
+</view>
+<!-- 天气情况模块 -->
+<view class="weather">
+    <!-- 横向滚动视图区域 -->
+    <!-- <scroll-view class="weather-scroll" scroll-x="{{true}}"> -->
+    <!-- 温度模块 -->
+    <view class="weather-scroll-item temp">
+        <!-- 温度图形区域 -->
+        <view class="weather-scroll-item-view temp-view">
+            <!-- 温度图形区域icon -->
+            <view class="weather-scroll-item-view-icon">
+                <image class="icon" src="/icon/temp.png"></image>
+            </view>
+            <!-- 温度图形区域名称 -->
+            <view class="weather-scroll-item-view-name">温度</view>
+            <!-- 温度图形区域数据 -->
+            <view class="weather-scroll-item-view-data">26℃</view>
+        </view>
+        <!-- 温度标题区域 -->
+        <view class="weather-scroll-item-title">今日温度</view>
+        <!-- 温度状态区域 -->
+        <view class="weather-scroll-item-state">较热</view>
+    </view>
+    <!-- 紫外线模块 -->
+    <view class="weather-scroll-item radiation">
+        <!-- 紫外线图形区域 -->
+        <view class="weather-scroll-item-view radiation-view">
+            <!-- 紫外线图形区域icon -->
+            <view class="weather-scroll-item-view-icon">
+                <image class="icon" src="/icon/radiation.png"></image>
+            </view>
+            <!-- 紫外线图形区域名称 -->
+            <view class="weather-scroll-item-view-name">紫外线</view>
+            <!-- 紫外线图形区域数据 -->
+            <view class="weather-scroll-item-view-data">50%</view>
+        </view>
+        <!-- 紫外线标题区域 -->
+        <view class="weather-scroll-item-title">紫外线强度</view>
+        <!-- 紫外线状态区域 -->
+        <view class="weather-scroll-item-state">有一定危害</view>
+    </view>
+    <!-- 湿度模块 -->
+    <view class="weather-scroll-item humidity">
+        <!-- 湿度图形区域 -->
+        <view class="weather-scroll-item-view humidity-view">
+            <!-- 湿度图形区域icon -->
+            <view class="weather-scroll-item-view-icon">
+                <image class="icon" src="/icon/humidity.png"></image>
+            </view>
+            <!-- 湿度图形区域名称 -->
+            <view class="weather-scroll-item-view-name">湿度</view>
+            <!-- 湿度图形区域数据 -->
+            <view class="weather-scroll-item-view-data">45%</view>
+        </view>
+        <!-- 湿度标题区域 -->
+        <view class="weather-scroll-item-title">空气湿度</view>
+        <!-- 湿度状态区域 -->
+        <view class="weather-scroll-item-state">适宜湿度</view>
+    </view>
+    <!-- PM2.5模块 -->
+    <view class="weather-scroll-item pm">
+        <!-- PM2.5图形区域 -->
+        <view class="weather-scroll-item-view pm-view">
+            <!-- PM2.5图形区域icon -->
+            <view class="weather-scroll-item-view-icon">
+                <image class="icon" src="/icon/pm2.5.png"></image>
+            </view>
+            <!-- PM2.5图形区域名称 -->
+            <view class="weather-scroll-item-view-name">PM2.5</view>
+            <!-- PM2.5图形区域数据 -->
+            <view class="weather-scroll-item-view-data">35</view>
+        </view>
+        <!-- PM2.5标题区域 -->
+        <view class="weather-scroll-item-title">PM2.5</view>
+        <!-- PM2.5状态区域 -->
+        <view class="weather-scroll-item-state">适宜出行</view>
+    </view>
+    <!-- </scroll-view> -->
+</view>
+<!-- 皮肤分析模块 -->
+<view class="analysis">
+    <!-- 皮肤分析标题区域 -->
+    <view class="analysis-title">
+        <!-- 皮肤分析标题文字区域 -->
+        <view class="anlysis-title-text">我的肌肤报告</view>
+        <!-- 皮肤分析标题右边框区域 -->
+        <view class="anlysis-title-border"></view>
+    </view>
+</view>
