@@ -1,0 +1,186 @@
+/* 全局样式 */
+page {
+    background-color: #f8f8f8;
+    padding-bottom: 28rpx;
+}
+
+/* 日历组件显示区域样式 */
+.calendar {
+    width: 100%;
+    height: 538rpx;
+    background: #FFFFFF;
+    opacity: 1;
+    margin: 16rpx 0;
+    padding-top: 20rpx;
+}
+
+/* 极点日历插件自定义标题样式 */
+.header {
+    font-size: 34rpx;
+    font-family: PingFang SC;
+    font-weight: bold;
+    line-height: 48rpx;
+    color: #06121E;
+    opacity: 1;
+}
+
+/* 皮肤分析用户历史分析记录区域样式 */
+.history {
+    width: 100%;
+    height: 350rpx;
+    margin-top: 28rpx;
+    white-space: nowrap;
+}
+
+/* 皮肤分析用户历史分析记录单个区域样式 */
+.history-item {
+    width: 194rpx;
+    height: 272rpx;
+    background: #FFFFFF;
+    box-shadow: 0px 4rpx 12rpx rgba(180, 21, 54, 0.19);
+    opacity: 1;
+    border-radius: 24rpx;
+    margin-top: 30rpx;
+    margin-left: 42rpx;
+    display: inline-block;
+}
+
+.active {
+    width: 216rpx;
+    height: 302rpx;
+    margin-top: 8rpx;
+}
+
+/* 皮肤分析用户历史分析记录单个区域图片样式 */
+.history-item-face {
+    width: 158rpx;
+    height: 158rpx;
+    background: #FFFFFF;
+    /* border: 2rpx solid #707070; */
+    border-radius: 50%;
+    opacity: 1;
+    margin-top: 18rpx;
+    margin-left: 18rpx;
+}
+
+/* 皮肤分析用户历史分析记录单个区域图片样式 */
+.history-item-face image {
+    width: 158rpx;
+    height: 158rpx;
+    border-radius: 50%;
+    position: absolute;
+}
+
+/* 皮肤分析用户历史分析记录单个区域日期样式 */
+.history-item-date {
+    width: 110rpx;
+    height: 28rpx;
+    background: #FF75A0;
+    opacity: 1;
+    border-radius: 16rpx;
+    font-size: 20rpx;
+    font-family: DIN;
+    font-weight: 500;
+    line-height: 24rpx;
+    color: #FFFFFF;
+    opacity: 1;
+    margin-top: 8rpx;
+    margin-left: 18rpx;
+    text-align: center;
+    position: absolute;
+}
+
+/* 皮肤分析用户历史分析记录单个区域状态样式 */
+.history-item-state {
+    height: 46rpx;
+    margin-top: 40rpx;
+    position: absolute;
+}
+
+/* 皮肤分析用户历史分析记录单个区域状态标题样式 */
+.history-item-state-title {
+    font-size: 18rpx;
+    font-family: PingFang SC;
+    font-weight: 400;
+    line-height: 26rpx;
+    color: #777777;
+    opacity: 1;
+    margin-top: 16rpx;
+    margin-left: 24rpx;
+}
+
+/* 皮肤分析用户历史分析记录单个区域状态分数样式 */
+.history-item-state-num {
+    font-size: 28rpx;
+    font-family: DIN;
+    font-weight: 500;
+    line-height: 34rpx;
+    color: #FF75A0;
+    opacity: 1;
+    margin-top: 8rpx;
+}
+
+/* 皮肤分析用户历史分析记录单个区域状态单位样式 */
+.history-item-state-unit {
+    font-size: 18rpx;
+    font-family: PingFang SC;
+    font-weight: 500;
+    line-height: 26rpx;
+    color: #FF75A0;
+    opacity: 1;
+    margin-top: 36rpx;
+}
+
+/* 皮肤详细分析模块样式 */
+.detailed-analysis {
+    width: 694rpx;
+    background: #FFFFFF;
+    opacity: 1;
+    border-radius: 30rpx;
+    margin-top: 28rpx;
+    margin-left: 28rpx;
+    padding-top: 20rpx;
+}
+
+/* 皮肤详细分析标题区域样式 */
+.detailed-analysis-title {
+    height: 40rpx;
+    display: flex;
+    align-items: center;
+}
+
+/* 皮肤详细分析标题点样式 */
+.detailed-analysis-title-dot {
+    width: 14rpx;
+    height: 14rpx;
+    background: #FF75A0;
+    border-radius: 50%;
+    opacity: 1;
+    margin-top: 40rpx;
+    margin-left: 30rpx;
+}
+
+/* 皮肤详细分析标题文字样式 */
+.detailed-analysis-title-text {
+    width: 168rpx;
+    height: 40rpx;
+    font-size: 24rpx;
+    font-family: PingFang SC;
+    font-weight: 400;
+    line-height: 40rpx;
+    color: #333333;
+    opacity: 1;
+    margin-top: 42rpx;
+    margin-left: 8rpx;
+}
+
+/* 皮肤详细分析内容样式 */
+.detailed-analysis-content {
+    font-size: 24rpx;
+    font-family: PingFang SC;
+    font-weight: 400;
+    line-height: 34rpx;
+    color: #777777;
+    opacity: 1;
+    margin: 30rpx 52rpx;
+}

@@ -1,0 +1,81 @@
+/* 全局样式 */
+page {
+    background-color: #f8f8f8;
+}
+
+/* 意见反馈区域样式 */
+.idea {
+    width: 694rpx;
+    height: 352rpx;
+    background: #FFFFFF;
+    opacity: 1;
+    border-radius: 30rpx;
+    margin: 16rpx 28rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 意见输入框样式 */
+.idea-textarea {
+    width: 642rpx;
+    height: 308rpx;
+}
+
+/* 意见输入框占位符样式 */
+.idea-place {
+    font-size: 24rpx;
+    font-family: PingFang SC;
+    font-weight: 400;
+    line-height: 32rpx;
+    color: #777777;
+    opacity: 1;
+}
+
+/* 联系方式区域样式 */
+.tel {
+    width: 694rpx;
+    height: 86rpx;
+    background: #FFFFFF;
+    opacity: 1;
+    border-radius: 20rpx;
+    margin: 0 28rpx 22rpx 28rpx;
+    display: flex;
+    align-items: center;
+}
+
+/* 联系方式标题样式 */
+.tel-label {
+    font-size: 28rpx;
+    font-family: PingFang SC;
+    font-weight: 400;
+    line-height: 32rpx;
+    color: #333333;
+    opacity: 1;
+    margin-left: 32rpx;
+    margin-right: 16rpx;
+}
+
+/* 联系方式输入框样式 */
+.tel-inp {}
+
+/* 联系方式输入框占位符样式 */
+.tel-place {
+    font-size: 24rpx;
+    font-family: PingFang SC;
+    font-weight: 400;
+    line-height: 32rpx;
+    color: #777777;
+    opacity: 1;
+}
+
+/* 提交按钮样式 */
+.btn {
+    width: 694rpx;
+    height: 88rpx;
+    background: #FF75A0;
+    box-shadow: 0px 6rpx 12rpx rgba(230, 97, 138, 0.18);
+    opacity: 1;
+    border-radius: 44rpx;
+    color: #FFFFFF;
+}

@@ -1,219 +1,87 @@
-<!-- 个人信息模块 -->
-<view class="data">
-    <!-- 个人信息左侧区域 -->
-    <view class="data-left">
-        <!-- 头像显示区域 -->
-        <view class="data-left-avatar">
-            <open-data type="userAvatarUrl"></open-data>
-        </view>
-    </view>
-    <!-- 个人信息中间区域 -->
-    <view class="data-center">
-        <!-- 昵称显示区域 -->
-        <view class="data-center-username">
-            <open-data type="userNickName"></open-data>
-        </view>
-        <!-- 序列号显示区域 -->
-        <view class="data-center-code">序列号：293819</view>
-    </view>
-    <!-- 个人信息右侧区域 -->
-    <view class="data-right">
-        <!-- 设置icon显示区域 -->
-        <view class="data-right-set" catch:tap="clickLink">
-            <image src="/icon/set.png"></image>
-        </view>
-    </view>
+<!-- 日历组件显示区域 -->
+<view class="calendar">
+    <!-- 极点日历插件，源码https://github.com/czcaiwj/calendar/ -->
+    <calendar weeks-type="cn" days-color="{{dayStyle}}" binddayClick="dayClick" cell-size="25" num="{{num}}" />
 </view>
-<!-- 天气情况模块 -->
-<view class="weather">
-    <!-- 横向滚动视图区域 -->
-    <!-- <scroll-view class="weather-scroll" scroll-x="{{true}}"> -->
-    <!-- 温度模块 -->
-    <view class="weather-scroll-item temp">
-        <!-- 温度图形区域 -->
-        <view class="weather-scroll-item-view temp-view">
-            <!-- 温度图形区域icon -->
-            <view class="weather-scroll-item-view-icon">
-                <image class="icon" src="/icon/temp.png"></image>
-            </view>
-            <!-- 温度图形区域名称 -->
-            <view class="weather-scroll-item-view-name">温度</view>
-            <!-- 温度图形区域数据 -->
-            <view class="weather-scroll-item-view-data">26℃</view>
-        </view>
-        <!-- 温度标题区域 -->
-        <view class="weather-scroll-item-title">今日温度</view>
-        <!-- 温度状态区域 -->
-        <view class="weather-scroll-item-state">较热</view>
-    </view>
-    <!-- 紫外线模块 -->
-    <view class="weather-scroll-item radiation">
-        <!-- 紫外线图形区域 -->
-        <view class="weather-scroll-item-view radiation-view">
-            <!-- 紫外线图形区域icon -->
-            <view class="weather-scroll-item-view-icon">
-                <image class="icon" src="/icon/radiation.png"></image>
-            </view>
-            <!-- 紫外线图形区域名称 -->
-            <view class="weather-scroll-item-view-name">紫外线</view>
-            <!-- 紫外线图形区域数据 -->
-            <view class="weather-scroll-item-view-data">50%</view>
-        </view>
-        <!-- 紫外线标题区域 -->
-        <view class="weather-scroll-item-title">紫外线强度</view>
-        <!-- 紫外线状态区域 -->
-        <view class="weather-scroll-item-state">有一定危害</view>
-    </view>
-    <!-- 湿度模块 -->
-    <view class="weather-scroll-item humidity">
-        <!-- 湿度图形区域 -->
-        <view class="weather-scroll-item-view humidity-view">
-            <!-- 湿度图形区域icon -->
-            <view class="weather-scroll-item-view-icon">
-                <image class="icon" src="/icon/humidity.png"></image>
-            </view>
-            <!-- 湿度图形区域名称 -->
-            <view class="weather-scroll-item-view-name">湿度</view>
-            <!-- 湿度图形区域数据 -->
-            <view class="weather-scroll-item-view-data">45%</view>
-        </view>
-        <!-- 湿度标题区域 -->
-        <view class="weather-scroll-item-title">空气湿度</view>
-        <!-- 湿度状态区域 -->
-        <view class="weather-scroll-item-state">适宜湿度</view>
-    </view>
-    <!-- PM2.5模块 -->
-    <view class="weather-scroll-item pm">
-        <!-- PM2.5图形区域 -->
-        <view class="weather-scroll-item-view pm-view">
-            <!-- PM2.5图形区域icon -->
-            <view class="weather-scroll-item-view-icon">
-                <image class="icon" src="/icon/pm2.5.png"></image>
-            </view>
-            <!-- PM2.5图形区域名称 -->
-            <view class="weather-scroll-item-view-name">PM2.5</view>
-            <!-- PM2.5图形区域数据 -->
-            <view class="weather-scroll-item-view-data">35</view>
-        </view>
-        <!-- PM2.5标题区域 -->
-        <view class="weather-scroll-item-title">PM2.5</view>
-        <!-- PM2.5状态区域 -->
-        <view class="weather-scroll-item-state">适宜出行</view>
-    </view>
-    <!-- </scroll-view> -->
-</view>
-<!-- 皮肤分析模块 -->
-<view class="analysis">
-    <!-- 皮肤分析标题区域 -->
-    <view class="analysis-title">
-        <!-- 皮肤分析标题文字区域 -->
-        <view class="analysis-title-text">我的肌肤报告</view>
-        <!-- 皮肤分析标题右边框区域 -->
-        <view class="analysis-title-border"></view>
-    </view>
-    <!-- 皮肤分析总分区域 -->
-    <view class="analysis-score">
-        <!-- 皮肤分析总分数字区域 -->
-        <view class="analysis-score-num">95</view>
-        <!-- 皮肤分析总分单位区域 -->
-        <view class="analysis-score-unit">分</view>
-    </view>
-    <!-- 皮肤分析皮肤缺陷气泡上 -->
-    <view class="analysis-bubble-up">血管型黑眼圈</view>
-    <!-- 皮肤分析皮肤缺陷气泡下 -->
-    <view class="analysis-bubble-down">开放性白头粉刺</view>
-    <!-- 皮肤分析用户照片区域 -->
-    <view class="analysis-face">
-        <!-- 用户拍照按钮区域 -->
-        <view class="analysis-face-uploader">
-            <van-uploader accept="image" capture="{{capture}}" file-list="{{ fileList }}" bind:after-read="afterRead">
-                <!-- 自定义用户拍照按钮icon -->
-                <image class="analysis-face-uploader-icon" src="/icon/camera.png" />
-            </van-uploader>
-        </view>
-        <!-- 皮肤分析用户照片区域用户照片 -->
-        <image class="analysis-face-image" mode="aspectFill" src="{{imgurl}}" />
-    </view>
-    <!-- 皮肤分析用户历史分析记录区域 -->
-    <scroll-view class="history" scroll-x>
-        <!-- 皮肤分析用户历史分析记录单个区域 -->
-        <view class="history-item">
+<!-- 皮肤历史显示区域 -->
+<scroll-view class="history" scroll-x scroll-into-view="{{id}}" id="scrollview" scroll-with-animation="true" scroll-left="{{index}}" enhanced="{{true}}" bindscroll="hadleDragging">
+    <!-- 皮肤分析用户历史分析记录单个区域 -->
+    <view class="history-item" id="i0">
+        <!-- 皮肤分析用户历史分析记录单个区域图片 -->
+        <view class="history-item-face">
             <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-            <view class="history-item-face">
-                <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-                <image src="/icon/1.jpg" mode="aspectFill" />
-            </view>
-            <!-- 皮肤分析用户历史分析记录单个区域日期 -->
-            <view class="history-item-date">2021.5.21</view>
-            <!-- 皮肤分析用户历史分析记录单个区域状态 -->
-            <view class="history-item-state">
-                <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
-                <text class="history-item-state-title">肌肤状态：</text>
-                <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
-                <text class="history-item-state-num">92</text>
-                <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
-                <text class="history-item-state-unit">分</text>
-            </view>
+            <image src="/icon/1.jpg" mode="aspectFill" />
         </view>
-        <!-- 皮肤分析用户历史分析记录单个区域 -->
-        <view class="history-item">
+        <!-- 皮肤分析用户历史分析记录单个区域日期 -->
+        <view class="history-item-date">2021.5.21</view>
+        <!-- 皮肤分析用户历史分析记录单个区域状态 -->
+        <view class="history-item-state">
+            <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
+            <text class="history-item-state-title">肌肤状态：</text>
+            <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
+            <text class="history-item-state-num">92</text>
+            <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
+            <text class="history-item-state-unit">分</text>
+        </view>
+    </view>
+    <!-- 皮肤分析用户历史分析记录单个区域 -->
+    <view class="history-item" id="i1">
+        <!-- 皮肤分析用户历史分析记录单个区域图片 -->
+        <view class="history-item-face">
             <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-            <view class="history-item-face">
-                <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-                <image src="/icon/1.jpg" mode="aspectFill" />
-            </view>
-            <!-- 皮肤分析用户历史分析记录单个区域日期 -->
-            <view class="history-item-date">2021.5.20</view>
-            <!-- 皮肤分析用户历史分析记录单个区域状态 -->
-            <view class="history-item-state">
-                <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
-                <text class="history-item-state-title">肌肤状态：</text>
-                <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
-                <text class="history-item-state-num">90</text>
-                <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
-                <text class="history-item-state-unit">分</text>
-            </view>
+            <image src="/icon/1.jpg" mode="aspectFill" />
         </view>
-        <!-- 皮肤分析用户历史分析记录单个区域 -->
-        <view class="history-item">
+        <!-- 皮肤分析用户历史分析记录单个区域日期 -->
+        <view class="history-item-date">2021.5.20</view>
+        <!-- 皮肤分析用户历史分析记录单个区域状态 -->
+        <view class="history-item-state">
+            <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
+            <text class="history-item-state-title">肌肤状态：</text>
+            <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
+            <text class="history-item-state-num">90</text>
+            <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
+            <text class="history-item-state-unit">分</text>
+        </view>
+    </view>
+    <!-- 皮肤分析用户历史分析记录单个区域 -->
+    <view class="history-item" id="i2">
+        <!-- 皮肤分析用户历史分析记录单个区域图片 -->
+        <view class="history-item-face">
             <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-            <view class="history-item-face">
-                <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-                <image src="/icon/1.jpg" mode="aspectFill" />
-            </view>
-            <!-- 皮肤分析用户历史分析记录单个区域日期 -->
-            <view class="history-item-date">2021.5.19</view>
-            <!-- 皮肤分析用户历史分析记录单个区域状态 -->
-            <view class="history-item-state">
-                <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
-                <text class="history-item-state-title">肌肤状态：</text>
-                <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
-                <text class="history-item-state-num">92</text>
-                <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
-                <text class="history-item-state-unit">分</text>
-            </view>
+            <image src="/icon/1.jpg" mode="aspectFill" />
         </view>
-        <!-- 皮肤分析用户历史分析记录单个区域 -->
-        <view class="history-item" style="margin-right: 30rpx;">
+        <!-- 皮肤分析用户历史分析记录单个区域日期 -->
+        <view class="history-item-date">2021.5.19</view>
+        <!-- 皮肤分析用户历史分析记录单个区域状态 -->
+        <view class="history-item-state">
+            <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
+            <text class="history-item-state-title">肌肤状态：</text>
+            <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
+            <text class="history-item-state-num">92</text>
+            <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
+            <text class="history-item-state-unit">分</text>
+        </view>
+    </view>
+    <!-- 皮肤分析用户历史分析记录单个区域 -->
+    <view class="history-item" id="i3" style="margin-right: 30rpx;" animation>
+        <!-- 皮肤分析用户历史分析记录单个区域图片 -->
+        <view class="history-item-face">
             <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-            <view class="history-item-face">
-                <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-                <image src="/icon/1.jpg" mode="aspectFill" />
-            </view>
-            <!-- 皮肤分析用户历史分析记录单个区域日期 -->
-            <view class="history-item-date">2021.5.18</view>
-            <!-- 皮肤分析用户历史分析记录单个区域状态 -->
-            <view class="history-item-state">
-                <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
-                <text class="history-item-state-title">肌肤状态：</text>
-                <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
-                <text class="history-item-state-num">90</text>
-                <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
-                <text class="history-item-state-unit">分</text>
-            </view>
+            <image src="/icon/1.jpg" mode="aspectFill" />
         </view>
-    </scroll-view>
-</view>
+        <!-- 皮肤分析用户历史分析记录单个区域日期 -->
+        <view class="history-item-date">2021.5.18</view>
+        <!-- 皮肤分析用户历史分析记录单个区域状态 -->
+        <view class="history-item-state">
+            <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
+            <text class="history-item-state-title">肌肤状态：</text>
+            <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
+            <text class="history-item-state-num">90</text>
+            <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
+            <text class="history-item-state-unit">分</text>
+        </view>
+    </view>
+</scroll-view>
 <!-- 皮肤详细分析模块 -->
 <view class="detailed-analysis">
     <!-- 皮肤详细分析标签 -->
@@ -350,16 +218,3 @@
         </van-tab>
     </van-tabs>
 </view>
-<!-- 遮罩层 -->
-<van-overlay show="{{ show }}" bind:click="onClickHide">
-    <!-- 提示图区域 -->
-    <view class="tips">
-        <!-- 提示图区域图片 -->
-        <image class="tips-img" src="/icon/link_success.png" />
-        <!-- 提示图区域关闭按钮视图 -->
-        <view class="tips-back">
-            <!-- 提示图区域关闭按钮视图icon -->
-            <image class="tips-back-img" src="/icon/back.png" />
-        </view>
-    </view>
-</van-overlay>

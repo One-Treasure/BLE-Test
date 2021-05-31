@@ -1,7 +1,11 @@
 {
-  "pages":[
+  "pages": [
     "pages/index/index",
+    "pages/calendar/calendar",
     "pages/mine/mine",
+    "pages/setwifi/setwifi",
+    "pages/history/history",
+    "pages/idea/idea",
     "pages/base64/base64",
     "pages/webgl/webgl",
     "pages/image/image",
@@ -11,11 +15,11 @@
     "pages/bluetooth/bluetooth",
     "pages/logs/logs"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "密芯儿",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle": "black"
   },
   "tabBar": {
     "color": "#777777",
@@ -23,8 +27,7 @@
     "backgroundColor": "#fff",
     "position": "bottom",
     "borderStyle": "black",
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/index/index",
         "text": "首页",
         "iconPath": "/icon/home.png",
@@ -38,6 +41,5 @@
       }
     ]
   },
-  "style": "v2",
   "sitemapLocation": "sitemap.json"
 }

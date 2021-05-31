@@ -1,0 +1,28 @@
+<swiper indicator-dots="{{indicatorDots}}" autoplay="{{false}}" interval="5000" duration="500" circular="{{false}}" display-multiple-items="3" skip-hidden-item-layout="true" bindchange="swiperChange">
+  <block wx:for="{{swiperList}}" wx:key="{{index}}">
+    <swiper-item>
+      <!-- <view class="{{ index == activeIndex ? 'active item-block' : 'item-block'}}">
+        <image src="{{item}}" mode="aspectFill"></image>
+      </view> -->
+      <!-- 皮肤分析用户历史分析记录单个区域 -->
+      <view class="history-item" animation="{{ index === activeIndex ? ani1 : 'ani2'}}" id="i0">
+        <!-- 皮肤分析用户历史分析记录单个区域图片 -->
+        <view class="history-item-face">
+          <!-- 皮肤分析用户历史分析记录单个区域图片 -->
+          <image src="/icon/1.jpg" mode="aspectFill" />
+        </view>
+        <!-- 皮肤分析用户历史分析记录单个区域日期 -->
+        <view class="history-item-date">2021.5.21</view>
+        <!-- 皮肤分析用户历史分析记录单个区域状态 -->
+        <view class="history-item-state">
+          <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
+          <text class="history-item-state-title">肌肤状态：</text>
+          <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
+          <text class="history-item-state-num">92</text>
+          <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
+          <text class="history-item-state-unit">分</text>
+        </view>
+      </view>
+    </swiper-item>
+  </block>
+</swiper>

@@ -16,7 +16,7 @@
     <!-- 左侧选项区域 -->
     <view class="options-left">
         <!-- wifi设置区域 -->
-        <view class="options-left-setwifi">
+        <view class="options-left-setwifi" bind:tap="toNewView" data-url="/pages/setwifi/setwifi">
             <!-- wifi的icon图片区域 -->
             <view class="options-wifi-icon">
                 <image src="/icon/wifi.png"></image>
@@ -28,7 +28,7 @@
     <!-- 右侧选项区域 -->
     <view class="options-right">
         <!-- 历史记录区域 -->
-        <view class="options-right-item history">
+        <view class="options-right-item history" bind:tap="toNewView" data-url="/pages/history/history">
             <!-- 历史记录的icon图片区域 -->
             <view class="options-icon">
                 <image src="/icon/history.png"></image>
@@ -37,7 +37,7 @@
             <view class="options-text">历史记录</view>
         </view>
         <!-- 意见反馈区域 -->
-        <view class="options-right-item idea">
+        <view class="options-right-item idea" bind:tap="toNewView" data-url="/pages/idea/idea">
             <!-- 意见反馈的icon图片区域 -->
             <view class="options-icon">
                 <image src="/icon/idea.png"></image>
@@ -48,4 +48,4 @@
     </view>
 </view>
 
-<van-uploader file-list="{{ fileList }}" bind:after-read="afterRead" />
+<van-uploader accept="image" capture="{{capture}}" file-list="{{ fileList }}" bind:after-read="afterRead" />
