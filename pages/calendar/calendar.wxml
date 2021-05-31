@@ -5,7 +5,7 @@
         <image src="{{item}}" mode="aspectFill"></image>
       </view> -->
       <!-- 皮肤分析用户历史分析记录单个区域 -->
-      <view class="history-item" animation="{{ index === activeIndex ? ani1 : 'ani2'}}" id="i0">
+      <view class="history-item {{ index === activeIndex ? 'active' : ''}}" animation="" id="i0">
         <!-- 皮肤分析用户历史分析记录单个区域图片 -->
         <view class="history-item-face">
           <!-- 皮肤分析用户历史分析记录单个区域图片 -->
