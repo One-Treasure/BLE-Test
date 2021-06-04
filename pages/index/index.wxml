@@ -2,19 +2,37 @@
 <view class="data">
     <!-- 个人信息左侧区域 -->
     <view class="data-left">
-        <!-- 头像显示区域 -->
-        <view class="data-left-avatar">
-            <open-data type="userAvatarUrl"></open-data>
-        </view>
+        <!-- 未绑定 -->
+        <button class="btn" wx:if="{{avatarUrl===''}}" bind:tap="getUserInfo">
+            <!-- 头像显示区域 -->
+            <view class="data-left-avatar">
+                <!-- 未绑定头像头部 -->
+                <view class="data-left-avatar-head"></view>
+                <!-- 未绑定头像身体 -->
+                <view class="data-left-avatar-body"></view>
+            </view>
+        </button>
+        <!-- 已绑定 -->
+        <block wx:else>
+            <!-- 头像显示区域 -->
+            <view class="data-left-avatar">
+                <!-- 头像图片 -->
+                <image src="{{avatarUrl}}" />
+            </view>
+        </block>
     </view>
     <!-- 个人信息中间区域 -->
     <view class="data-center">
-        <!-- 昵称显示区域 -->
-        <view class="data-center-username">
-            <open-data type="userNickName"></open-data>
-        </view>
-        <!-- 序列号显示区域 -->
-        <view class="data-center-code">序列号：293819</view>
+        <button class="btn" wx:if="{{avatarUrl===''}}" bind:tap="getUserInfo">
+            <!-- 未绑定显示文字 -->
+            <view class="data-center-unbound">点击登录</view>
+        </button>
+        <block wx:else>
+            <!-- 昵称显示区域 -->
+            <view class="data-center-username">{{nickName}}</view>
+            <!-- 序列号显示区域 -->
+            <view class="data-center-code">序列号：293819</view>
+        </block>
     </view>
     <!-- 个人信息右侧区域 -->
     <view class="data-right">
@@ -27,79 +45,119 @@
 <!-- 天气情况模块 -->
 <view class="weather">
     <!-- 横向滚动视图区域 -->
-    <!-- <scroll-view class="weather-scroll" scroll-x="{{true}}"> -->
+    <!-- <scroll-view class="weather-scroll" scroll-x="{{!local_power}}"> -->
     <!-- 温度模块 -->
-    <view class="weather-scroll-item temp">
-        <!-- 温度图形区域 -->
-        <view class="weather-scroll-item-view temp-view">
-            <!-- 温度图形区域icon -->
-            <view class="weather-scroll-item-view-icon">
-                <image class="icon" src="/icon/temp.png"></image>
+    <button class="btn" bind:tap="getLocation">
+        <view class="weather-scroll-item temp">
+            <!-- 温度图形区域 -->
+            <view class="weather-scroll-item-view" style="background: {{tempdata.bgcolor}}">
+                <!-- 温度图形区域icon -->
+                <!-- <view class="weather-scroll-item-view-icon"> -->
+                <image class="weather-scroll-item-view-icon" src="{{tempdata.icon}}" wx:if="{{local_power}}"></image>
+                <!-- </view> -->
+                <!-- 用户未授权的icon -->
+                <view class="weather-scroll-item-view-noaddress-icon" wx:if="{{!local_power}}"></view>
+                <!-- 温度图形区域名称 -->
+                <view class="weather-scroll-item-view-name">温度</view>
+                <!-- 温度图形区域数据 -->
+                <view class="weather-scroll-item-view-data" wx:if="{{local_power}}">{{temp}}℃</view>
+                <!-- 用户未授权的数据 -->
+                <view class="weather-scroll-item-view-noaddress-data" wx:if="{{!local_power}}"></view>
             </view>
-            <!-- 温度图形区域名称 -->
-            <view class="weather-scroll-item-view-name">温度</view>
-            <!-- 温度图形区域数据 -->
-            <view class="weather-scroll-item-view-data">26℃</view>
+            <block wx:if="{{local_power}}">
+                <!-- 温度标题区域 -->
+                <view class="weather-scroll-item-title">今日温度</view>
+                <!-- 温度状态区域 -->
+                <view class="weather-scroll-item-state">较热</view>
+            </block>
+            <block wx:if="{{!local_power}}">
+                <view class="weather-scroll-item-title">点击授权</view>
+            </block>
         </view>
-        <!-- 温度标题区域 -->
-        <view class="weather-scroll-item-title">今日温度</view>
-        <!-- 温度状态区域 -->
-        <view class="weather-scroll-item-state">较热</view>
-    </view>
-    <!-- 紫外线模块 -->
-    <view class="weather-scroll-item radiation">
-        <!-- 紫外线图形区域 -->
-        <view class="weather-scroll-item-view radiation-view">
-            <!-- 紫外线图形区域icon -->
-            <view class="weather-scroll-item-view-icon">
-                <image class="icon" src="/icon/radiation.png"></image>
+        <!-- 紫外线模块 -->
+        <view class="weather-scroll-item radiation">
+            <!-- 紫外线图形区域 -->
+            <view class="weather-scroll-item-view radiation-view">
+                <!-- 紫外线图形区域icon -->
+                <!-- <view class="weather-scroll-item-view-icon"> -->
+                <image class="weather-scroll-item-view-icon" src="/icon/uvi.png" wx:if="{{local_power}}"></image>
+                <!-- </view> -->
+                <!-- 用户未授权的icon -->
+                <view class="weather-scroll-item-view-noaddress-icon" wx:if="{{!local_power}}"></view>
+                <!-- 紫外线图形区域名称 -->
+                <view class="weather-scroll-item-view-name">紫外线</view>
+                <!-- 紫外线图形区域数据 -->
+                <view class="weather-scroll-item-view-data" wx:if="{{local_power}}">{{uvi}}</view>
+                <!-- 用户未授权的数据 -->
+                <view class="weather-scroll-item-view-noaddress-data" wx:if="{{!local_power}}"></view>
             </view>
-            <!-- 紫外线图形区域名称 -->
-            <view class="weather-scroll-item-view-name">紫外线</view>
-            <!-- 紫外线图形区域数据 -->
-            <view class="weather-scroll-item-view-data">50%</view>
+            <block wx:if="{{local_power}}">
+                <!-- 紫外线标题区域 -->
+                <view class="weather-scroll-item-title">紫外线强度</view>
+                <!-- 紫外线状态区域 -->
+                <view class="weather-scroll-item-state">有一定危害</view>
+            </block>
+            <block wx:if="{{!local_power}}">
+                <view class="weather-scroll-item-title">点击授权</view>
+            </block>
         </view>
-        <!-- 紫外线标题区域 -->
-        <view class="weather-scroll-item-title">紫外线强度</view>
-        <!-- 紫外线状态区域 -->
-        <view class="weather-scroll-item-state">有一定危害</view>
-    </view>
-    <!-- 湿度模块 -->
-    <view class="weather-scroll-item humidity">
-        <!-- 湿度图形区域 -->
-        <view class="weather-scroll-item-view humidity-view">
-            <!-- 湿度图形区域icon -->
-            <view class="weather-scroll-item-view-icon">
-                <image class="icon" src="/icon/humidity.png"></image>
+        <!-- 湿度模块 -->
+        <view class="weather-scroll-item humidity">
+            <!-- 湿度图形区域 -->
+            <view class="weather-scroll-item-view humidity-view">
+                <!-- 湿度图形区域icon -->
+                <!-- <view class="weather-scroll-item-view-icon"> -->
+                <image class="weather-scroll-item-view-icon" src="{{humdata.icon}}" wx:if="{{local_power}}"></image>
+                <!-- </view> -->
+                <!-- 用户未授权的icon -->
+                <view class="weather-scroll-item-view-noaddress-icon" wx:if="{{!local_power}}"></view>
+                <!-- 湿度图形区域名称 -->
+                <view class="weather-scroll-item-view-name">湿度</view>
+                <!-- 湿度图形区域数据 -->
+                <view class="weather-scroll-item-view-data" wx:if="{{local_power}}">
+                    {{humidity}}%
+                </view>
+                <!-- 用户未授权的数据 -->
+                <view class="weather-scroll-item-view-noaddress-data" wx:if="{{!local_power}}"></view>
             </view>
-            <!-- 湿度图形区域名称 -->
-            <view class="weather-scroll-item-view-name">湿度</view>
-            <!-- 湿度图形区域数据 -->
-            <view class="weather-scroll-item-view-data">45%</view>
+            <block wx:if="{{local_power}}">
+                <!-- 湿度标题区域 -->
+                <view class="weather-scroll-item-title">空气湿度</view>
+                <!-- 湿度状态区域 -->
+                <view class="weather-scroll-item-state">适宜湿度</view>
+            </block>
+            <block wx:if="{{!local_power}}">
+                <view class="weather-scroll-item-title">点击授权</view>
+            </block>
         </view>
-        <!-- 湿度标题区域 -->
-        <view class="weather-scroll-item-title">空气湿度</view>
-        <!-- 湿度状态区域 -->
-        <view class="weather-scroll-item-state">适宜湿度</view>
-    </view>
-    <!-- PM2.5模块 -->
-    <view class="weather-scroll-item pm">
-        <!-- PM2.5图形区域 -->
-        <view class="weather-scroll-item-view pm-view">
-            <!-- PM2.5图形区域icon -->
-            <view class="weather-scroll-item-view-icon">
-                <image class="icon" src="/icon/pm2.5.png"></image>
+        <!-- PM2.5模块 -->
+        <view class="weather-scroll-item pm">
+            <!-- PM2.5图形区域 -->
+            <view class="weather-scroll-item-view pm-view">
+                <!-- PM2.5图形区域icon -->
+                <!-- <view class="weather-scroll-item-view-icon"> -->
+                <image class="weather-scroll-item-view-icon" src="{{pm25Cdata.icon}}" wx:if="{{local_power}}"></image>
+                <!-- </view> -->
+                <!-- 用户未授权的icon -->
+                <view class="weather-scroll-item-view-noaddress-icon" wx:if="{{!local_power}}"></view>
+                <!-- PM2.5图形区域名称 -->
+                <view class="weather-scroll-item-view-name">PM2.5</view>
+                <!-- PM2.5图形区域数据 -->
+                <view class="weather-scroll-item-view-data" wx:if="{{local_power}}">{{pm25C}}</view>
+                <!-- 用户未授权的数据 -->
+                <view class="weather-scroll-item-view-noaddress-data" wx:if="{{!local_power}}"></view>
             </view>
-            <!-- PM2.5图形区域名称 -->
-            <view class="weather-scroll-item-view-name">PM2.5</view>
-            <!-- PM2.5图形区域数据 -->
-            <view class="weather-scroll-item-view-data">35</view>
+            <block wx:if="{{local_power}}">
+                <!-- PM2.5标题区域 -->
+                <view class="weather-scroll-item-title">PM2.5</view>
+                <!-- PM2.5状态区域 -->
+                <view class="weather-scroll-item-state">适宜出行</view>
+            </block>
+            <block wx:if="{{!local_power}}">
+                <view class="weather-scroll-item-title">点击授权</view>
+            </block>
         </view>
-        <!-- PM2.5标题区域 -->
-        <view class="weather-scroll-item-title">PM2.5</view>
-        <!-- PM2.5状态区域 -->
-        <view class="weather-scroll-item-state">适宜出行</view>
-    </view>
+    </button>
     <!-- </scroll-view> -->
 </view>
 <!-- 皮肤分析模块 -->
@@ -119,20 +177,25 @@
         <view class="analysis-score-unit">分</view>
     </view>
     <!-- 皮肤分析皮肤缺陷气泡上 -->
-    <view class="analysis-bubble-up">血管型黑眼圈</view>
+    <view class="outer" style="{{overflow}}">
+        <view class="analysis-bubble-up" animation="{{slide_up1}}">血管型黑眼圈</view>
+    </view>
     <!-- 皮肤分析皮肤缺陷气泡下 -->
-    <view class="analysis-bubble-down">开放性白头粉刺</view>
+    <view class="outer" style="{{overflow}}">
+        <view class="analysis-bubble-down" animation="{{slide_up1}}">开放性白头粉刺</view>
+    </view>
     <!-- 皮肤分析用户照片区域 -->
     <view class="analysis-face">
         <!-- 用户拍照按钮区域 -->
-        <view class="analysis-face-uploader">
-            <van-uploader accept="image" capture="{{capture}}" file-list="{{ fileList }}" bind:after-read="afterRead">
+        <!-- <view class="analysis-face-uploader"> -->
+            <!-- <van-uploader accept="image" capture="{{capture}}" file-list="{{ fileList }}" bind:after-read="afterRead"> -->
                 <!-- 自定义用户拍照按钮icon -->
-                <image class="analysis-face-uploader-icon" src="/icon/camera.png" />
-            </van-uploader>
-        </view>
+                <!-- <image class="analysis-face-uploader-icon" src="/icon/camera.png" /> -->
+            <!-- </van-uploader> -->
+        <!-- </view> -->
         <!-- 皮肤分析用户照片区域用户照片 -->
-        <image class="analysis-face-image" mode="aspectFill" src="{{imgurl}}" />
+        <image class="analysis-face-image" mode="aspectFill" src="{{imgurl}}" bind:tap="toCamera" />
+        <view class="wrapper" hidden="{{hidden_wrapper}}"></view>
     </view>
     <!-- 皮肤分析用户历史分析记录区域 -->
     <scroll-view class="history" scroll-x>
@@ -217,7 +280,7 @@
 <!-- 皮肤详细分析模块 -->
 <view class="detailed-analysis">
     <!-- 皮肤详细分析标签 -->
-    <van-tabs active="{{ active }}" sticky animated color="#FF75A0" line-width="76rpx" line-height="6rpx" ellipsis="{{false}}" title-active-color="#333333" title-inactive-color="#777777" lazy-render="false" swipeable="true" bind:change="onChange">
+    <van-tabs id="tabs" active="{{ active }}" sticky animated color="#FF75A0" line-width="76rpx" line-height="6rpx" ellipsis="{{local_power}}" title-active-color="#333333" title-inactive-color="#777777" lazy-render="local_power" swipeable="!local_power" bind:change="onChange">
         <van-tab title="肤色">
             <!-- 皮肤详细分析标题区域 -->
             <view class="detailed-analysis-title">
@@ -351,7 +414,7 @@
     </van-tabs>
 </view>
 <!-- 遮罩层 -->
-<van-overlay show="{{ show }}" bind:click="onClickHide">
+<van-overlay show="{{ show }}" bind:click="onClickHide" z-index="5">
     <!-- 提示图区域 -->
     <view class="tips">
         <!-- 提示图区域图片 -->
@@ -363,3 +426,10 @@
         </view>
     </view>
 </van-overlay>
+<!-- 弹出框 -->
+<van-dialog id="van-dialog" />
+<canvas style="width: 300px; height: 200px;position: absolute;left:-8000px;top:-8000px;" canvas-id="myCanvas" class="canvas" />
+<canvas style="width:2px;height:2px;position: absolute;left:-8000px;top:-8000px;" canvas-id="judgeCanvas"></canvas>
+<!-- <image src="{{imgurl}}" style="width: 544rpx;height: 544rpx;" bind:tap="previewImage" /> -->
+<!-- 在页面内添加对应的节点 -->
+<van-notify id="van-notify" />

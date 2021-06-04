@@ -18,6 +18,20 @@ page {
     justify-content: center;
 }
 
+/* 隐藏按钮的样式 */
+.btn {
+    height: 100%;
+    background-color: #fff;
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.btn::after {
+    border: 0;
+    padding: 0;
+}
+
 /* 用户个人信息头像模块样式 */
 .userdata-avatar {
     width: 200rpx;
@@ -28,7 +42,47 @@ page {
     opacity: 1;
     margin-top: 16rpx;
     overflow: hidden;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 用户个人信息头像样式 */
+.userdata-avatar image {
+    width: 200rpx;
+    height: 200rpx;
+    border-radius: 50%;
+    opacity: 1;
+}
+
+/* 未绑定状态头像头部 */
+.data-left-avatar-head {
+    width: 46rpx;
+    height: 46rpx;
+    background: #BDC4CE;
+    border-radius: 50%;
+    opacity: 1;
+}
+
+/* 未绑定状态头像身体 */
+.data-left-avatar-body {
+    width: 86rpx;
+    height: 52rpx;
+    background: #BDC4CE;
+    border-radius: 50%;
+    opacity: 1;
+    margin-top: 6rpx;
+}
+
+/* 未绑定显示文字样式 */
+.data-center-unbound {
+    font-size: 28rpx;
+    font-family: PingFang SC;
+    font-weight: 500;
+    line-height: 40rpx;
+    color: #333333;
+    opacity: 1;
 }
 
 /* 用户个人信息昵称模块样式 */

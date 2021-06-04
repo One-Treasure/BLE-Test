@@ -9,11 +9,26 @@ Page({
       { month: 'current', day: new Date().getDate(), color: 'white', background: '#FF75A0' },
       { month: 'current', day: new Date().getDate(), color: 'white', background: '#FF75A0' }
     ],
-    num: [1, 2, 5, 8, 9]
+    num: [1, 2, 5, 8, 9],
+    swiperList: ['/icon/1.jpg', '/icon/1.jpg', '/icon/1.jpg', '/icon/1.jpg', '/icon/1.jpg', '/icon/1.jpg', '/icon/1.jpg', '/icon/1.jpg'],
+    activeIndex: 1,//默认放大显示的卡片角标
+    cur: 1
+  },
+
+  /* 切换卡片事件 */
+  swiperChange(e) {
+    /* if (e.detail.current >= this.data.swiperList.length - 2) {
+      e.detail.current = e.detail.current - this.data.swiperList.length
+    } */
+    this.setData({
+      activeIndex: e.detail.current
+    })
   },
 
   //给点击的日期设置一个背景颜色
   dayClick: function (event) {
+    const day = event.detail.year + '.' + event.detail.month + '.' + event.detail.day;
+    console.log(day);
     let clickDay = event.detail.day;
     let changeBgColor = `dayStyle[0].color`;
     let changeBg = `dayStyle[0].background`;
@@ -26,25 +41,6 @@ Page({
       [changeBgColor]: "black",
       [changeEndBg]: "#FF75A0"
     })
-  },
-
-  hadleDragging(e) {
-    var animation1 = wx.createAnimation({
-      duration: 100,
-      timingFunction: "linear",
-      delay: 0
-    })
-    if (e.detail.scrollLeft >= 50 && e.detail.scrollLeft <= 120) {
-      animation1.opacity(1).scale(1.2, 1.2).step();
-      this.setData({
-        animation1
-      })
-    } else {
-      animation1.opacity(1).scale(0.5, 0.5).step();
-      this.setData({
-        animation1
-      })
-    }
   },
 
   /**
@@ -96,30 +92,7 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    /* this.setData({
-      id: 'i1'
-    })
-    var animation1 = wx.createAnimation({
-      duration: 300,
-      timingFunction: "linear",
-      delay: 0
-    })
-    animation1.opacity(1).scale(1.2, 1.2).step();
-    this.setData({
-      animation1
-    }) */
-    wx.createSelectorQuery()
-      .select('#scrollview')
-      .node()
-      .exec((res) => {
-        const scrollView = res[0].node;
-        scrollView.scrollTo({
-          left: 120,
-          animated: true,
-          duration: 500
-        })
-        console.log(res);
-      })
+    
   },
 
   /**

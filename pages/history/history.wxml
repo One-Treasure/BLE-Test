@@ -3,85 +3,37 @@
     <!-- 极点日历插件，源码https://github.com/czcaiwj/calendar/ -->
     <calendar weeks-type="cn" days-color="{{dayStyle}}" binddayClick="dayClick" cell-size="25" num="{{num}}" />
 </view>
-<!-- 皮肤历史显示区域 -->
-<scroll-view class="history" scroll-x scroll-into-view="{{id}}" id="scrollview" scroll-with-animation="true" scroll-left="{{index}}" enhanced="{{true}}" bindscroll="hadleDragging">
-    <!-- 皮肤分析用户历史分析记录单个区域 -->
-    <view class="history-item" id="i0">
+<!-- 使用轮播图展示皮肤分析历史记录，使用scroll-view无法实现指定某个卡片样式改变 -->
+<swiper indicator-dots="{{indicatorDots}}" autoplay="{{false}}" circular="{{false}}" current="{{cur}}" display-multiple-items="3" skip-hidden-item-layout="true" previous-margin="-18rpx" next-margin="-18rpx" bindchange="swiperChange">
+<swiper-item ></swiper-item>
+  <block wx:for="{{swiperList}}" wx:key="item">
+    <swiper-item item-id="{{'item'+index}}">
+      <!-- <view class="{{ index == activeIndex ? 'active item-block' : 'item-block'}}">
+        <image src="{{item}}" mode="aspectFill"></image>
+      </view> -->
+      <!-- 皮肤分析用户历史分析记录单个区域 -->
+      <view class="history-item {{ index === activeIndex ? 'item-active' : ''}}" animation="" id="i0">
         <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-        <view class="history-item-face">
-            <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-            <image src="/icon/1.jpg" mode="aspectFill" />
+        <view class="history-item-face {{ index === activeIndex ? 'face-active' : ''}}">
+          <!-- 皮肤分析用户历史分析记录单个区域图片 -->
+          <image src="/icon/1.jpg" mode="aspectFill" style="{{ index === activeIndex ? 'width: 176rpx;height: 176rpx;' : ''}}" />
         </view>
         <!-- 皮肤分析用户历史分析记录单个区域日期 -->
-        <view class="history-item-date">2021.5.21</view>
+        <view class="history-item-date {{ index === activeIndex ? 'date-active' : ''}}">2021.5.21</view>
         <!-- 皮肤分析用户历史分析记录单个区域状态 -->
-        <view class="history-item-state">
-            <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
-            <text class="history-item-state-title">肌肤状态：</text>
-            <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
-            <text class="history-item-state-num">92</text>
-            <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
-            <text class="history-item-state-unit">分</text>
+        <view class="history-item-state {{ index === activeIndex ? 'state-active' : ''}}">
+          <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
+          <text class="history-item-state-title {{ index === activeIndex ? 'tiltle-active' : ''}}">肌肤状态：</text>
+          <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
+          <text class="history-item-state-num {{ index === activeIndex ? 'num-active' : ''}}">92</text>
+          <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
+          <text class="history-item-state-unit {{ index === activeIndex ? 'unit-active' : ''}}">分</text>
         </view>
-    </view>
-    <!-- 皮肤分析用户历史分析记录单个区域 -->
-    <view class="history-item" id="i1">
-        <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-        <view class="history-item-face">
-            <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-            <image src="/icon/1.jpg" mode="aspectFill" />
-        </view>
-        <!-- 皮肤分析用户历史分析记录单个区域日期 -->
-        <view class="history-item-date">2021.5.20</view>
-        <!-- 皮肤分析用户历史分析记录单个区域状态 -->
-        <view class="history-item-state">
-            <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
-            <text class="history-item-state-title">肌肤状态：</text>
-            <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
-            <text class="history-item-state-num">90</text>
-            <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
-            <text class="history-item-state-unit">分</text>
-        </view>
-    </view>
-    <!-- 皮肤分析用户历史分析记录单个区域 -->
-    <view class="history-item" id="i2">
-        <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-        <view class="history-item-face">
-            <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-            <image src="/icon/1.jpg" mode="aspectFill" />
-        </view>
-        <!-- 皮肤分析用户历史分析记录单个区域日期 -->
-        <view class="history-item-date">2021.5.19</view>
-        <!-- 皮肤分析用户历史分析记录单个区域状态 -->
-        <view class="history-item-state">
-            <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
-            <text class="history-item-state-title">肌肤状态：</text>
-            <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
-            <text class="history-item-state-num">92</text>
-            <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
-            <text class="history-item-state-unit">分</text>
-        </view>
-    </view>
-    <!-- 皮肤分析用户历史分析记录单个区域 -->
-    <view class="history-item" id="i3" style="margin-right: 30rpx;" animation>
-        <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-        <view class="history-item-face">
-            <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-            <image src="/icon/1.jpg" mode="aspectFill" />
-        </view>
-        <!-- 皮肤分析用户历史分析记录单个区域日期 -->
-        <view class="history-item-date">2021.5.18</view>
-        <!-- 皮肤分析用户历史分析记录单个区域状态 -->
-        <view class="history-item-state">
-            <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
-            <text class="history-item-state-title">肌肤状态：</text>
-            <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
-            <text class="history-item-state-num">90</text>
-            <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
-            <text class="history-item-state-unit">分</text>
-        </view>
-    </view>
-</scroll-view>
+      </view>
+    </swiper-item>
+  </block>
+  <swiper-item ></swiper-item>
+</swiper>
 <!-- 皮肤详细分析模块 -->
 <view class="detailed-analysis">
     <!-- 皮肤详细分析标签 -->

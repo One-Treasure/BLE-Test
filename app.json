@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/camera/camera",
     "pages/index/index",
     "pages/calendar/calendar",
     "pages/mine/mine",
@@ -10,7 +11,6 @@
     "pages/webgl/webgl",
     "pages/image/image",
     "pages/canvastest/canvastest",
-    "pages/camera/camera",
     "pages/canvas/canvas",
     "pages/bluetooth/bluetooth",
     "pages/logs/logs"
@@ -40,6 +40,11 @@
         "selectedIconPath": "/icon/sel_mine.png"
       }
     ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "您的位置信息将用于向您展示天气情况"
+    }
   },
   "sitemapLocation": "sitemap.json"
 }

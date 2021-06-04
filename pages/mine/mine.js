@@ -1,3 +1,5 @@
+var app =  getApp();
+
 // pages/mine/mine.js
 Page({
 
@@ -6,7 +8,29 @@ Page({
    */
   data: {
     fileList: [],
-    capture: ['camera']
+    capture: ['camera'],
+    avatarUrl: '',
+    nickName: ''
+  },
+
+  /* 获取用户信息（头像、昵称等） */
+  getUserInfo() {
+    wx.getUserProfile({
+      desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+      success: (res) => {
+        console.log(res);
+        // res.userInfo.openId = wx.getStorageSync('openId');
+        const data = res.userInfo;
+        app.appRequest('POST', 'setUserInfo', { data }).then(res => {
+          console.log(res);
+        })
+        this.setData({
+          userInfo: res.userInfo,
+          nickName: res.userInfo.nickName,
+          avatarUrl: res.userInfo.avatarUrl
+        })
+      }
+    })
   },
 
   /* 跳转至 */
@@ -14,26 +38,6 @@ Page({
     const { url } = e.currentTarget.dataset;
     wx.navigateTo({
       url
-    });
-  },
-
-  /* 照片上传，测试使用 */
-  afterRead(event) {
-    const { file } = event.detail;
-    const base64 = 'data:image/jpeg;base64,' + wx.getFileSystemManager().readFileSync(file.url, "base64");
-    // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
-    var reqTask = wx.request({
-      url: 'http://192.168.0.107:8083/api/analyze',
-      data: { file: base64 },
-      header: { 'content-type': 'application/json' },
-      method: 'POST',
-      dataType: 'json',
-      responseType: 'text',
-      success: (result) => {
-
-      },
-      fail: () => { },
-      complete: () => { }
     });
   },
 
@@ -55,7 +59,18 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    let avatarUrl = '';
+    let nickName = '';
+    if (wx.getStorageSync('avatarUrl')) {
+      avatarUrl = wx.getStorageSync('avatarUrl');
+    }
+    if (wx.getStorageSync('nickName')) {
+      nickName = wx.getStorageSync('nickName');
+    }
+    this.setData({
+      avatarUrl,
+      nickName
+    })
   },
 
   /**

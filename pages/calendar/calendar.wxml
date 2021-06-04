@@ -1,6 +1,9 @@
-<swiper indicator-dots="{{indicatorDots}}" autoplay="{{false}}" interval="5000" duration="500" circular="{{false}}" display-multiple-items="3" skip-hidden-item-layout="true" bindchange="swiperChange">
-  <block wx:for="{{swiperList}}" wx:key="{{index}}">
-    <swiper-item>
+<swiper indicator-dots="{{indicatorDots}}" autoplay="{{false}}" interval="5000" duration="500" circular="{{false}}" current="{{cur}}" display-multiple-items="3" skip-hidden-item-layout="true" previous-margin="-18rpx" next-margin="-18rpx" bindchange="swiperChange">
+  <swiper-item></swiper-item>
+  <block wx:for="{{swiperList}}" wx:key="item">
+    <swiper-item item-id="{{'item'+index}}">
+    {{index}}
+    {{activeIndex}}
       <!-- <view class="{{ index == activeIndex ? 'active item-block' : 'item-block'}}">
         <image src="{{item}}" mode="aspectFill"></image>
       </view> -->
@@ -25,4 +28,5 @@
       </view>
     </swiper-item>
   </block>
+  <swiper-item></swiper-item>
 </swiper>

@@ -4,21 +4,20 @@ Page({
    * 页面的初始数据
    */
   data: {
-    devicePosition: 'back',
+    devicePosition: 'front',
     authCamera: false,//用户是否运行授权拍照
     windowHeight: wx.getStorageSync('windowHeight'),
     windowWidth: wx.getStorageSync('windowWidth')
   },
 
   onLoad: function () {
-    const selQuery = wx.createSelectorQuery();
+    /* const selQuery = wx.createSelectorQuery();
     selQuery.select('#canvas')
       .fields({ size: true, node: true })
-      .exec(this.init.bind(this))
+      .exec(this.init.bind(this)) */
   },
 
   init(res) {
-    console.log(res);
     const selQuery = wx.createSelectorQuery();
     selQuery.select('#canvas')
       .fields({ size: true, node: true })
@@ -81,8 +80,24 @@ Page({
     });
   },
   takePhoto: function () {
+    var that = this;
     var cameraContext = wx.createCameraContext();
-    //拍摄照片
+    cameraContext.takePhoto({
+      quality: 'high',//拍摄质量(high:高质量 normal:普通质量 low:高质量)
+      success: (res) => {
+        //拍摄成功
+        //照片文件的临时文件
+        var file = res.tempImagePath;
+        // that.afterRead(file);
+        wx.reLaunch({
+          url: '/pages/index/index?file=' + file
+        });
+      },
+      fail: (res) => {
+        //拍摄失败
+      },
+    })
+    /* //拍摄照片
     new Promise((resolve) => {
       cameraContext.takePhoto({
         quality: 'high',//拍摄质量(high:高质量 normal:普通质量 low:高质量)
@@ -90,17 +105,13 @@ Page({
           //拍摄成功
           //照片文件的临时文件
           var file = res.tempImagePath;
-          resolve(
-            this.setData({
-              file
-            })
-          )
+          resolve(file)
         },
         fail: (res) => {
           //拍摄失败
         },
       })
-    }).then(() => {
+    }).then((res) => {
       setTimeout(() => {
         var animation = wx.createAnimation({
           duration: 4000,
@@ -112,7 +123,48 @@ Page({
           ani: animation.export()
         })
       }, 500);
-    })
+      that.afterRead(res);
+    }) */
+  },
+
+  /* 照片上传，测试使用 */
+  afterRead(event) {
+    const file = event;
+    console.log(file);
+    var that = this;
+    const base64 = 'data:image/jpeg;base64,' + wx.getFileSystemManager().readFileSync(file, "base64");
+    // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
+    var reqTask = wx.request({
+      url: 'http://192.168.0.107:8083/api/analyze',
+      data: { file: base64 },
+      header: { 'content-type': 'application/json' },
+      method: 'POST',
+      dataType: 'json',
+      responseType: 'text',
+      success: (res) => {
+        let { data } = res.data;
+        console.log(data);
+        that.setData({
+          imgurl: data.path,
+          hidden_wrapper: false
+        })
+        wx.reLaunch({
+          url: '/pages/index/index?file=' + JSON.parse(data),
+          success: (result) => {
+
+          },
+          fail: () => { },
+          complete: () => { }
+        });
+        setTimeout(() => {
+          this.setData({
+            hidden_wrapper: true
+          })
+        }, 5000)
+      },
+      fail: () => { },
+      complete: () => { }
+    });
   },
 
   // 关闭相机页面

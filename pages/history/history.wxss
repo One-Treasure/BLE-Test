@@ -45,11 +45,17 @@ page {
     display: inline-block;
 }
 
-.active {
-    width: 216rpx;
-    height: 302rpx;
-    margin-top: 8rpx;
+/* 指定轮播图区域的高度 */
+swiper {
+    height: 350rpx;
 }
+
+/* swiper-item .item-block {
+    padding: 0 10rpx;
+    height: 350rpx;
+    padding-top: 45rpx;
+    overflow: hidden;
+} */
 
 /* 皮肤分析用户历史分析记录单个区域图片样式 */
 .history-item-face {
@@ -131,13 +137,69 @@ page {
     margin-top: 36rpx;
 }
 
+/* 动画代码 */
+/* @keyframes example {
+    from {
+        width: 194rpx;
+        height: 272rpx;
+        margin-top: 30rpx;
+        margin-left: 42rpx;
+    }
+
+    to {
+        width: 216rpx;
+        height: 302rpx;
+        margin-top: 8rpx;
+    }
+} */
+
+/* 历史记录卡片选中状态样式 */
+.item-active {
+    width: 216rpx;
+    height: 302rpx;
+    margin-top: 8rpx;
+    margin-left: 35rpx;
+    /* animation-name: example;
+    animation-duration: 0.5s; */
+}
+
+.face-active {
+    width: 176rpx;
+    height: 176rpx;
+    margin-top: 20rpx;
+    margin-left: 20rpx;
+}
+
+.date-active {
+    width: 122rpx;
+    height: 32rpx;
+    font-size: 24rpx;
+    line-height: 30rpx;
+    margin-top: 8rpx;
+    margin-left: 20rpx;
+}
+
+.title-active {
+    font-size: 20rpx;
+    line-height: 28rpx;
+}
+
+.num-active {
+    font-size: 32rpx;
+    line-height: 38rpx;
+}
+
+.unit-active {
+    font-size: 20rpx;
+    line-height: 28rpx;
+}
+
 /* 皮肤详细分析模块样式 */
 .detailed-analysis {
     width: 694rpx;
     background: #FFFFFF;
     opacity: 1;
     border-radius: 30rpx;
-    margin-top: 28rpx;
     margin-left: 28rpx;
     padding-top: 20rpx;
 }

@@ -35,10 +35,67 @@ page {
     display: block;
 }
 
+/* 用户头像样式 */
+.data-left-avatar image {
+    width: 118rpx;
+    height: 118rpx;
+}
+
+/* 未绑定状态头像头部 */
+.data-left-avatar-head {
+    width: 46rpx;
+    height: 46rpx;
+    background: #BDC4CE;
+    border-radius: 50%;
+    opacity: 1;
+    margin-top: 16rpx;
+    margin-left: 36rpx;
+}
+
+/* 未绑定状态头像身体 */
+.data-left-avatar-body {
+    width: 86rpx;
+    height: 52rpx;
+    background: #BDC4CE;
+    border-radius: 50%;
+    opacity: 1;
+    margin-top: 6rpx;
+    margin-left: 16rpx;
+}
+
 /* 个人信息中间区域样式 */
 .data-center {
     width: 494rpx;
     height: 100%;
+}
+
+/* 隐藏按钮的样式 */
+.btn {
+    height: 100%;
+    background-color: #fff;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.btn::after {
+    border: 0;
+    padding: 0;
+}
+
+/* 未绑定显示文字样式 */
+.data-center-unbound {
+    width: 112rpx;
+    height: 40rpx;
+    font-size: 28rpx;
+    font-family: PingFang SC;
+    font-weight: 500;
+    line-height: 40rpx;
+    color: #333333;
+    opacity: 1;
+    margin-top: 76rpx;
+    margin-left: 16rpx;
 }
 
 /* 用户昵称样式 */
@@ -132,13 +189,22 @@ page {
 .weather-scroll-item-view-icon {
     width: 40rpx;
     height: 40rpx;
-    margin-top: 10rpx;
 }
 
 /* 图形区域icon图片样式 */
-.weather-scroll-item-view-icon image {
+.icon {
     width: 40rpx;
     height: 40rpx;
+    margin-top: 10rpx;
+}
+
+/* 用户未授权的icon样式 */
+.weather-scroll-item-view-noaddress-icon {
+    width: 42rpx;
+    height: 6rpx;
+    background: #FFFFFF;
+    opacity: 1;
+    margin-bottom: 10rpx;
 }
 
 /* 图形区域名称样式 */
@@ -163,6 +229,15 @@ page {
     color: #FFFFFF;
     opacity: 1;
     margin-top: 10rpx;
+}
+
+/* 用户未授权的数据样式 */
+.weather-scroll-item-view-noaddress-data {
+    width: 42rpx;
+    height: 6rpx;
+    background: #FFFFFF;
+    opacity: 1;
+    margin-top: 20rpx;
 }
 
 /* 标题区域样式 */
@@ -308,6 +383,10 @@ page {
     margin-top: 16rpx;
 }
 
+.outer{
+    position: relative;
+}
+
 /* 皮肤分析皮肤缺陷气泡上样式 */
 .analysis-bubble-up {
     background: #FF75A0;
@@ -323,6 +402,7 @@ page {
     margin-top: 186rpx;
     margin-left: 24rpx;
     position: absolute;
+    top: 800px;
     z-index: 1;
     display: flex;
     align-items: center;
@@ -345,6 +425,7 @@ page {
     margin-top: 382rpx;
     margin-left: 466rpx;
     position: absolute;
+    top: 800px;
     z-index: 1;
     display: flex;
     align-items: center;
@@ -368,14 +449,14 @@ page {
 }
 
 /* 用户拍照按钮区域样式 */
-.analysis-face-uploader{
+.analysis-face-uploader {
     position: absolute;
-    z-index: 1;
+    z-index: 2;
     opacity: 0.6;
 }
 
 /* 自定义用户拍照按钮icon样式 */
-.analysis-face-uploader-icon{
+.analysis-face-uploader-icon {
     width: 150rpx;
     height: 150rpx;
 }
@@ -385,6 +466,34 @@ page {
     width: 544rpx;
     height: 544rpx;
     border-radius: 50%;
+    position: absolute;
+}
+
+.wrapper {
+    width: 544rpx;
+    height: 544rpx;
+    background:
+        linear-gradient(#fff, #fff),
+        linear-gradient(90deg, #ffffff33 1px, transparent 0, transparent 19px),
+        linear-gradient(#ffffff33 1px, transparent 0, transparent 19px),
+        linear-gradient(transparent, #fff);
+    background-size: 100% 1.5%, 10% 100%, 100% 8%, 100% 100%;
+    background-repeat: no-repeat, repeat, repeat, no-repeat;
+    background-position: 0% 0%, 0 0, 0 0, 0 0;
+    /* 初始位置 */
+    clip-path: polygon(0% 0%, 100% 0%, 100% 1.5%, 0% 1.5%);
+    /* 添加动画效果 */
+    animation: move 2s infinite linear;
+    z-index: 1;
+    border-radius: 50%;
+}
+
+@keyframes move {
+    to {
+        background-position: 0 100%, 0 0, 0 0, 0 0;
+        /* 终止位置 */
+        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    }
 }
 
 /* 皮肤分析用户历史分析记录区域样式 */
