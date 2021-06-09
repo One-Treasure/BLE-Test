@@ -41,7 +41,6 @@ var checkOrientation = function(canvasId) {
         } catch(ex) {
           console.error(ex.message);
         };
-        console.log('isOrientationRight: ' + isOrientationRight);
       }
     })
   });

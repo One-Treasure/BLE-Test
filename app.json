@@ -1,7 +1,8 @@
 {
   "pages": [
-    "pages/camera/camera",
+    "pages/chart/chart",
     "pages/index/index",
+    "pages/camera/camera",
     "pages/calendar/calendar",
     "pages/mine/mine",
     "pages/setwifi/setwifi",

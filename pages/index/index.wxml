@@ -115,7 +115,7 @@
                 <view class="weather-scroll-item-view-name">湿度</view>
                 <!-- 湿度图形区域数据 -->
                 <view class="weather-scroll-item-view-data" wx:if="{{local_power}}">
-                    {{humidity}}%
+                    {{humidity}}
                 </view>
                 <!-- 用户未授权的数据 -->
                 <view class="weather-scroll-item-view-noaddress-data" wx:if="{{!local_power}}"></view>
@@ -136,14 +136,14 @@
             <view class="weather-scroll-item-view pm-view">
                 <!-- PM2.5图形区域icon -->
                 <!-- <view class="weather-scroll-item-view-icon"> -->
-                <image class="weather-scroll-item-view-icon" src="{{pm25Cdata.icon}}" wx:if="{{local_power}}"></image>
+                <image class="weather-scroll-item-view-icon" src="{{pm25cdata.icon}}" wx:if="{{local_power}}"></image>
                 <!-- </view> -->
                 <!-- 用户未授权的icon -->
                 <view class="weather-scroll-item-view-noaddress-icon" wx:if="{{!local_power}}"></view>
                 <!-- PM2.5图形区域名称 -->
                 <view class="weather-scroll-item-view-name">PM2.5</view>
                 <!-- PM2.5图形区域数据 -->
-                <view class="weather-scroll-item-view-data" wx:if="{{local_power}}">{{pm25C}}</view>
+                <view class="weather-scroll-item-view-data" wx:if="{{local_power}}">{{pm25c}}</view>
                 <!-- 用户未授权的数据 -->
                 <view class="weather-scroll-item-view-noaddress-data" wx:if="{{!local_power}}"></view>
             </view>
@@ -160,259 +160,284 @@
     </button>
     <!-- </scroll-view> -->
 </view>
-<!-- 皮肤分析模块 -->
-<view class="analysis">
-    <!-- 皮肤分析标题区域 -->
-    <view class="analysis-title">
-        <!-- 皮肤分析标题文字区域 -->
-        <view class="analysis-title-text">我的肌肤报告</view>
-        <!-- 皮肤分析标题右边框区域 -->
-        <view class="analysis-title-border"></view>
-    </view>
-    <!-- 皮肤分析总分区域 -->
-    <view class="analysis-score">
-        <!-- 皮肤分析总分数字区域 -->
-        <view class="analysis-score-num">95</view>
-        <!-- 皮肤分析总分单位区域 -->
-        <view class="analysis-score-unit">分</view>
-    </view>
-    <!-- 皮肤分析皮肤缺陷气泡上 -->
-    <view class="outer" style="{{overflow}}">
-        <view class="analysis-bubble-up" animation="{{slide_up1}}">血管型黑眼圈</view>
-    </view>
-    <!-- 皮肤分析皮肤缺陷气泡下 -->
-    <view class="outer" style="{{overflow}}">
-        <view class="analysis-bubble-down" animation="{{slide_up1}}">开放性白头粉刺</view>
-    </view>
-    <!-- 皮肤分析用户照片区域 -->
-    <view class="analysis-face">
-        <!-- 用户拍照按钮区域 -->
-        <!-- <view class="analysis-face-uploader"> -->
-            <!-- <van-uploader accept="image" capture="{{capture}}" file-list="{{ fileList }}" bind:after-read="afterRead"> -->
-                <!-- 自定义用户拍照按钮icon -->
-                <!-- <image class="analysis-face-uploader-icon" src="/icon/camera.png" /> -->
-            <!-- </van-uploader> -->
+<!-- 绑定状态下的皮肤分析区域 -->
+<block wx:if="{{avatarUrl!==''}}">
+    <!-- 皮肤分析模块 -->
+    <view class="analysis">
+        <!-- 皮肤分析标题区域 -->
+        <view class="analysis-title">
+            <!-- 皮肤分析标题文字区域 -->
+            <view class="analysis-title-text">我的肌肤报告</view>
+            <!-- 皮肤分析标题右边框区域 -->
+            <view class="analysis-title-border"></view>
+        </view>
+        <!-- 皮肤分析总分区域 -->
+        <view class="analysis-score" bind:tap="toCamera">
+            <!-- 皮肤分析总分数字区域 -->
+            <view class="analysis-score-num">95</view>
+            <!-- 皮肤分析总分单位区域 -->
+            <view class="analysis-score-unit">分</view>
+        </view>
+        <!-- 皮肤分析皮肤缺陷气泡上 -->
+        <!-- <view class="outer" style="{{overflow}}"> -->
+            <view class="analysis-bubble-up" animation="{{slide_up1}}">血管型黑眼圈</view>
         <!-- </view> -->
-        <!-- 皮肤分析用户照片区域用户照片 -->
-        <image class="analysis-face-image" mode="aspectFill" src="{{imgurl}}" bind:tap="toCamera" />
-        <view class="wrapper" hidden="{{hidden_wrapper}}"></view>
+        <!-- 皮肤分析皮肤缺陷气泡下 -->
+        <!-- <view class="outer" style="{{overflow}}"> -->
+            <view class="analysis-bubble-down" animation="{{slide_up1}}">开放性白头粉刺</view>
+        <!-- </view> -->
+        <!-- 皮肤分析用户照片区域 -->
+        <view class="analysis-face">
+            <!-- 用户拍照按钮区域 -->
+            <!-- <view class="analysis-face-uploader"> -->
+            <!-- <van-uploader accept="image" capture="{{capture}}" file-list="{{ fileList }}" bind:after-read="afterRead"> -->
+            <!-- 自定义用户拍照按钮icon -->
+            <!-- <image class="analysis-face-uploader-icon" src="/icon/camera.png" /> -->
+            <!-- </van-uploader> -->
+            <!-- </view> -->
+            <!-- 皮肤分析用户照片区域用户照片 -->
+            <image class="analysis-face-image" mode="aspectFill" src="{{imgurl}}" bind:tap="bindAnim" />
+            <view class="wrapper" hidden="{{hidden_wrapper}}"></view>
+        </view>
+        <!-- 皮肤分析用户历史分析记录区域 -->
+        <scroll-view class="history" scroll-x>
+            <!-- 皮肤分析用户历史分析记录单个区域 -->
+            <view class="history-item">
+                <!-- 皮肤分析用户历史分析记录单个区域图片 -->
+                <view class="history-item-face">
+                    <!-- 皮肤分析用户历史分析记录单个区域图片 -->
+                    <image src="/icon/1.jpg" mode="aspectFill" />
+                </view>
+                <!-- 皮肤分析用户历史分析记录单个区域日期 -->
+                <view class="history-item-date">2021.5.21</view>
+                <!-- 皮肤分析用户历史分析记录单个区域状态 -->
+                <view class="history-item-state">
+                    <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
+                    <text class="history-item-state-title">肌肤状态：</text>
+                    <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
+                    <text class="history-item-state-num">92</text>
+                    <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
+                    <text class="history-item-state-unit">分</text>
+                </view>
+            </view>
+            <!-- 皮肤分析用户历史分析记录单个区域 -->
+            <view class="history-item">
+                <!-- 皮肤分析用户历史分析记录单个区域图片 -->
+                <view class="history-item-face">
+                    <!-- 皮肤分析用户历史分析记录单个区域图片 -->
+                    <image src="/icon/1.jpg" mode="aspectFill" />
+                </view>
+                <!-- 皮肤分析用户历史分析记录单个区域日期 -->
+                <view class="history-item-date">2021.5.20</view>
+                <!-- 皮肤分析用户历史分析记录单个区域状态 -->
+                <view class="history-item-state">
+                    <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
+                    <text class="history-item-state-title">肌肤状态：</text>
+                    <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
+                    <text class="history-item-state-num">90</text>
+                    <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
+                    <text class="history-item-state-unit">分</text>
+                </view>
+            </view>
+            <!-- 皮肤分析用户历史分析记录单个区域 -->
+            <view class="history-item">
+                <!-- 皮肤分析用户历史分析记录单个区域图片 -->
+                <view class="history-item-face">
+                    <!-- 皮肤分析用户历史分析记录单个区域图片 -->
+                    <image src="/icon/1.jpg" mode="aspectFill" />
+                </view>
+                <!-- 皮肤分析用户历史分析记录单个区域日期 -->
+                <view class="history-item-date">2021.5.19</view>
+                <!-- 皮肤分析用户历史分析记录单个区域状态 -->
+                <view class="history-item-state">
+                    <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
+                    <text class="history-item-state-title">肌肤状态：</text>
+                    <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
+                    <text class="history-item-state-num">92</text>
+                    <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
+                    <text class="history-item-state-unit">分</text>
+                </view>
+            </view>
+            <!-- 皮肤分析用户历史分析记录单个区域 -->
+            <view class="history-item" style="margin-right: 30rpx;">
+                <!-- 皮肤分析用户历史分析记录单个区域图片 -->
+                <view class="history-item-face">
+                    <!-- 皮肤分析用户历史分析记录单个区域图片 -->
+                    <image src="/icon/1.jpg" mode="aspectFill" />
+                </view>
+                <!-- 皮肤分析用户历史分析记录单个区域日期 -->
+                <view class="history-item-date">2021.5.18</view>
+                <!-- 皮肤分析用户历史分析记录单个区域状态 -->
+                <view class="history-item-state">
+                    <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
+                    <text class="history-item-state-title">肌肤状态：</text>
+                    <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
+                    <text class="history-item-state-num">90</text>
+                    <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
+                    <text class="history-item-state-unit">分</text>
+                </view>
+            </view>
+        </scroll-view>
     </view>
-    <!-- 皮肤分析用户历史分析记录区域 -->
-    <scroll-view class="history" scroll-x>
-        <!-- 皮肤分析用户历史分析记录单个区域 -->
-        <view class="history-item">
-            <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-            <view class="history-item-face">
-                <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-                <image src="/icon/1.jpg" mode="aspectFill" />
-            </view>
-            <!-- 皮肤分析用户历史分析记录单个区域日期 -->
-            <view class="history-item-date">2021.5.21</view>
-            <!-- 皮肤分析用户历史分析记录单个区域状态 -->
-            <view class="history-item-state">
-                <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
-                <text class="history-item-state-title">肌肤状态：</text>
-                <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
-                <text class="history-item-state-num">92</text>
-                <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
-                <text class="history-item-state-unit">分</text>
-            </view>
+    <!-- 皮肤详细分析模块 -->
+    <view class="detailed-analysis">
+        <!-- 皮肤详细分析标签 -->
+        <van-tabs id="tabs" custom-class="custom-class" nav-class="nav-class" ellipsis="{{false}}" active="{{ active }}" sticky animated color="#FF75A0" line-width="76rpx" line-height="6rpx" title-active-color="#333333" title-inactive-color="#777777" lazy-render="{{true}}" swipeable="{{true}}" bind:change="onChange">
+            <van-tab title="肤色">
+                <!-- 皮肤详细分析标题区域 -->
+                <view class="detailed-analysis-title">
+                    <!-- 皮肤详细分析标题点 -->
+                    <view class="detailed-analysis-title-dot"></view>
+                    <!-- 皮肤详细分析标题文字 -->
+                    <view class="detailed-analysis-title-text">你的黑头类型</view>
+                </view>
+                <!-- 皮肤详细分析内容 -->
+                <view class="detailed-analysis-content">
+                    毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
+                </view>
+            </van-tab>
+            <van-tab title="光滑度">
+                <!-- 皮肤详细分析标题区域 -->
+                <view class="detailed-analysis-title">
+                    <!-- 皮肤详细分析标题点 -->
+                    <view class="detailed-analysis-title-dot"></view>
+                    <!-- 皮肤详细分析标题文字 -->
+                    <view class="detailed-analysis-title-text">你的黑头类型</view>
+                </view>
+                <!-- 皮肤详细分析内容 -->
+                <view class="detailed-analysis-content">
+                    毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
+                </view>
+            </van-tab>
+            <van-tab title="色斑">
+                <!-- 皮肤详细分析标题区域 -->
+                <view class="detailed-analysis-title">
+                    <!-- 皮肤详细分析标题点 -->
+                    <view class="detailed-analysis-title-dot"></view>
+                    <!-- 皮肤详细分析标题文字 -->
+                    <view class="detailed-analysis-title-text">你的黑头类型</view>
+                </view>
+                <!-- 皮肤详细分析内容 -->
+                <view class="detailed-analysis-content">
+                    毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
+                </view>
+            </van-tab>
+            <van-tab title="黑头">
+                <!-- 皮肤详细分析标题区域 -->
+                <view class="detailed-analysis-title">
+                    <!-- 皮肤详细分析标题点 -->
+                    <view class="detailed-analysis-title-dot"></view>
+                    <!-- 皮肤详细分析标题文字 -->
+                    <view class="detailed-analysis-title-text">你的黑头类型</view>
+                </view>
+                <!-- 皮肤详细分析内容 -->
+                <view class="detailed-analysis-content">
+                    毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
+                </view>
+            </van-tab>
+            <van-tab title="眼袋">
+                <!-- 皮肤详细分析标题区域 -->
+                <view class="detailed-analysis-title">
+                    <!-- 皮肤详细分析标题点 -->
+                    <view class="detailed-analysis-title-dot"></view>
+                    <!-- 皮肤详细分析标题文字 -->
+                    <view class="detailed-analysis-title-text">你的黑头类型</view>
+                </view>
+                <!-- 皮肤详细分析内容 -->
+                <view class="detailed-analysis-content">
+                    毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
+                </view>
+            </van-tab>
+            <van-tab title="黑眼圈">
+                <!-- 皮肤详细分析标题区域 -->
+                <view class="detailed-analysis-title">
+                    <!-- 皮肤详细分析标题点 -->
+                    <view class="detailed-analysis-title-dot"></view>
+                    <!-- 皮肤详细分析标题文字 -->
+                    <view class="detailed-analysis-title-text">你的黑头类型</view>
+                </view>
+                <!-- 皮肤详细分析内容 -->
+                <view class="detailed-analysis-content">
+                    毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
+                </view>
+            </van-tab>
+            <van-tab title="痘痘/痘印">
+                <!-- 皮肤详细分析标题区域 -->
+                <view class="detailed-analysis-title">
+                    <!-- 皮肤详细分析标题点 -->
+                    <view class="detailed-analysis-title-dot"></view>
+                    <!-- 皮肤详细分析标题文字 -->
+                    <view class="detailed-analysis-title-text">你的黑头类型</view>
+                </view>
+                <!-- 皮肤详细分析内容 -->
+                <view class="detailed-analysis-content">
+                    毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
+                </view>
+            </van-tab>
+            <van-tab title="毛孔">
+                <!-- 皮肤详细分析标题区域 -->
+                <view class="detailed-analysis-title">
+                    <!-- 皮肤详细分析标题点 -->
+                    <view class="detailed-analysis-title-dot"></view>
+                    <!-- 皮肤详细分析标题文字 -->
+                    <view class="detailed-analysis-title-text">你的黑头类型</view>
+                </view>
+                <!-- 皮肤详细分析内容 -->
+                <view class="detailed-analysis-content">
+                    毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
+                </view>
+            </van-tab>
+            <van-tab title="皱纹">
+                <!-- 皮肤详细分析标题区域 -->
+                <view class="detailed-analysis-title">
+                    <!-- 皮肤详细分析标题点 -->
+                    <view class="detailed-analysis-title-dot"></view>
+                    <!-- 皮肤详细分析标题文字 -->
+                    <view class="detailed-analysis-title-text">你的黑头类型</view>
+                </view>
+                <!-- 皮肤详细分析内容 -->
+                <view class="detailed-analysis-content">
+                    毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
+                </view>
+            </van-tab>
+            <van-tab title="痣">
+                <!-- 皮肤详细分析标题区域 -->
+                <view class="detailed-analysis-title">
+                    <!-- 皮肤详细分析标题点 -->
+                    <view class="detailed-analysis-title-dot"></view>
+                    <!-- 皮肤详细分析标题文字 -->
+                    <view class="detailed-analysis-title-text">你的黑头类型</view>
+                </view>
+                <!-- 皮肤详细分析内容 -->
+                <view class="detailed-analysis-content">
+                    毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
+                </view>
+            </van-tab>
+        </van-tabs>
+    </view>
+</block>
+<!-- 未绑定状态下的皮肤分析区域 -->
+<block wx:else>
+    <!-- 未绑定状态整体区域 -->
+    <view class="empty">
+        <!-- 皮肤分析标题区域 -->
+        <view class="analysis-title">
+            <!-- 皮肤分析标题文字区域 -->
+            <view class="analysis-title-text">我的肌肤报告</view>
+            <!-- 皮肤分析标题右边框区域 -->
+            <view class="analysis-title-border"></view>
         </view>
-        <!-- 皮肤分析用户历史分析记录单个区域 -->
-        <view class="history-item">
-            <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-            <view class="history-item-face">
-                <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-                <image src="/icon/1.jpg" mode="aspectFill" />
-            </view>
-            <!-- 皮肤分析用户历史分析记录单个区域日期 -->
-            <view class="history-item-date">2021.5.20</view>
-            <!-- 皮肤分析用户历史分析记录单个区域状态 -->
-            <view class="history-item-state">
-                <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
-                <text class="history-item-state-title">肌肤状态：</text>
-                <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
-                <text class="history-item-state-num">90</text>
-                <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
-                <text class="history-item-state-unit">分</text>
-            </view>
+        <!-- 空状态icon区域 -->
+        <view class="empty-icon">
+            <!-- 空状态icon -->
+            <image src="/icon/empty.png" />
+            <!-- 空状态主标题 -->
+            <view class="empty-icon-title">您还没有登录呀</view>
+            <!-- 空状态副标题 -->
+            <view class="empty-icon-subtitle">快去登录看看吧</view>
         </view>
-        <!-- 皮肤分析用户历史分析记录单个区域 -->
-        <view class="history-item">
-            <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-            <view class="history-item-face">
-                <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-                <image src="/icon/1.jpg" mode="aspectFill" />
-            </view>
-            <!-- 皮肤分析用户历史分析记录单个区域日期 -->
-            <view class="history-item-date">2021.5.19</view>
-            <!-- 皮肤分析用户历史分析记录单个区域状态 -->
-            <view class="history-item-state">
-                <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
-                <text class="history-item-state-title">肌肤状态：</text>
-                <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
-                <text class="history-item-state-num">92</text>
-                <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
-                <text class="history-item-state-unit">分</text>
-            </view>
-        </view>
-        <!-- 皮肤分析用户历史分析记录单个区域 -->
-        <view class="history-item" style="margin-right: 30rpx;">
-            <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-            <view class="history-item-face">
-                <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-                <image src="/icon/1.jpg" mode="aspectFill" />
-            </view>
-            <!-- 皮肤分析用户历史分析记录单个区域日期 -->
-            <view class="history-item-date">2021.5.18</view>
-            <!-- 皮肤分析用户历史分析记录单个区域状态 -->
-            <view class="history-item-state">
-                <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
-                <text class="history-item-state-title">肌肤状态：</text>
-                <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
-                <text class="history-item-state-num">90</text>
-                <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
-                <text class="history-item-state-unit">分</text>
-            </view>
-        </view>
-    </scroll-view>
-</view>
-<!-- 皮肤详细分析模块 -->
-<view class="detailed-analysis">
-    <!-- 皮肤详细分析标签 -->
-    <van-tabs id="tabs" active="{{ active }}" sticky animated color="#FF75A0" line-width="76rpx" line-height="6rpx" ellipsis="{{local_power}}" title-active-color="#333333" title-inactive-color="#777777" lazy-render="local_power" swipeable="!local_power" bind:change="onChange">
-        <van-tab title="肤色">
-            <!-- 皮肤详细分析标题区域 -->
-            <view class="detailed-analysis-title">
-                <!-- 皮肤详细分析标题点 -->
-                <view class="detailed-analysis-title-dot"></view>
-                <!-- 皮肤详细分析标题文字 -->
-                <view class="detailed-analysis-title-text">你的黑头类型</view>
-            </view>
-            <!-- 皮肤详细分析内容 -->
-            <view class="detailed-analysis-content">
-                毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
-            </view>
-        </van-tab>
-        <van-tab title="光滑度">
-            <!-- 皮肤详细分析标题区域 -->
-            <view class="detailed-analysis-title">
-                <!-- 皮肤详细分析标题点 -->
-                <view class="detailed-analysis-title-dot"></view>
-                <!-- 皮肤详细分析标题文字 -->
-                <view class="detailed-analysis-title-text">你的黑头类型</view>
-            </view>
-            <!-- 皮肤详细分析内容 -->
-            <view class="detailed-analysis-content">
-                毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
-            </view>
-        </van-tab>
-        <van-tab title="色斑">
-            <!-- 皮肤详细分析标题区域 -->
-            <view class="detailed-analysis-title">
-                <!-- 皮肤详细分析标题点 -->
-                <view class="detailed-analysis-title-dot"></view>
-                <!-- 皮肤详细分析标题文字 -->
-                <view class="detailed-analysis-title-text">你的黑头类型</view>
-            </view>
-            <!-- 皮肤详细分析内容 -->
-            <view class="detailed-analysis-content">
-                毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
-            </view>
-        </van-tab>
-        <van-tab title="黑头">
-            <!-- 皮肤详细分析标题区域 -->
-            <view class="detailed-analysis-title">
-                <!-- 皮肤详细分析标题点 -->
-                <view class="detailed-analysis-title-dot"></view>
-                <!-- 皮肤详细分析标题文字 -->
-                <view class="detailed-analysis-title-text">你的黑头类型</view>
-            </view>
-            <!-- 皮肤详细分析内容 -->
-            <view class="detailed-analysis-content">
-                毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
-            </view>
-        </van-tab>
-        <van-tab title="眼袋">
-            <!-- 皮肤详细分析标题区域 -->
-            <view class="detailed-analysis-title">
-                <!-- 皮肤详细分析标题点 -->
-                <view class="detailed-analysis-title-dot"></view>
-                <!-- 皮肤详细分析标题文字 -->
-                <view class="detailed-analysis-title-text">你的黑头类型</view>
-            </view>
-            <!-- 皮肤详细分析内容 -->
-            <view class="detailed-analysis-content">
-                毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
-            </view>
-        </van-tab>
-        <van-tab title="黑眼圈">
-            <!-- 皮肤详细分析标题区域 -->
-            <view class="detailed-analysis-title">
-                <!-- 皮肤详细分析标题点 -->
-                <view class="detailed-analysis-title-dot"></view>
-                <!-- 皮肤详细分析标题文字 -->
-                <view class="detailed-analysis-title-text">你的黑头类型</view>
-            </view>
-            <!-- 皮肤详细分析内容 -->
-            <view class="detailed-analysis-content">
-                毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
-            </view>
-        </van-tab>
-        <van-tab title="痘痘/痘印">
-            <!-- 皮肤详细分析标题区域 -->
-            <view class="detailed-analysis-title">
-                <!-- 皮肤详细分析标题点 -->
-                <view class="detailed-analysis-title-dot"></view>
-                <!-- 皮肤详细分析标题文字 -->
-                <view class="detailed-analysis-title-text">你的黑头类型</view>
-            </view>
-            <!-- 皮肤详细分析内容 -->
-            <view class="detailed-analysis-content">
-                毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
-            </view>
-        </van-tab>
-        <van-tab title="毛孔">
-            <!-- 皮肤详细分析标题区域 -->
-            <view class="detailed-analysis-title">
-                <!-- 皮肤详细分析标题点 -->
-                <view class="detailed-analysis-title-dot"></view>
-                <!-- 皮肤详细分析标题文字 -->
-                <view class="detailed-analysis-title-text">你的黑头类型</view>
-            </view>
-            <!-- 皮肤详细分析内容 -->
-            <view class="detailed-analysis-content">
-                毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
-            </view>
-        </van-tab>
-        <van-tab title="皱纹">
-            <!-- 皮肤详细分析标题区域 -->
-            <view class="detailed-analysis-title">
-                <!-- 皮肤详细分析标题点 -->
-                <view class="detailed-analysis-title-dot"></view>
-                <!-- 皮肤详细分析标题文字 -->
-                <view class="detailed-analysis-title-text">你的黑头类型</view>
-            </view>
-            <!-- 皮肤详细分析内容 -->
-            <view class="detailed-analysis-content">
-                毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
-            </view>
-        </van-tab>
-        <van-tab title="痣">
-            <!-- 皮肤详细分析标题区域 -->
-            <view class="detailed-analysis-title">
-                <!-- 皮肤详细分析标题点 -->
-                <view class="detailed-analysis-title-dot"></view>
-                <!-- 皮肤详细分析标题文字 -->
-                <view class="detailed-analysis-title-text">你的黑头类型</view>
-            </view>
-            <!-- 皮肤详细分析内容 -->
-            <view class="detailed-analysis-content">
-                毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
-            </view>
-        </van-tab>
-    </van-tabs>
-</view>
+    </view>
+</block>
 <!-- 遮罩层 -->
 <van-overlay show="{{ show }}" bind:click="onClickHide" z-index="5">
     <!-- 提示图区域 -->

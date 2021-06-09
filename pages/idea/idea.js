@@ -1,3 +1,5 @@
+var app = getApp();
+
 // pages/idea/idea.js
 Page({
 
@@ -6,6 +8,13 @@ Page({
    */
   data: {
 
+  },
+
+  formSubmit(e) {
+    const data = e.detail.value;
+    app.appRequest('POST', 'suggest', data).then(res => {
+      console.log(res);
+    })
   },
 
   /**

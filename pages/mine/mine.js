@@ -1,4 +1,5 @@
-var app =  getApp();
+import Dialog from '@vant/weapp/dialog/dialog';
+var app = getApp();
 
 // pages/mine/mine.js
 Page({
@@ -35,10 +36,20 @@ Page({
 
   /* 跳转至 */
   toNewView(e) {
-    const { url } = e.currentTarget.dataset;
-    wx.navigateTo({
-      url
-    });
+    if (!wx.getStorageSync('avatarUrl')) {
+      Dialog.alert({
+        context: this,//代表的当前页面
+        selector: "#van-dialog",//选择器
+        title: '提示',
+        message: '不登录无法进行更多操作哦',
+        theme: 'round-button',
+      })
+    } else {
+      const { url } = e.currentTarget.dataset;
+      wx.navigateTo({
+        url
+      });
+    }
   },
 
   /**

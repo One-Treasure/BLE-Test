@@ -2,14 +2,14 @@
     <!-- 意见详情区域 -->
     <view class="idea">
         <!-- 意见输入框 -->
-        <textarea name="" class="idea-textarea" placeholder="请详细描述您遇到的问题或建议（建议15字以上）" placeholder-class="idea-place" maxlength="-1"></textarea>
+        <textarea name="content" class="idea-textarea" placeholder="请详细描述您遇到的问题或建议（建议15字以上）" placeholder-class="idea-place" maxlength="-1"></textarea>
     </view>
     <!-- 联系方式区域 -->
     <view class="tel">
         <!-- 联系方式标题 -->
         <text class="tel-label">联系方式</text>
         <!-- 联系方式输入框 -->
-        <input class="tel-inp" type="text" placeholder="请输入邮箱、QQ、手机号" placeholder-class="tel-place" />
+        <input name="contract" class="tel-inp" type="text" placeholder="请输入邮箱、QQ、手机号" placeholder-class="tel-place" />
     </view>
     <!-- 提交按钮 -->
     <button class="btn" style="width: 694rpx;" form-type="submit">提交</button>

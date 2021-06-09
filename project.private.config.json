@@ -35,6 +35,12 @@
           "pathName": "pages/calendar/calendar",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "拍照",
+          "pathName": "pages/camera/camera",
+          "query": "",
+          "scene": null
         }
       ]
     }

@@ -77,7 +77,7 @@ page {
 
 /* 未绑定显示文字样式 */
 .data-center-unbound {
-    font-size: 28rpx;
+    font-size: 32rpx;
     font-family: PingFang SC;
     font-weight: 500;
     line-height: 40rpx;

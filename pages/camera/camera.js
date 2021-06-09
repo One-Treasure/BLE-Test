@@ -6,8 +6,6 @@ Page({
   data: {
     devicePosition: 'front',
     authCamera: false,//用户是否运行授权拍照
-    windowHeight: wx.getStorageSync('windowHeight'),
-    windowWidth: wx.getStorageSync('windowWidth')
   },
 
   onLoad: function () {
@@ -17,6 +15,7 @@ Page({
       .exec(this.init.bind(this)) */
   },
 
+  /* 绘制拍照页面取相框 */
   init(res) {
     const selQuery = wx.createSelectorQuery();
     selQuery.select('#canvas')
@@ -74,14 +73,32 @@ Page({
       icon: 'none'
     })
   },
+
+  /* 切换摄像头为前置或后置 */
   reverseCamera: function () {
     this.setData({
       devicePosition: "back" === this.data.devicePosition ? "front" : "back"
     });
   },
+
+  /* 点击拍照 */
   takePhoto: function () {
     var that = this;
     var cameraContext = wx.createCameraContext();
+    var file = '/icon/1.jpg'
+    var pages = getCurrentPages();
+    var prevPage = pages[pages.length - 2]; //上一个页面
+    //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
+    prevPage.setData({
+      file: file
+    })
+    // that.afterRead(file);
+    /* wx.reLaunch({
+      url: '/pages/index/index?file=' + file
+    }); */
+    wx.navigateBack({
+      delta: 1
+    });
     cameraContext.takePhoto({
       quality: 'high',//拍摄质量(high:高质量 normal:普通质量 low:高质量)
       success: (res) => {
@@ -89,8 +106,17 @@ Page({
         //照片文件的临时文件
         var file = res.tempImagePath;
         // that.afterRead(file);
-        wx.reLaunch({
+        /* wx.reLaunch({
           url: '/pages/index/index?file=' + file
+        }); */
+        var pages = getCurrentPages();
+        var prevPage = pages[pages.length - 2]; //上一个页面
+        //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
+        prevPage.setData({
+          file: file
+        })
+        wx.navigateBack({
+          delta: 1
         });
       },
       fail: (res) => {
@@ -135,7 +161,7 @@ Page({
     const base64 = 'data:image/jpeg;base64,' + wx.getFileSystemManager().readFileSync(file, "base64");
     // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
     var reqTask = wx.request({
-      url: 'http://192.168.0.107:8083/api/analyze',
+      url: 'http://192.168.0.2:8083/api/analyze',
       data: { file: base64 },
       header: { 'content-type': 'application/json' },
       method: 'POST',
@@ -143,7 +169,6 @@ Page({
       responseType: 'text',
       success: (res) => {
         let { data } = res.data;
-        console.log(data);
         that.setData({
           imgurl: data.path,
           hidden_wrapper: false
@@ -178,6 +203,18 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    /* 获取页面高度，转为rpx，用于设置view的高度，解决底部有留白的问题 */
+    wx.getSystemInfo({
+      success: (res) => {
+        let windowHeight = (res.windowHeight * (750 / res.windowWidth))
+        this.setData({
+          windowHeight
+        })
+      },
+      fail: () => { },
+      complete: () => { }
+    });
+    /* 获取用户相机授权情况，并根据授权情况引导用户进行授权 */
     wx.getSetting({
       success: (res) => {
         if (res.authSetting["scope.camera"]) {

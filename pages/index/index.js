@@ -15,8 +15,9 @@ Page({
     hidden_wrapper: true,
     tempdata: { icon: '/icon/temp_m.png', bgcolor: 'linear-gradient(180deg, #FFDC9F 0%, #F9BE56 100%);' },
     humdata: { icon: '/icon/humidity_m.png' },
-    pm25Cdata: { icon: '/icon/pm2.5_m.png' },
-    overflow: 'overflow: hidden;'
+    pm25cdata: { icon: '/icon/pm2.5_m.png' },
+    overflow: 'overflow: hidden;',
+    bool: true
   },
 
   /* 获取用户信息（头像、昵称等） */
@@ -121,7 +122,7 @@ Page({
   },
 
   /* 跳转至拍照页面 */
-  toCamera(){
+  toCamera() {
     wx.navigateTo({
       url: '/pages/camera/camera'
     });
@@ -143,17 +144,20 @@ Page({
 
   /* 照片上传，测试使用 */
   afterRead(event) {
-    const { file } = event;
     console.log(event);
+    const file = event;
+    if (!file) {
+      return;
+    }
     var that = this;
-    app.slideupshow(this, 'slide_up1', 0, 1)
+    app.slideupshow(this, 'slide_up1', 0, 0)
     this.setData({
       overflow: 'overflow: hidden;'
     })
     const base64 = 'data:image/jpeg;base64,' + wx.getFileSystemManager().readFileSync(file, "base64");
     // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
     var reqTask = wx.request({
-      url: 'http://192.168.0.107:8083/api/analyze',
+      url: 'http://192.168.0.2:8083/api/analyze',
       data: { file: base64 },
       header: { 'content-type': 'application/json' },
       method: 'POST',
@@ -161,20 +165,38 @@ Page({
       responseType: 'text',
       success: (res) => {
         const { data } = res.data;
-        that.setData({
-          imgurl: data.path,
-          hidden_wrapper: false,
-          top: -800
-        })
-        setTimeout(() => {
-          this.setData({
-            hidden_wrapper: true,
-            overflow: ''
+        console.log(res);
+        if (res.statusCode === 200) {
+          that.setData({
+            imgurl: data.path,
+            hidden_wrapper: false,
           })
-          app.slideupshow(this, 'slide_up1', -800, 1)
-        }, 5000)
+          setTimeout(() => {
+            this.setData({
+              hidden_wrapper: true,
+              overflow: ''
+            })
+            app.slideupshow(this, 'slide_up1', -80, 1)
+          }, 5000)
+        } else {
+          Dialog.alert({
+            context: this,//代表的当前页面
+            selector: "#van-dialog",//选择器
+            title: '温馨提示',
+            message: data.errors,
+            theme: 'round-button',
+          })
+        }
       },
-      fail: () => { },
+      fail: (e) => {
+        Dialog.alert({
+          context: this,//代表的当前页面
+          selector: "#van-dialog",//选择器
+          title: '温馨提示',
+          message: '网络错误',
+          theme: 'round-button',
+        })
+      },
       complete: () => { }
     });
   },
@@ -186,11 +208,22 @@ Page({
     })
   },
 
+  /* 点击隐藏或显示皮肤瑕疵标签 */
+  bindAnim() {
+    let { bool } = this.data;
+    if (bool) {
+      app.slideupshow(this, 'slide_up1', 0, 0)
+    } else {
+      app.slideupshow(this, 'slide_up1', -80, 1)
+    }
+    this.setData({
+      bool: !bool
+    })
+  },
+
   //options(Object)
   onLoad: function (options) {
-    console.log(options);
     this.getLocation(wx.getStorageSync('weather'));
-    this.afterRead(options);
     if (app.globalData.hashLogin) { // 登录已完成
       console.log('app.globalData.hasLogin1', app.globalData);
       /* app.appRequest('GET', 'analyze', {}).then((res) => {
@@ -212,10 +245,20 @@ Page({
   onReady: function () {
     // 首次进入，利用隐藏的judgeCanvas判断当前导出图像是否颠倒
     helper.checkOrientation('judgeCanvas');
-    this.selectComponent('#tabs').resize();
+    // 外层元素大小或组件显示状态变化时，可以调用此方法来触发重绘
+    // this.selectComponent('#tabs').resize();
+    console.log(2);
   },
   onShow: function () {
     console.log('app.globalData.hasLogin3', app.globalData);
+    console.log('file', this.data.file);
+    // 调用监听器，监听需要分析的图片的数据变化，解决从其他页面切换回首页重复分析图片的bug，只在用户重新拍照后才进行分析
+    app.watch1(this, {
+      file: function (newVal) {
+        console.log('newVal', newVal)
+        this.afterRead(newVal);
+      }
+    })
     const that = this;
     let avatarUrl = '';
     let nickName = '';
@@ -254,12 +297,11 @@ Page({
   getWeather(weather) {
     var that = this;
     app.appRequest('POST', 'getWeather', weather).then((res) => {
-      console.log(res);
       const { data } = res.data;
-      const { temp, uvi, humidity } = data.condition;
-      const { pm25C } = data.aqi;
+      console.log(data);
+      const { temp, uvi, humidity, pm25c } = data;
       Notify({ type: 'success', message: res.data.message });
-      let { tempdata, humdata, pm25Cdata } = that.data;
+      let { tempdata, humdata, pm25cdata } = that.data;
       switch (true) {
         case temp > 25:
           tempdata.icon = '/icon/temp_h.png';
@@ -286,14 +328,14 @@ Page({
           break;
       }
       switch (true) {
-        case pm25C < 35:
-          pm25Cdata.icon = '/icon/pm2.5_l.png';
+        case pm25c < 35:
+          pm25cdata.icon = '/icon/pm2.5_l.png';
           break;
-        case pm25C >= 35 && pm25C < 75:
-          pm25Cdata.icon = '/icon/pm2.5_m.png';
+        case pm25c >= 35 && pm25c < 75:
+          pm25cdata.icon = '/icon/pm2.5_m.png';
           break;
         default:
-          pm25Cdata.icon = '/icon/pm2.5_h.png';
+          pm25cdata.icon = '/icon/pm2.5_h.png';
           break;
       }
       that.setData({
@@ -302,7 +344,7 @@ Page({
         temp, // 温度 单位摄氏度
         uvi, // 紫外线强度
         humidity, // 湿度 单位%
-        pm25C // pm2.5浓度 单位μg/m³（微克每立方米）
+        pm25c // pm2.5浓度 单位μg/m³（微克每立方米）
       })
     })
   },

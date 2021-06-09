@@ -194,55 +194,52 @@ swiper {
     line-height: 28rpx;
 }
 
-/* 皮肤详细分析模块样式 */
-.detailed-analysis {
-    width: 694rpx;
+/* 图表分析区域样式 */
+.chart {
+    width: 100%;
+    height: 1420rpx;
     background: #FFFFFF;
     opacity: 1;
-    border-radius: 30rpx;
-    margin-left: 28rpx;
-    padding-top: 20rpx;
 }
 
-/* 皮肤详细分析标题区域样式 */
-.detailed-analysis-title {
-    height: 40rpx;
+/* 图表区域标题样式 */
+.chart-title {
+    width: 140rpx;
+    height: 44rpx;
+    opacity: 1;
     display: flex;
     align-items: center;
+    justify-content: center;
+    padding-top: 16rpx;
+    padding-left: 28rpx;
 }
 
-/* 皮肤详细分析标题点样式 */
-.detailed-analysis-title-dot {
-    width: 14rpx;
-    height: 14rpx;
-    background: #FF75A0;
-    border-radius: 50%;
-    opacity: 1;
-    margin-top: 40rpx;
-    margin-left: 30rpx;
-}
-
-/* 皮肤详细分析标题文字样式 */
-.detailed-analysis-title-text {
-    width: 168rpx;
-    height: 40rpx;
-    font-size: 24rpx;
+/* 图表区域标题文字样式 */
+.chart-title-text {
+    font-size: 32rpx;
     font-family: PingFang SC;
-    font-weight: 400;
-    line-height: 40rpx;
+    font-weight: 500;
+    line-height: 44rpx;
     color: #333333;
-    opacity: 1;
-    margin-top: 42rpx;
-    margin-left: 8rpx;
 }
 
-/* 皮肤详细分析内容样式 */
-.detailed-analysis-content {
-    font-size: 24rpx;
-    font-family: PingFang SC;
-    font-weight: 400;
-    line-height: 34rpx;
-    color: #777777;
+/* 图表区域标题右边框样式 */
+.chart-title-border {
+    width: 8rpx;
+    height: 32rpx;
+    background: #FF75A0;
     opacity: 1;
-    margin: 30rpx 52rpx;
+    border-radius: 4rpx;
+    margin-left: 4rpx;
+}
+
+/* 折线图区域样式 */
+.chart-line {
+    width: 694rpx;
+    height: 490rpx;
+    background: rgba(255, 117, 160, 0.11);
+    opacity: 1;
+    border-radius: 15px;
+    margin-top: 32rpx;
+    margin-left: 28rpx;
 }

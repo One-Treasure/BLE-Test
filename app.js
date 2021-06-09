@@ -1,7 +1,7 @@
 // app.js
 App({
   //渐入，渐出实现 
-  show : function(that,param,opacity){
+  show: function (that, param, opacity) {
     var animation = wx.createAnimation({
       //持续时间800ms
       duration: 800,
@@ -18,7 +18,7 @@ App({
   },
 
   //滑动渐入渐出
-  slideupshow:function(that,param,px,opacity){
+  slideupshow: function (that, param, px, opacity) {
     var animation = wx.createAnimation({
       duration: 800,
       timingFunction: 'ease',
@@ -26,7 +26,6 @@ App({
     animation.translateY(px).opacity(opacity).step()
     //将param转换为key
     var json = '{"' + param + '":""}'
-    console.log(json);
     json = JSON.parse(json);
     json[param] = animation.export()
     //设置动画
@@ -48,7 +47,7 @@ App({
     that.setData(json)
   },
   name: "测试账号",
-  siteUrl: "http://192.168.0.107:8083/api/wechat/", // 必填: api地址，结尾要带/
+  siteUrl: "http://192.168.0.2:8083/api/wechat/", // 必填: api地址，结尾要带/
   act: "",
   groupIV: "",
   groupData: "",
@@ -84,6 +83,30 @@ App({
           this.globalData.hashLogin = false;
         });
     }
+  },
+
+  // 设置监听器
+  watch1: function (ctx, obj) {
+    Object.keys(obj).forEach(key => {
+      this.observer(ctx.data, key, ctx.data[key], function (value) {
+        obj[key].call(ctx, value)
+      })
+    })
+  },
+  // 监听属性，并执行监听函数
+  observer: function (data, key, val, fn) {
+    Object.defineProperty(data, key, {
+      configurable: true,
+      enumerable: true,
+      get: function () {
+        return val
+      },
+      set: function (newVal) {
+        if (newVal === val) return
+        fn && fn(newVal)
+        val = newVal
+      },
+    })
   },
 
   // 监听hasLogin属性
@@ -162,7 +185,6 @@ App({
               if (res.statusCode === 200) {
                 wx.hideLoading();
                 const data = res.data.data;
-                console.log(data);
                 wx.setStorageSync('session', data.sessionid);
                 if (data.userInfo !== null) {
                   wx.setStorageSync('avatarUrl', data.userInfo.avatar);
