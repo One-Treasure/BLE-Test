@@ -603,6 +603,7 @@ page {
 /* 皮肤详细分析模块样式 */
 .detailed-analysis {
     width: 694rpx;
+    min-height: 500rpx;
     background: #FFFFFF;
     opacity: 1;
     border-bottom-left-radius: 30rpx;

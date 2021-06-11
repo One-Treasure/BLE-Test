@@ -2,6 +2,7 @@
   "pages": [
     "pages/chart/chart",
     "pages/index/index",
+    "pages/number/number",
     "pages/camera/camera",
     "pages/calendar/calendar",
     "pages/mine/mine",

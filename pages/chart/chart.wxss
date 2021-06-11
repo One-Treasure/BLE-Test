@@ -2,3 +2,26 @@
     width: 100%;
     height: 500rpx;
 }
+
+.canvas {
+    width: 694rpx;
+    height: 490rpx;
+    margin: 0 auto;
+    border: 1px solid #dde1e3;
+    box-sizing: border-box;
+    background: rgba(255, 117, 160, 0.11);
+    opacity: 1;
+    border-radius: 15px;
+    margin-top: 32rpx;
+    margin-left: 28rpx;
+}
+
+.canvasStyle {
+    width: 100%;
+    height: 100%;
+}
+
+#column-dom{
+    width: 100%;
+    height: 100%;
+}

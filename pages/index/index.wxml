@@ -174,7 +174,7 @@
         <!-- 皮肤分析总分区域 -->
         <view class="analysis-score" bind:tap="toCamera">
             <!-- 皮肤分析总分数字区域 -->
-            <view class="analysis-score-num">95</view>
+            <view class="analysis-score-num">{{library.score?library.score:'?'}}</view>
             <!-- 皮肤分析总分单位区域 -->
             <view class="analysis-score-unit">分</view>
         </view>
@@ -289,11 +289,11 @@
                     <!-- 皮肤详细分析标题点 -->
                     <view class="detailed-analysis-title-dot"></view>
                     <!-- 皮肤详细分析标题文字 -->
-                    <view class="detailed-analysis-title-text">你的黑头类型</view>
+                    <view class="detailed-analysis-title-text">你的肤色</view>
                 </view>
                 <!-- 皮肤详细分析内容 -->
                 <view class="detailed-analysis-content">
-                    毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
+                    {{library.color.desc}}
                 </view>
             </van-tab>
             <van-tab title="光滑度">
@@ -302,11 +302,11 @@
                     <!-- 皮肤详细分析标题点 -->
                     <view class="detailed-analysis-title-dot"></view>
                     <!-- 皮肤详细分析标题文字 -->
-                    <view class="detailed-analysis-title-text">你的黑头类型</view>
+                    <view class="detailed-analysis-title-text">你的皮肤光滑度</view>
                 </view>
                 <!-- 皮肤详细分析内容 -->
                 <view class="detailed-analysis-content">
-                    毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
+                    {{library.smooth.desc}}
                 </view>
             </van-tab>
             <van-tab title="色斑">
@@ -315,11 +315,11 @@
                     <!-- 皮肤详细分析标题点 -->
                     <view class="detailed-analysis-title-dot"></view>
                     <!-- 皮肤详细分析标题文字 -->
-                    <view class="detailed-analysis-title-text">你的黑头类型</view>
+                    <view class="detailed-analysis-title-text">你的色斑</view>
                 </view>
                 <!-- 皮肤详细分析内容 -->
                 <view class="detailed-analysis-content">
-                    毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
+                    {{library.speckle.desc}}
                 </view>
             </van-tab>
             <van-tab title="黑头">
@@ -328,11 +328,11 @@
                     <!-- 皮肤详细分析标题点 -->
                     <view class="detailed-analysis-title-dot"></view>
                     <!-- 皮肤详细分析标题文字 -->
-                    <view class="detailed-analysis-title-text">你的黑头类型</view>
+                    <view class="detailed-analysis-title-text">你的黑头</view>
                 </view>
                 <!-- 皮肤详细分析内容 -->
                 <view class="detailed-analysis-content">
-                    毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
+                    {{library.blackhead.desc}}
                 </view>
             </van-tab>
             <van-tab title="眼袋">
@@ -341,11 +341,11 @@
                     <!-- 皮肤详细分析标题点 -->
                     <view class="detailed-analysis-title-dot"></view>
                     <!-- 皮肤详细分析标题文字 -->
-                    <view class="detailed-analysis-title-text">你的黑头类型</view>
+                    <view class="detailed-analysis-title-text">你的眼袋</view>
                 </view>
                 <!-- 皮肤详细分析内容 -->
                 <view class="detailed-analysis-content">
-                    毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
+                    {{library.color.desc}}
                 </view>
             </van-tab>
             <van-tab title="黑眼圈">
@@ -354,11 +354,11 @@
                     <!-- 皮肤详细分析标题点 -->
                     <view class="detailed-analysis-title-dot"></view>
                     <!-- 皮肤详细分析标题文字 -->
-                    <view class="detailed-analysis-title-text">你的黑头类型</view>
+                    <view class="detailed-analysis-title-text">你的黑眼圈</view>
                 </view>
                 <!-- 皮肤详细分析内容 -->
                 <view class="detailed-analysis-content">
-                    毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
+                    {{library.color.desc}}
                 </view>
             </van-tab>
             <van-tab title="痘痘/痘印">
@@ -367,11 +367,11 @@
                     <!-- 皮肤详细分析标题点 -->
                     <view class="detailed-analysis-title-dot"></view>
                     <!-- 皮肤详细分析标题文字 -->
-                    <view class="detailed-analysis-title-text">你的黑头类型</view>
+                    <view class="detailed-analysis-title-text">你的痘痘和痘印</view>
                 </view>
                 <!-- 皮肤详细分析内容 -->
                 <view class="detailed-analysis-content">
-                    毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
+                    {{library.acne.desc}}
                 </view>
             </van-tab>
             <van-tab title="毛孔">
@@ -380,11 +380,11 @@
                     <!-- 皮肤详细分析标题点 -->
                     <view class="detailed-analysis-title-dot"></view>
                     <!-- 皮肤详细分析标题文字 -->
-                    <view class="detailed-analysis-title-text">你的黑头类型</view>
+                    <view class="detailed-analysis-title-text">你的毛孔</view>
                 </view>
                 <!-- 皮肤详细分析内容 -->
                 <view class="detailed-analysis-content">
-                    毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
+                    {{library.pore.desc}}
                 </view>
             </van-tab>
             <van-tab title="皱纹">
@@ -393,11 +393,11 @@
                     <!-- 皮肤详细分析标题点 -->
                     <view class="detailed-analysis-title-dot"></view>
                     <!-- 皮肤详细分析标题文字 -->
-                    <view class="detailed-analysis-title-text">你的黑头类型</view>
+                    <view class="detailed-analysis-title-text">你的皱纹</view>
                 </view>
                 <!-- 皮肤详细分析内容 -->
                 <view class="detailed-analysis-content">
-                    毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
+                    {{library.wrinkle.desc}}
                 </view>
             </van-tab>
             <van-tab title="痣">
@@ -406,11 +406,11 @@
                     <!-- 皮肤详细分析标题点 -->
                     <view class="detailed-analysis-title-dot"></view>
                     <!-- 皮肤详细分析标题文字 -->
-                    <view class="detailed-analysis-title-text">你的黑头类型</view>
+                    <view class="detailed-analysis-title-text">你的痣</view>
                 </view>
                 <!-- 皮肤详细分析内容 -->
                 <view class="detailed-analysis-content">
-                    毳毛毛孔中的黑头（毳 cuì 〔毳毛〕医学上指人 体表面除头发、阴毛、腋毛外，其他部位生的细 毛。俗称“寒毛” ）毳毛毛孔中正常是会含有的一 根毳毛，因为某些刺激或其他原因导致产生了多 根毳毛出现在同一毛孔中，这类黑头更常见出现在 鼻子两侧的脸颊部位，有的朋友问过我的“我的黑头 上/毛孔上还长了小黑毛”也属于这种肌肤问题的范 畴，这种黑头呢比较难用粉刺针排出。
+                    {{library.color.desc}}
                 </view>
             </van-tab>
         </van-tabs>

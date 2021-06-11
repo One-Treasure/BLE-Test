@@ -165,7 +165,6 @@ Page({
       responseType: 'text',
       success: (res) => {
         const { data } = res.data;
-        console.log(res);
         if (res.statusCode === 200) {
           that.setData({
             imgurl: data.path,
@@ -174,7 +173,8 @@ Page({
           setTimeout(() => {
             this.setData({
               hidden_wrapper: true,
-              overflow: ''
+              overflow: '',
+              library: data.library
             })
             app.slideupshow(this, 'slide_up1', -80, 1)
           }, 5000)
@@ -183,7 +183,7 @@ Page({
             context: this,//代表的当前页面
             selector: "#van-dialog",//选择器
             title: '温馨提示',
-            message: data.errors,
+            message: res.data.errors,
             theme: 'round-button',
           })
         }
