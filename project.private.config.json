@@ -41,6 +41,12 @@
           "pathName": "pages/camera/camera",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "趋势图",
+          "pathName": "pages/chart/chart",
+          "query": "",
+          "scene": null
         }
       ]
     }

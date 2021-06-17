@@ -2,7 +2,8 @@
   "usingComponents": {
     "van-tab": "@vant/weapp/tab/index",
     "van-tabs": "@vant/weapp/tabs/index",
-    "calendar": "/components/calendar/calendar"
+    "calendar": "/components/calendar/calendar",
+    "ff-canvas": "@antv/f2-canvas"
   },
   "navigationBarTitleText": "历史记录"
 }

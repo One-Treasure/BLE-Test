@@ -1,3 +1,4 @@
+var util = require('../../utils/util.js');
 // pages/web/index.js
 Page({
   /**
@@ -82,40 +83,9 @@ Page({
   },
 
   /* 点击拍照 */
-  takePhoto: function () {
-    var that = this;
-    var cameraContext = wx.createCameraContext();
-    /* var file = '/icon/1.jpg'
-    var pages = getCurrentPages();
-    var prevPage = pages[pages.length - 2]; //上一个页面
-    //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
-    prevPage.setData({
-      file: file
-    })
-    wx.navigateBack({
-      delta: 1
-    }); */
-    cameraContext.takePhoto({
-      quality: 'high',//拍摄质量(high:高质量 normal:普通质量 low:高质量)
-      success: (res) => {
-        //拍摄成功
-        //照片文件的临时文件
-        var file = res.tempImagePath;
-        var pages = getCurrentPages();
-        var prevPage = pages[pages.length - 2]; //上一个页面
-        //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
-        prevPage.setData({
-          file: file
-        })
-        wx.navigateBack({
-          delta: 1
-        });
-      },
-      fail: (res) => {
-        //拍摄失败
-      },
-    })
-  },
+  takePhoto: util.throttle(function () {
+    console.log(1);
+  }, 10000),
 
   // 关闭相机页面
   back() {

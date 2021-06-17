@@ -438,7 +438,7 @@
         </view>
     </view>
 </block>
-<!-- 遮罩层 -->
+<!-- 连接状态遮罩层 -->
 <van-overlay show="{{ show }}" bind:click="onClickHide" z-index="5">
     <!-- 提示图区域 -->
     <view class="tips">
@@ -449,6 +449,25 @@
             <!-- 提示图区域关闭按钮视图icon -->
             <image class="tips-back-img" src="/icon/back.png" />
         </view>
+    </view>
+</van-overlay>
+<!-- 连接引导遮罩层 -->
+<van-overlay show="{{ leadshow }}" bind:click="onClickHide" z-index="5">
+    <!-- 引导区域 -->
+    <view class="lead">
+        <!-- 标题 -->
+        <view class="lead-title">我的设备</view>
+        <!-- 提示 -->
+        <view class="lead-hint">
+            <!-- 提示文字 -->
+            <view class="lead-hint-text">{{leadTitle}}</view>
+            <!-- 提示图片 -->
+            <image wx:if="{{bluetooth!==''}}" class="lead-hint-icon" src="{{bluetooth}}" />
+        </view>
+        <!-- 技巧 -->
+        <view class="lead-tips">{{leadTips}}</view>
+        <!-- 按钮 -->
+        <van-button color="#FF75A0" round custom-class="lead-btn" loading="{{loading}}" loading-type="spinner" bind:click="next">下一步</van-button>
     </view>
 </van-overlay>
 <!-- 弹出框 -->

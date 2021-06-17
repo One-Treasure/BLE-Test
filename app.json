@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/chart/chart",
     "pages/index/index",
+    "pages/chart/chart",
     "pages/number/number",
     "pages/camera/camera",
     "pages/calendar/calendar",

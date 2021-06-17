@@ -1,11 +1,11 @@
 <!-- 日历组件显示区域 -->
 <view class="calendar">
-    <!-- 极点日历插件，源码https://github.com/czcaiwj/calendar/ -->
-    <calendar weeks-type="cn" days-color="{{dayStyle}}" binddayClick="dayClick" cell-size="25" num="{{num}}" />
+  <!-- 极点日历插件，源码https://github.com/czcaiwj/calendar/ -->
+  <calendar weeks-type="cn" days-color="{{dayStyle}}" binddayClick="dayClick" cell-size="25" num="{{num}}" />
 </view>
 <!-- 使用轮播图展示皮肤分析历史记录，使用scroll-view无法实现指定某个卡片样式改变 -->
 <swiper indicator-dots="{{indicatorDots}}" autoplay="{{false}}" circular="{{false}}" current="{{cur}}" display-multiple-items="3" skip-hidden-item-layout="true" previous-margin="-18rpx" next-margin="-18rpx" bindchange="swiperChange">
-<swiper-item ></swiper-item>
+  <swiper-item></swiper-item>
   <block wx:for="{{swiperList}}" wx:key="item">
     <swiper-item item-id="{{'item'+index}}">
       <!-- <view class="{{ index == activeIndex ? 'active item-block' : 'item-block'}}">
@@ -19,33 +19,52 @@
           <image src="/icon/1.jpg" mode="aspectFill" style="{{ index === activeIndex ? 'width: 176rpx;height: 176rpx;' : ''}}" />
         </view>
         <!-- 皮肤分析用户历史分析记录单个区域日期 -->
-        <view class="history-item-date {{ index === activeIndex ? 'date-active' : ''}}">2021.5.21</view>
+        <view class="history-item-date {{ index === activeIndex ? 'date-active' : ''}}">
+          2021.5.21
+        </view>
         <!-- 皮肤分析用户历史分析记录单个区域状态 -->
         <view class="history-item-state {{ index === activeIndex ? 'state-active' : ''}}">
           <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
-          <text class="history-item-state-title {{ index === activeIndex ? 'tiltle-active' : ''}}">肌肤状态：</text>
+          <view class="history-item-state-title {{ index === activeIndex ? 'tiltle-active' : ''}}">
+            肌肤状态：
+          </view>
           <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
-          <text class="history-item-state-num {{ index === activeIndex ? 'num-active' : ''}}">92</text>
+          <view class="history-item-state-num {{ index === activeIndex ? 'num-active' : ''}}">
+            92
+          </view>
           <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
-          <text class="history-item-state-unit {{ index === activeIndex ? 'unit-active' : ''}}">分</text>
+          <view class="history-item-state-unit {{ index === activeIndex ? 'unit-active' : ''}}">
+            分
+          </view>
         </view>
       </view>
     </swiper-item>
   </block>
-  <swiper-item ></swiper-item>
+  <swiper-item></swiper-item>
 </swiper>
 <!-- 图表分析区域 -->
 <view class="chart">
-    <!-- 图表区域标题 -->
-    <view class="chart-title">
-        <!-- 图表区域标题文字 -->
-        <view class="chart-title-text">肤质变化</view>
-        <!-- 图表区域标题右边框 -->
-        <view class="chart-title-border"></view>
+  <!-- 图表区域标题 -->
+  <view class="chart-title">
+    <!-- 图表区域标题文字 -->
+    <view class="chart-title-text">肤质变化</view>
+    <!-- 图表区域标题右边框 -->
+    <view class="chart-title-border"></view>
+  </view>
+  <!-- 折线图区域 -->
+  <view class="chart-line">
+    <!-- 折线图时间选择区域 -->
+    <view class="chart-line-date">
+      <!-- 一周 -->
+      <view class="chart-line-date-time {{curIndex === index?'active':''}}" wx:for="{{sel_time}}" wx:key="index" bindtap='changeTab' data-index='{{index}}'>
+        <!-- 文字 -->
+        <view class="chart-line-date-time-text">{{item}}</view>
+        <!-- 选中时的下边框 -->
+      </view>
+      <view class="chart-line-date-time-border" style="left: {{left}}px"></view>
     </view>
-    <!-- 折线图区域 -->
-    <view class="chart-line">
-        <!-- 标签栏区域 -->
-        <view class="chart-line-tabs"></view>
-    </view>
+    <ff-canvas id="column-dom" canvas-id="column" opts="{{ opts }}"></ff-canvas>
+  </view>
+  <!-- 环形图区域 -->
+  <view class="chart-circle"></view>
 </view>

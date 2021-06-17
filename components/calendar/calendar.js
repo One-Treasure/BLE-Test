@@ -1,3 +1,5 @@
+var app = getApp();
+
 // plugin/components/calendar/calendar.js
 /**
  * 属性：
@@ -439,8 +441,7 @@ Component({
          * @param int year 年份
          * @param int month 月份，取值1~12
          */
-        _setCalendarData: function (year, month) {
-            console.log(this.properties.num);
+        _setCalendarData: function (year, month, num) {
             const empty_days_count = new Date(year, month - 1, 1).getDay(); // 本月第一天是周几，0是星期日，6是星期六
             let empty_days = new Array;
             const prev_month = month - 1 == 0 ? 12 : month - 1;             // 上个月的月份数
@@ -500,11 +501,18 @@ Component({
             /**
              * 给本月的突出日期增加颜色
              */
-            temp.forEach(v => {
-                if (v.month === 5 && v.day == 15) {
-                    v.color = '#FF75A0'
-                }
+            var num = this.data.num;
+            num.forEach(v => {
+                temp.forEach(y => {
+                    if (y.day.toString().length === 1) {
+                        y.day = '0' + y.day
+                    }
+                    if (v === y.year + '-0' + y.month + '-' + y.day) {
+                        y.color = '#FF75A0'
+                    }
+                })
             })
+
             const days_range = temp;                                   // 本月
             let days = empty_days.concat(days_range, empty_days_last); // 上个月 + 本月 + 下个月            
             // 如果要显示前后月份的日期
@@ -720,11 +728,22 @@ Component({
     },
 
     attached: function () {
-        const year = this.data.year;
-        const month = this.data.month;
-        this.setData({
-            days_array: this._setCalendarData(year, month)
-        });
+        var that = this;
+        app.appRequest('POST', 'analyze/getDate').then(res => {
+            if (res.statusCode === 200) {
+                const num = res.data.data;
+                console.log(res);
+                that.setData({
+                    num
+                })
+            }
+        }).then(() => {
+            const year = this.data.year;
+            const month = this.data.month;
+            this.setData({
+                days_array: this._setCalendarData(year, month)
+            });
+        })
     },
 
     ready: function () {

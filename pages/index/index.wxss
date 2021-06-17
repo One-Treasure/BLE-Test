@@ -743,3 +743,67 @@ page {
     width: 78rpx;
     height: 78rpx;
 }
+
+/* 引导区域 */
+.lead {
+    width: 680rpx;
+    height: 646rpx;
+    background: #FFFFFF;
+    opacity: 1;
+    border-radius: 12rpx;
+    margin-top: 198rpx;
+    margin-left: 34rpx;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* 标题 */
+.lead-title {
+    font-size: 44rpx;
+    font-family: PingFang SC;
+    font-weight: bold;
+    line-height: 60rpx;
+    color: #06121E;
+    opacity: 1;
+    margin-top: 8rpx;
+}
+
+/* 提示 */
+.lead-hint {
+    font-size: 32rpx;
+    font-family: PingFang SC;
+    font-weight: 500;
+    line-height: 44rpx;
+    color: #333333;
+    opacity: 1;
+    margin-top: 90rpx;
+    display: flex;
+}
+
+/* 提示图片 */
+.lead-hint-icon{
+    width: 40rpx;
+    height: 44rpx;
+    margin-left: 8rpx;
+}
+
+/* 技巧 */
+.lead-tips {
+    font-size: 28rpx;
+    font-family: PingFang SC;
+    font-weight: 500;
+    line-height: 40rpx;
+    color: #777777;
+    opacity: 1;
+    margin-top: 62rpx;
+}
+
+/* 按钮 */
+.lead-btn {
+    width: 600rpx;
+    height: 88rpx;
+    opacity: 1;
+    color: #FFFFFF;
+    margin-top: 188rpx;
+}

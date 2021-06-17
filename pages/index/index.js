@@ -17,7 +17,11 @@ Page({
     humdata: { icon: '/icon/humidity_m.png' },
     pm25cdata: { icon: '/icon/pm2.5_m.png' },
     overflow: 'overflow: hidden;',
-    bool: true
+    bool: true,
+    leadshow: true,
+    bluetooth: '',
+    leadTitle: '打开手机蓝牙',
+    leadTips: '长按蜜镜开关开启配对模式'
   },
 
   /* 获取用户信息（头像、昵称等） */
@@ -26,7 +30,7 @@ Page({
       desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
       success: (res) => {
         const userinfo = res.userInfo;
-        app.appRequest('POST', 'setUserInfo', userinfo).then(res => {
+        app.appRequest('POST', 'wechat/setUserInfo', userinfo).then(res => {
           const data = res.data.data;
           wx.setStorage({
             key: 'avatarUrl',
@@ -36,24 +40,27 @@ Page({
             key: 'nickName',
             data: data.nickname
           });
-          /* wx.showToast({
-            title: '绑定成功',
-            icon: 'success',
-            duration: 1500,
-            mask: false
-          }); */
           Notify({ type: 'success', message: res.data.message });
           this.setData({
             avatarUrl: data.avatar,
             nickName: data.nickname
           })
         }, err => {
-          /* wx.showToast({
-            title: '绑定失败，请重试',
-            duration: 1500,
-            mask: false
-          }); */
-          Notify({ type: 'error', message: '绑定失败，请重试' });
+          Dialog.alert({
+            context: this,//代表的当前页面
+            selector: "#van-dialog",//选择器
+            title: '温馨提示',
+            message: '出现了点错误，请稍后重试吧',
+            theme: 'round-button',
+          })
+        }).catch(error => {
+          Dialog.alert({
+            context: this,//代表的当前页面
+            selector: "#van-dialog",//选择器
+            title: '温馨提示',
+            message: '出现了点错误，请稍后重试吧',
+            theme: 'round-button',
+          })
         })
       },
       fail: (res) => {
@@ -255,7 +262,6 @@ Page({
     // 调用监听器，监听需要分析的图片的数据变化，解决从其他页面切换回首页重复分析图片的bug，只在用户重新拍照后才进行分析
     app.watch1(this, {
       file: function (newVal) {
-        console.log('newVal', newVal)
         this.afterRead(newVal);
       }
     })
@@ -296,9 +302,8 @@ Page({
   /* 获取天气状况的方法 */
   getWeather(weather) {
     var that = this;
-    app.appRequest('POST', 'getWeather', weather).then((res) => {
+    app.appRequest('POST', 'wechat/getWeather', weather).then((res) => {
       const { data } = res.data;
-      console.log(data);
       const { temp, uvi, humidity, pm25c } = data;
       Notify({ type: 'success', message: res.data.message });
       let { tempdata, humdata, pm25cdata } = that.data;
@@ -346,7 +351,44 @@ Page({
         humidity, // 湿度 单位%
         pm25c // pm2.5浓度 单位μg/m³（微克每立方米）
       })
+    }, err => {
+      Dialog.alert({
+        context: this,//代表的当前页面
+        selector: "#van-dialog",//选择器
+        title: '温馨提示',
+        message: '出现了点错误，请稍后重试吧',
+        theme: 'round-button',
+      })
+    }).catch(error => {
+      Dialog.alert({
+        context: this,//代表的当前页面
+        selector: "#van-dialog",//选择器
+        title: '温馨提示',
+        message: '出现了点错误，请稍后重试吧',
+        theme: 'round-button',
+      })
     })
+  },
+
+  /* 引导设置点击事件 */
+  next() {
+    let { leadTitle, leadTips, bluetooth } = this.data;
+    if (leadTitle === '打开手机蓝牙') {
+      leadTitle = '配对成功';
+      leadTips = '连接WiFi获取肌肤秘方';
+      bluetooth = '/icon/bluetooth_success.png';
+    }
+    this.setData({
+      loading: true
+    })
+    setTimeout(() => {
+      this.setData({
+        leadTitle,
+        leadTips,
+        bluetooth,
+        loading: false
+      })
+    }, 500)
   },
 
   onHide: function () {

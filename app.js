@@ -47,7 +47,7 @@ App({
     that.setData(json)
   },
   name: "测试账号",
-  siteUrl: "http://192.168.0.2:8083/api/wechat/", // 必填: api地址，结尾要带/
+  siteUrl: "http://192.168.0.2:8083/api/", // 必填: api地址，结尾要带/
   act: "",
   groupIV: "",
   groupData: "",
@@ -174,7 +174,7 @@ App({
             complete: () => { }
           });
           wx.request({
-            url: `${this.siteUrl}getSessionId`,
+            url: `${this.siteUrl}wechat/getSessionId`,
             data: { code },
             header: { 'content-type': 'application/json' },
             method: 'POST',

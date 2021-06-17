@@ -1,4 +1,5 @@
 import Dialog from '@vant/weapp/dialog/dialog';
+import Notify from '@vant/weapp/notify/notify';
 var app = getApp();
 
 // pages/mine/mine.js
@@ -19,16 +20,47 @@ Page({
     wx.getUserProfile({
       desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
       success: (res) => {
-        console.log(res);
-        // res.userInfo.openId = wx.getStorageSync('openId');
-        const data = res.userInfo;
-        app.appRequest('POST', 'setUserInfo', { data }).then(res => {
-          console.log(res);
+        const userinfo = res.userInfo;
+        app.appRequest('POST', 'wechat/setUserInfo', userinfo).then(res => {
+          const data = res.data.data;
+          wx.setStorage({
+            key: 'avatarUrl',
+            data: data.avatar
+          });
+          wx.setStorage({
+            key: 'nickName',
+            data: data.nickname
+          });
+          Notify({ type: 'success', message: res.data.message });
+          this.setData({
+            avatarUrl: data.avatar,
+            nickName: data.nickname
+          })
+        }, err => {
+          Dialog.alert({
+            context: this,//代表的当前页面
+            selector: "#van-dialog",//选择器
+            title: '温馨提示',
+            message: '出现了点错误，请稍后重试吧',
+            theme: 'round-button',
+          })
+        }).catch(error => {
+          Dialog.alert({
+            context: this,//代表的当前页面
+            selector: "#van-dialog",//选择器
+            title: '温馨提示',
+            message: '出现了点错误，请稍后重试吧',
+            theme: 'round-button',
+          })
         })
-        this.setData({
-          userInfo: res.userInfo,
-          nickName: res.userInfo.nickName,
-          avatarUrl: res.userInfo.avatarUrl
+      },
+      fail: (res) => {
+        Dialog.alert({
+          context: this,//代表的当前页面
+          selector: "#van-dialog",//选择器
+          title: '提示',
+          message: '不绑定无法进行更多操作哦',
+          theme: 'round-button',
         })
       }
     })
