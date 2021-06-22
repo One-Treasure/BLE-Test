@@ -83,7 +83,7 @@ swiper {
     background: #FF75A0;
     opacity: 1;
     border-radius: 16rpx;
-    font-size: 20rpx;
+    font-size: 18rpx;
     font-family: DIN;
     font-weight: 500;
     line-height: 24rpx;
@@ -170,7 +170,7 @@ swiper {
 .date-active {
     width: 122rpx;
     height: 32rpx;
-    font-size: 24rpx;
+    font-size: 20rpx;
     line-height: 30rpx;
     margin-top: 8rpx;
     margin-left: 20rpx;
@@ -304,4 +304,196 @@ swiper {
     border-radius: 30rpx;
     margin-top: 42rpx;
     margin-left: 28rpx;
+    position: relative;
+}
+
+/* 环形图时间 */
+.chart-circle-time {
+    font-size: 28rpx;
+    font-family: PingFang SC;
+    font-weight: 400;
+    line-height: 40rpx;
+    color: #333333;
+    opacity: 1;
+    margin: 16rpx 0 0 16rpx;
+}
+
+/* 环形图标记 */
+.chart-circle-tag {
+    display: flex;
+    align-items: center;
+    position: absolute;
+}
+
+.chart-circle-tag-round {
+    width: 18rpx;
+    height: 18rpx;
+    background: #FFFFFF;
+    border: 2rpx solid #FF75A0;
+    border-radius: 50%;
+    opacity: 1;
+}
+
+.chart-circle-tag-text {
+    background: #FF75A0;
+    box-shadow: 0px 6rpx 12rpx rgba(255, 117, 160, 0.21);
+    opacity: 1;
+    border-radius: 28rpx;
+    color: #FFFFFF;
+    padding: 10rpx 24rpx;
+    font-size: 24rpx;
+    font-family: PingFang SC;
+    font-weight: 400;
+    line-height: 34rpx;
+}
+
+/* 环形图 */
+.chart-circle-content {
+    width: 370rpx;
+    height: 370rpx;
+    opacity: 1;
+    position: absolute;
+    margin-left: 174rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 环形图文字区域 */
+.chart-circle-content-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 分数 */
+.chart-circle-content-center-score {
+    width: 98rpx;
+    height: 84rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.chart-circle-content-center-score-num {
+    font-size: 60rpx;
+    font-family: PingFang SC;
+    font-weight: 500;
+    line-height: 40rpx;
+    color: #333333;
+    opacity: 1;
+}
+
+.chart-circle-content-center-score-num text {
+    font-size: 28rpx;
+    font-family: PingFang SC;
+    font-weight: 400;
+    line-height: 40rpx;
+    color: #333333;
+    opacity: 1;
+}
+
+/* 状态 */
+.chart-circle-content-center-state {
+    background: #FFB4CB;
+    box-shadow: 0px 6rpx 12rpx rgba(226, 158, 178, 0.22);
+    opacity: 1;
+    border-radius: 24rpx;
+    color: #FFFFFF;
+    font-size: 24rpx;
+    font-family: PingFang SC;
+    font-weight: 400;
+    line-height: 17px;
+    padding: 6rpx 14rpx;
+}
+
+/* 皮肤近况区域 */
+.chart-status {
+    width: 694rpx;
+    height: 292rpx;
+    background: #FFFFFF;
+    box-shadow: 0px 6rpx 12rpx rgba(51, 51, 51, 0.04);
+    opacity: 1;
+    border-radius: 30rpx;
+    margin-top: 16rpx;
+    margin-left: 28rpx;
+}
+
+/* 标题 */
+.chart-status-title {
+    width: 112rpx;
+    height: 40rpx;
+    font-size: 28rpx;
+    font-family: PingFang SC;
+    font-weight: 400;
+    line-height: 40rpx;
+    color: #333333;
+    opacity: 1;
+    padding-top: 16rpx;
+    padding-left: 16rpx;
+}
+
+/* 内容 */
+.chart-status-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chart-status-content-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 42rpx;
+}
+
+.chart-status-content-item-state {
+    display: flex;
+    position: relative;
+}
+
+.chart-status-content-item-state-tx {
+    font-size: 48rpx;
+    font-family: PingFang SC;
+    font-weight: 400;
+    line-height: 66rpx;
+    color: #333333;
+    opacity: 1;
+    z-index: 1;
+}
+
+.chart-status-content-item-state-round {
+    width: 20rpx;
+    height: 20rpx;
+    background: #FF75A0;
+    border-radius: 50%;
+    opacity: 1;
+    position: absolute;
+    right: 0;
+    margin-top: 4rpx;
+}
+
+.chart-status-content-item-title {
+    font-size: 24rpx;
+    font-family: PingFang SC;
+    font-weight: 400;
+    line-height: 34rpx;
+    color: #777777;
+    opacity: 1;
+    margin-top: 8rpx;
+}
+
+/* 说明 */
+.chart-status-explain {
+    font-size: 20rpx;
+    font-family: PingFang SC;
+    font-weight: 400;
+    line-height: 28rpx;
+    color: #777777;
+    opacity: 1;
+    margin-top: 32rpx;
+    margin-left: 208rpx;
 }

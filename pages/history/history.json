@@ -3,7 +3,8 @@
     "van-tab": "@vant/weapp/tab/index",
     "van-tabs": "@vant/weapp/tabs/index",
     "calendar": "/components/calendar/calendar",
-    "ff-canvas": "@antv/f2-canvas"
+    "ff-canvas": "@antv/f2-canvas",
+    "van-circle": "@vant/weapp/circle/index"
   },
   "navigationBarTitleText": "历史记录"
 }

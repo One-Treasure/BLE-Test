@@ -180,11 +180,11 @@
         </view>
         <!-- 皮肤分析皮肤缺陷气泡上 -->
         <!-- <view class="outer" style="{{overflow}}"> -->
-            <view class="analysis-bubble-up" animation="{{slide_up1}}">血管型黑眼圈</view>
+        <view class="analysis-bubble-up" wx:if="{{library.tips[0]}}" animation="{{slide_up1}}">{{library.tips[0]}}</view>
         <!-- </view> -->
         <!-- 皮肤分析皮肤缺陷气泡下 -->
         <!-- <view class="outer" style="{{overflow}}"> -->
-            <view class="analysis-bubble-down" animation="{{slide_up1}}">开放性白头粉刺</view>
+        <view class="analysis-bubble-down" wx:if="{{library.tips[1]}}" animation="{{slide_up1}}">{{library.tips[1]}}</view>
         <!-- </view> -->
         <!-- 皮肤分析用户照片区域 -->
         <view class="analysis-face">
@@ -202,77 +202,20 @@
         <!-- 皮肤分析用户历史分析记录区域 -->
         <scroll-view class="history" scroll-x>
             <!-- 皮肤分析用户历史分析记录单个区域 -->
-            <view class="history-item">
+            <view class="history-item" wx:for="{{calendarData}}" wx:key="index">
                 <!-- 皮肤分析用户历史分析记录单个区域图片 -->
                 <view class="history-item-face">
                     <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-                    <image src="/icon/1.jpg" mode="aspectFill" />
+                    <image src="{{item.path}}" mode="aspectFill" />
                 </view>
                 <!-- 皮肤分析用户历史分析记录单个区域日期 -->
-                <view class="history-item-date">2021.5.21</view>
+                <view class="history-item-date">{{item.date}}</view>
                 <!-- 皮肤分析用户历史分析记录单个区域状态 -->
                 <view class="history-item-state">
                     <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
                     <text class="history-item-state-title">肌肤状态：</text>
                     <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
-                    <text class="history-item-state-num">92</text>
-                    <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
-                    <text class="history-item-state-unit">分</text>
-                </view>
-            </view>
-            <!-- 皮肤分析用户历史分析记录单个区域 -->
-            <view class="history-item">
-                <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-                <view class="history-item-face">
-                    <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-                    <image src="/icon/1.jpg" mode="aspectFill" />
-                </view>
-                <!-- 皮肤分析用户历史分析记录单个区域日期 -->
-                <view class="history-item-date">2021.5.20</view>
-                <!-- 皮肤分析用户历史分析记录单个区域状态 -->
-                <view class="history-item-state">
-                    <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
-                    <text class="history-item-state-title">肌肤状态：</text>
-                    <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
-                    <text class="history-item-state-num">90</text>
-                    <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
-                    <text class="history-item-state-unit">分</text>
-                </view>
-            </view>
-            <!-- 皮肤分析用户历史分析记录单个区域 -->
-            <view class="history-item">
-                <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-                <view class="history-item-face">
-                    <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-                    <image src="/icon/1.jpg" mode="aspectFill" />
-                </view>
-                <!-- 皮肤分析用户历史分析记录单个区域日期 -->
-                <view class="history-item-date">2021.5.19</view>
-                <!-- 皮肤分析用户历史分析记录单个区域状态 -->
-                <view class="history-item-state">
-                    <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
-                    <text class="history-item-state-title">肌肤状态：</text>
-                    <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
-                    <text class="history-item-state-num">92</text>
-                    <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
-                    <text class="history-item-state-unit">分</text>
-                </view>
-            </view>
-            <!-- 皮肤分析用户历史分析记录单个区域 -->
-            <view class="history-item" style="margin-right: 30rpx;">
-                <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-                <view class="history-item-face">
-                    <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-                    <image src="/icon/1.jpg" mode="aspectFill" />
-                </view>
-                <!-- 皮肤分析用户历史分析记录单个区域日期 -->
-                <view class="history-item-date">2021.5.18</view>
-                <!-- 皮肤分析用户历史分析记录单个区域状态 -->
-                <view class="history-item-state">
-                    <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
-                    <text class="history-item-state-title">肌肤状态：</text>
-                    <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
-                    <text class="history-item-state-num">90</text>
+                    <text class="history-item-state-num">{{item.score}}</text>
                     <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
                     <text class="history-item-state-unit">分</text>
                 </view>
@@ -292,9 +235,7 @@
                     <view class="detailed-analysis-title-text">你的肤色</view>
                 </view>
                 <!-- 皮肤详细分析内容 -->
-                <view class="detailed-analysis-content">
-                    {{library.color.desc}}
-                </view>
+                <view class="detailed-analysis-content">{{library.color.desc}}</view>
             </van-tab>
             <van-tab title="光滑度">
                 <!-- 皮肤详细分析标题区域 -->
@@ -305,9 +246,7 @@
                     <view class="detailed-analysis-title-text">你的皮肤光滑度</view>
                 </view>
                 <!-- 皮肤详细分析内容 -->
-                <view class="detailed-analysis-content">
-                    {{library.smooth.desc}}
-                </view>
+                <view class="detailed-analysis-content">{{library.smooth.desc}}</view>
             </van-tab>
             <van-tab title="色斑">
                 <!-- 皮肤详细分析标题区域 -->
@@ -318,9 +257,7 @@
                     <view class="detailed-analysis-title-text">你的色斑</view>
                 </view>
                 <!-- 皮肤详细分析内容 -->
-                <view class="detailed-analysis-content">
-                    {{library.speckle.desc}}
-                </view>
+                <view class="detailed-analysis-content">{{library.speckle.desc}}</view>
             </van-tab>
             <van-tab title="黑头">
                 <!-- 皮肤详细分析标题区域 -->
@@ -331,9 +268,7 @@
                     <view class="detailed-analysis-title-text">你的黑头</view>
                 </view>
                 <!-- 皮肤详细分析内容 -->
-                <view class="detailed-analysis-content">
-                    {{library.blackhead.desc}}
-                </view>
+                <view class="detailed-analysis-content">{{library.blackhead.desc}}</view>
             </van-tab>
             <van-tab title="眼袋">
                 <!-- 皮肤详细分析标题区域 -->
@@ -344,9 +279,7 @@
                     <view class="detailed-analysis-title-text">你的眼袋</view>
                 </view>
                 <!-- 皮肤详细分析内容 -->
-                <view class="detailed-analysis-content">
-                    {{library.color.desc}}
-                </view>
+                <view class="detailed-analysis-content">{{library.color.desc}}</view>
             </van-tab>
             <van-tab title="黑眼圈">
                 <!-- 皮肤详细分析标题区域 -->
@@ -357,9 +290,7 @@
                     <view class="detailed-analysis-title-text">你的黑眼圈</view>
                 </view>
                 <!-- 皮肤详细分析内容 -->
-                <view class="detailed-analysis-content">
-                    {{library.color.desc}}
-                </view>
+                <view class="detailed-analysis-content">{{library.color.desc}}</view>
             </van-tab>
             <van-tab title="痘痘/痘印">
                 <!-- 皮肤详细分析标题区域 -->
@@ -370,9 +301,7 @@
                     <view class="detailed-analysis-title-text">你的痘痘和痘印</view>
                 </view>
                 <!-- 皮肤详细分析内容 -->
-                <view class="detailed-analysis-content">
-                    {{library.acne.desc}}
-                </view>
+                <view class="detailed-analysis-content">{{library.acne.desc}}</view>
             </van-tab>
             <van-tab title="毛孔">
                 <!-- 皮肤详细分析标题区域 -->
@@ -383,9 +312,7 @@
                     <view class="detailed-analysis-title-text">你的毛孔</view>
                 </view>
                 <!-- 皮肤详细分析内容 -->
-                <view class="detailed-analysis-content">
-                    {{library.pore.desc}}
-                </view>
+                <view class="detailed-analysis-content">{{library.pore.desc}}</view>
             </van-tab>
             <van-tab title="皱纹">
                 <!-- 皮肤详细分析标题区域 -->
@@ -396,9 +323,7 @@
                     <view class="detailed-analysis-title-text">你的皱纹</view>
                 </view>
                 <!-- 皮肤详细分析内容 -->
-                <view class="detailed-analysis-content">
-                    {{library.wrinkle.desc}}
-                </view>
+                <view class="detailed-analysis-content">{{library.wrinkle.desc}}</view>
             </van-tab>
             <van-tab title="痣">
                 <!-- 皮肤详细分析标题区域 -->
@@ -409,9 +334,7 @@
                     <view class="detailed-analysis-title-text">你的痣</view>
                 </view>
                 <!-- 皮肤详细分析内容 -->
-                <view class="detailed-analysis-content">
-                    {{library.color.desc}}
-                </view>
+                <view class="detailed-analysis-content">{{library.color.desc}}</view>
             </van-tab>
         </van-tabs>
     </view>
@@ -457,17 +380,40 @@
     <view class="lead">
         <!-- 标题 -->
         <view class="lead-title">我的设备</view>
-        <!-- 提示 -->
-        <view class="lead-hint">
-            <!-- 提示文字 -->
-            <view class="lead-hint-text">{{leadTitle}}</view>
-            <!-- 提示图片 -->
-            <image wx:if="{{bluetooth!==''}}" class="lead-hint-icon" src="{{bluetooth}}" />
-        </view>
-        <!-- 技巧 -->
-        <view class="lead-tips">{{leadTips}}</view>
-        <!-- 按钮 -->
-        <van-button color="#FF75A0" round custom-class="lead-btn" loading="{{loading}}" loading-type="spinner" bind:click="next">下一步</van-button>
+        <block wx:if="{{leadTitle!=='连接wifi'}}">
+            <!-- 提示 -->
+            <view class="lead-hint">
+                <!-- 提示文字 -->
+                <view class="lead-hint-text">{{leadTitle}}</view>
+                <!-- 提示图片 -->
+                <image wx:if="{{bluetooth!==''}}" class="lead-hint-icon" src="{{bluetooth}}" />
+            </view>
+            <!-- 技巧 -->
+            <view class="lead-tips">{{leadTips}}</view>
+            <!-- 按钮 -->
+            <van-button color="#FF75A0" round custom-class="lead-btn" loading="{{loading}}" loading-type="spinner" bind:click="next">
+                下一步
+            </van-button>
+        </block>
+        <block wx:else>
+            <!-- wifi连接 -->
+            <form bindsubmit="wifiFormSubmit">
+                <!-- 标题 -->
+                <view class="lead-wifi-title">{{leadTitle}}</view>
+                <!-- 输入框 -->
+                <view class="lead-wifi-inp">
+                    <input type="text" value="{{ssid}}" placeholder="输入账号" placeholder-class="inp-place" />
+                </view>
+                <!-- 输入框 -->
+                <view class="lead-wifi-inp">
+                    <input type="password" placeholder="输入密码" placeholder-class="inp-place" />
+                </view>
+                <!-- 按钮 -->
+                <van-button color="#FF75A0" round custom-class="lead-wifi-btn" loading="{{loading}}" loading-type="spinner" form-type="submit">
+                    完成
+                </van-button>
+            </form>
+        </block>
     </view>
 </van-overlay>
 <!-- 弹出框 -->

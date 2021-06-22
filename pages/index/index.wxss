@@ -391,7 +391,6 @@ page {
 .analysis-bubble-up {
     background: #FF75A0;
     box-shadow: 0px 6rpx 12rpx rgba(222, 88, 130, 0.28);
-    opacity: 1;
     border-radius: 16rpx;
     font-size: 28rpx;
     font-family: PingFang SC;
@@ -415,7 +414,6 @@ page {
 .analysis-bubble-down {
     background: #FF75A0;
     box-shadow: 0px 6rpx 12rpx rgba(222, 88, 130, 0.28);
-    opacity: 1;
     border-radius: 16rpx;
     font-size: 28rpx;
     font-family: PingFang SC;
@@ -547,7 +545,7 @@ page {
     background: #FF75A0;
     opacity: 1;
     border-radius: 16rpx;
-    font-size: 24rpx;
+    font-size: 20rpx;
     font-family: DIN;
     font-weight: 500;
     line-height: 30rpx;
@@ -782,7 +780,7 @@ page {
 }
 
 /* 提示图片 */
-.lead-hint-icon{
+.lead-hint-icon {
     width: 40rpx;
     height: 44rpx;
     margin-left: 8rpx;
@@ -806,4 +804,50 @@ page {
     opacity: 1;
     color: #FFFFFF;
     margin-top: 188rpx;
+}
+
+/* wifi连接标题 */
+.lead-wifi-title {
+    font-size: 32rpx;
+    font-family: PingFang SC;
+    font-weight: 500;
+    line-height: 44rpx;
+    color: #333333;
+    opacity: 1;
+    margin-top: 68rpx;
+    margin-left: 44rpx;
+}
+
+/* 输入框 */
+.lead-wifi-inp {
+    width: 514rpx;
+    height: 88rpx;
+    background: #FFFFFF;
+    border: 2rpx solid #777777;
+    opacity: 1;
+    border-radius: 18rpx;
+    display: flex;
+    align-items: center;
+    margin-top: 16rpx;
+    padding-left: 16rpx;
+    margin-left: 44rpx;
+}
+
+/* 占位符样式 */
+.inp-place {
+    font-size: 24rpx;
+    font-family: PingFang SC;
+    font-weight: 400;
+    line-height: 34rpx;
+    color: #777777;
+    opacity: 1;
+}
+
+/* 按钮 */
+.lead-wifi-btn {
+    width: 600rpx;
+    height: 88rpx;
+    opacity: 1;
+    color: #FFFFFF;
+    margin-top: 104rpx;
 }

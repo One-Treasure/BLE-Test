@@ -1,6 +1,7 @@
 import Dialog from '@vant/weapp/dialog/dialog';
 import Notify from '@vant/weapp/notify/notify';
 import { base64src } from '../../utils/base64src.js'
+const util = require('../../utils/util.js')
 var helper = require('../../src/index.js');
 var app = getApp();
 
@@ -21,7 +22,12 @@ Page({
     leadshow: true,
     bluetooth: '',
     leadTitle: '打开手机蓝牙',
-    leadTips: '长按蜜镜开关开启配对模式'
+    leadTips: '长按蜜镜开关开启配对模式',
+    ssid: '',
+    pass: '',
+    logs: [],
+    deviceArray: [],
+    currDeviceID: '请选择...'
   },
 
   /* 获取用户信息（头像、昵称等） */
@@ -171,6 +177,7 @@ Page({
       dataType: 'json',
       responseType: 'text',
       success: (res) => {
+        console.log('afterRead', res.data.data);
         const { data } = res.data;
         if (res.statusCode === 200) {
           that.setData({
@@ -230,23 +237,13 @@ Page({
 
   //options(Object)
   onLoad: function (options) {
-    this.getLocation(wx.getStorageSync('weather'));
     if (app.globalData.hashLogin) { // 登录已完成
-      console.log('app.globalData.hasLogin1', app.globalData);
-      /* app.appRequest('GET', 'analyze', {}).then((res) => {
-        console.log('success', res);//正确返回结果
-      }).catch((errMsg) => {
-        console.log('err', errMsg);//错误提示信息
-      }); */
+      this.getLocation(wx.getStorageSync('weather'));
     } else {
-      console.log('app.globalData.hasLogin2', app.globalData);
-      /* app.watch((value) => {
-        app.appRequest('POST', 'analyze', {}).then((res) => {
-          console.log('success', res);//正确返回结果
-        }).catch((errMsg) => {
-          console.log('err', errMsg);//错误提示信息
-        });
-      }) */
+      this.getLocation(wx.getStorageSync('weather'));
+      app.watch((value) => {
+        console.log(value);
+      })
     }
   },
   onReady: function () {
@@ -259,6 +256,7 @@ Page({
   onShow: function () {
     console.log('app.globalData.hasLogin3', app.globalData);
     console.log('file', this.data.file);
+    this.getCalendarData(dateFormat(new Date()));
     // 调用监听器，监听需要分析的图片的数据变化，解决从其他页面切换回首页重复分析图片的bug，只在用户重新拍照后才进行分析
     app.watch1(this, {
       file: function (newVal) {
@@ -297,6 +295,36 @@ Page({
       fail: () => { },
       complete: () => { }
     });
+  },
+
+  /* 获取卡片历史记录数据 */
+  getCalendarData(date) {
+    let that = this;
+    app.appRequest('POST', 'analyze/calendarData', { date }).then(res => {
+      if (res.statusCode === 200) {
+        let calendarData = res.data.data;
+        calendarData.reverse();
+        that.setData({
+          calendarData
+        })
+      } else {
+        Dialog.alert({
+          context: this,//代表的当前页面
+          selector: "#van-dialog",//选择器
+          title: '温馨提示',
+          message: res.data.errors,
+          theme: 'round-button',
+        })
+      }
+    }).catch(error => {
+      Dialog.alert({
+        context: this,//代表的当前页面
+        selector: "#van-dialog",//选择器
+        title: '温馨提示',
+        message: '出现了点错误，请稍后重试吧',
+        theme: 'round-button',
+      })
+    })
   },
 
   /* 获取天气状况的方法 */
@@ -372,11 +400,38 @@ Page({
 
   /* 引导设置点击事件 */
   next() {
+    var that = this;
     let { leadTitle, leadTips, bluetooth } = this.data;
     if (leadTitle === '打开手机蓝牙') {
+      // this.initBLE();
       leadTitle = '配对成功';
       leadTips = '连接WiFi获取肌肤秘方';
       bluetooth = '/icon/bluetooth_success.png';
+    } else if (leadTitle === '配对成功') {
+      leadTitle = '连接wifi';
+      wx.startWifi({
+        success(res) {
+          console.log('startWifi', res.errMsg)
+          wx.getConnectedWifi({
+            success: function (res) {
+              console.log('getConnectedWifi', res);
+              that.setData({
+                ssid: res.wifi.SSID
+              })
+            },
+            fail: function (res) {
+              if (res.errCode == 12006) {
+                wx.showModal({
+                  title: '请打开GPS定位',
+                  content: 'Android手机不打开GPS定位，无法搜索到蓝牙设备.',
+                  showCancel: false
+                })
+              }
+              console.log('getConnectedWifi fail', res);
+            }
+          })
+        }
+      })
     }
     this.setData({
       loading: true
@@ -389,6 +444,144 @@ Page({
         loading: false
       })
     }, 500)
+  },
+
+  /* 引导设置完成表单提交事件 */
+  wifiFormSubmit(e) {
+    this.setData({
+      leadshow: false
+    })
+  },
+
+  /* 蓝牙初始化 */
+  initBLE: function () {
+    this.printLog("启动蓝牙适配器, 蓝牙初始化")
+    var that = this;
+    wx.openBluetoothAdapter({
+      success: function (res) {
+        console.log('openBluetoothAdapter', res);
+        that.findBLE();
+      },
+      fail: function (res) {
+        console.log('openBluetoothAdapter fail', res);
+        util.toastError('请先打开蓝牙');
+      }
+    })
+  },
+
+  findBLE: function () {
+    this.printLog("打开蓝牙成功.")
+    var that = this
+    wx.startBluetoothDevicesDiscovery({
+      allowDuplicatesKey: false,
+      interval: 0,
+      success: function (res) {
+        wx.showLoading({
+          title: '正在搜索设备',
+        })
+        console.log('startBluetoothDevicesDiscovery', res);
+        delayTimer = setInterval(function () {
+          that.discoveryBLE() //3.0 //这里的discovery需要多次调用
+        }, 1000);
+        setTimeout(function () {
+          if (isFound) {
+            return;
+          } else {
+            wx.hideLoading();
+            console.log("findBLE搜索设备超时");
+            wx.stopBluetoothDevicesDiscovery({
+              success: function (res) {
+                console.log('findBLE连接蓝牙成功之后关闭蓝牙搜索');
+              }
+            })
+            clearInterval(delayTimer)
+            wx.showModal({
+              title: '搜索设备超时',
+              content: '请检查蓝牙设备是否正常工作，Android手机请打开GPS定位.',
+              showCancel: false
+            })
+            util.toastError("搜索设备超时，请打开GPS定位，再搜索")
+            return
+          }
+        }, 15000);
+      },
+      fail: function (res) {
+        that.printLog("蓝牙设备服务发现失败: " + res.errMsg);
+      }
+    })
+  },
+
+  discoveryBLE: function () {
+    var that = this
+    wx.getBluetoothDevices({
+      success: function (res) {
+        var list = res.devices;
+        console.log('getBluetoothDevices(设备列表)', list);
+        if (list.length <= 0) {
+          return;
+        }
+        var devices = [];
+        for (var i = 0; i < list.length; i++) {
+          //that.data.inputValue：表示的是需要连接的蓝牙设备ID，
+          //简单点来说就是我想要连接这个蓝牙设备，
+          //所以我去遍历我搜索到的蓝牙设备中是否有这个ID
+          var name = list[i].name || list[i].localName;
+          if (util.isEmpty(name)) {
+            continue;
+          }
+          if (name.indexOf('MI') >= 0 && list[i].RSSI != 0) {
+            console.log('被选中的设备', list[i]);
+            devices.push(list[i]);
+          }
+        }
+        console.log('总共有' + devices.length + "个设备需要设置")
+        if (devices.length <= 0) {
+          return;
+        }
+        that.connectBLE(devices);
+      },
+      fail: function () {
+        util.toastError('搜索蓝牙设备失败');
+      }
+    })
+  },
+
+  connectBLE: function (devices) {
+    this.printLog('总共有' + devices.length + "个设备需要设置")
+    var that = this;
+    wx.hideLoading();
+    isFound = true;
+    clearInterval(delayTimer);
+    wx.stopBluetoothDevicesDiscovery({
+      success: function (res) {
+        that.printLog('连接蓝牙成功之后关闭蓝牙搜索');
+      }
+    })
+    //两个的时候需要选择
+    var list = [];
+    for (var i = 0; i < devices.length; i++) {
+      var name = devices[i].name || devices[i].localName;
+      list.push(name + "[" + devices[i].deviceId + "]")
+    }
+    this.setData({
+      deviceArray: list
+    })
+    //默认选择
+    this.setData({
+      currDeviceID: list[0]
+    })
+  },
+
+  printLog: function (msg) {
+    var logs = this.data.logs;
+    logs.push(msg);
+    this.setData({ logs: logs, scrollH: logs.length * 400 })
+    /* wx.createSelectorQuery().select('.bottom').boundingClientRect(function (rect) {
+      // 使页面滚动到底部
+      wx.pageScrollTo({
+        scrollTop: rect.bottom
+      })
+    }).exec() */
   },
 
   onHide: function () {
@@ -414,3 +607,11 @@ Page({
 
   }
 });
+
+/* 格式化时间 */
+function dateFormat(date) {
+  var year = date.getFullYear()
+  var month = date.getMonth() + 1
+
+  return year + '-0' + month
+}

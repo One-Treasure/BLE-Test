@@ -1,13 +1,13 @@
 <!-- 日历组件显示区域 -->
 <view class="calendar">
   <!-- 极点日历插件，源码https://github.com/czcaiwj/calendar/ -->
-  <calendar weeks-type="cn" days-color="{{dayStyle}}" binddayClick="dayClick" cell-size="25" num="{{num}}" />
+  <calendar weeks-type="cn" days-color="{{dayStyle}}" binddayClick="dayClick" bindprevMonth="prevMonth" bindnextMonth="nextMonth" cell-size="25" num="{{num}}" />
 </view>
 <!-- 使用轮播图展示皮肤分析历史记录，使用scroll-view无法实现指定某个卡片样式改变 -->
-<swiper indicator-dots="{{indicatorDots}}" autoplay="{{false}}" circular="{{false}}" current="{{cur}}" display-multiple-items="3" skip-hidden-item-layout="true" previous-margin="-18rpx" next-margin="-18rpx" bindchange="swiperChange">
+<swiper indicator-dots="{{indicatorDots}}" autoplay="{{false}}" circular="{{false}}" current="{{cur}}" display-multiple-items="3" previous-margin="-18rpx" next-margin="-18rpx" bindchange="swiperChange">
   <swiper-item></swiper-item>
-  <block wx:for="{{swiperList}}" wx:key="item">
-    <swiper-item item-id="{{'item'+index}}">
+  <block wx:for="{{calendarData}}" wx:key="item">
+    <swiper-item item-id="{{'item'+index}}" skip-hidden-item-layout="true">
       <!-- <view class="{{ index == activeIndex ? 'active item-block' : 'item-block'}}">
         <image src="{{item}}" mode="aspectFill"></image>
       </view> -->
@@ -16,11 +16,11 @@
         <!-- 皮肤分析用户历史分析记录单个区域图片 -->
         <view class="history-item-face {{ index === activeIndex ? 'face-active' : ''}}">
           <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-          <image src="/icon/1.jpg" mode="aspectFill" style="{{ index === activeIndex ? 'width: 176rpx;height: 176rpx;' : ''}}" />
+          <image src="{{item.path}}" mode="aspectFill" style="{{ index === activeIndex ? 'width: 176rpx;height: 176rpx;' : ''}}" />
         </view>
         <!-- 皮肤分析用户历史分析记录单个区域日期 -->
         <view class="history-item-date {{ index === activeIndex ? 'date-active' : ''}}">
-          2021.5.21
+          {{item.date}}
         </view>
         <!-- 皮肤分析用户历史分析记录单个区域状态 -->
         <view class="history-item-state {{ index === activeIndex ? 'state-active' : ''}}">
@@ -30,7 +30,7 @@
           </view>
           <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
           <view class="history-item-state-num {{ index === activeIndex ? 'num-active' : ''}}">
-            92
+            {{item.score}}
           </view>
           <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
           <view class="history-item-state-unit {{ index === activeIndex ? 'unit-active' : ''}}">
@@ -66,5 +66,66 @@
     <ff-canvas id="column-dom" canvas-id="column" opts="{{ opts }}"></ff-canvas>
   </view>
   <!-- 环形图区域 -->
-  <view class="chart-circle"></view>
+  <view class="chart-circle">
+    <!-- 环形图时间 -->
+    <view class="chart-circle-time">2021年6月15日</view>
+    <!-- 环形图标记 -->
+    <view class="chart-circle-tag" style="margin-left: 430rpx;">
+      <view class="chart-circle-tag-round" style="margin-right: 16rpx;"></view>
+      <view class="chart-circle-tag-text">轻微黑眼圈</view>
+    </view>
+    <!-- 环形图 -->
+    <view class="chart-circle-content">
+      <van-circle value="{{ score }}" size="131" stroke-width="8" color="#FF75A0" layer-color="#FFB5CD">
+        <!-- 环形图文字区域 -->
+        <view class="chart-circle-content-center">
+          <!-- 分数 -->
+          <view class="chart-circle-content-center-score">
+            <view class="chart-circle-content-center-score-num">{{score}}<text>分</text></view>
+            <!-- <view class="chart-circle-content-center-score-unit">分</view> -->
+          </view>
+          <!-- 状态 -->
+          <view class="chart-circle-content-center-state">皮肤状态良好</view>
+        </view>
+      </van-circle>
+    </view>
+    <!-- 环形图标记 -->
+    <view class="chart-circle-tag" style="margin-top: 308rpx;margin-left: 64rpx;">
+      <view class="chart-circle-tag-text">轻微痘印</view>
+      <view class="chart-circle-tag-round" style="margin-left: 16rpx;"></view>
+    </view>
+  </view>
+  <!-- 皮肤近况区域 -->
+  <view class="chart-status">
+    <!-- 标题 -->
+    <view class="chart-status-title">肌肤近况</view>
+    <!-- 内容 -->
+    <view class="chart-status-content">
+      <view class="chart-status-content-item">
+        <view class="chart-status-content-item-state">
+          <view class="chart-status-content-item-state-tx">87</view>
+          <view class="chart-status-content-item-state-round"></view>
+        </view>
+        <view class="chart-status-content-item-title">综合得分</view>
+      </view>
+      <view class="chart-status-content-item" style="margin-left: 92rpx;">
+        <view class="chart-status-content-item-state">
+          <view class="chart-status-content-item-state-tx">蛋黄</view>
+          <view class="chart-status-content-item-state-round"></view>
+        </view>
+        <view class="chart-status-content-item-title">光滑度</view>
+      </view>
+      <view class="chart-status-content-item" style="margin-left: 92rpx;">
+        <view class="chart-status-content-item-state">
+          <view class="chart-status-content-item-state-tx">粉一白</view>
+          <view class="chart-status-content-item-state-round"></view>
+        </view>
+        <view class="chart-status-content-item-title">肤色</view>
+      </view>
+    </view>
+    <!-- 说明 -->
+    <view class="chart-status-explain">根据最近一周5次的检测记录生成</view>
+  </view>
 </view>
+<!-- 弹出框 -->
+<van-dialog id="van-dialog" />

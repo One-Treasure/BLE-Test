@@ -1,4 +1,6 @@
+import Dialog from '@vant/weapp/dialog/dialog';
 var app = getApp();
+var score = 0;
 
 // pages/history/history.js
 Page({
@@ -12,42 +14,102 @@ Page({
       { month: 'current', day: new Date().getDate(), color: 'white', background: '#FF75A0' }
     ],
     num: [],
-    swiperList: ['/icon/1.jpg', '/icon/1.jpg', '/icon/1.jpg', '/icon/1.jpg', '/icon/1.jpg', '/icon/1.jpg', '/icon/1.jpg', '/icon/1.jpg'],
-    activeIndex: 1,//默认放大显示的卡片角标
-    cur: 1,
+    activeIndex: 0,//默认放大显示的卡片角标
+    cur: 0,
     opts: {
       onInit: initChart
     },
     sel_time: ['近一周', '近一月', '近90天'],
     curIndex: 0,
-    left: ''
+    left: '',
+    score: score
   },
 
   /* 切换卡片事件 */
   swiperChange(e) {
-    /* if (e.detail.current >= this.data.swiperList.length - 2) {
-      e.detail.current = e.detail.current - this.data.swiperList.length
-    } */
+    const { current } = e.detail;
+    const { calendarData } = this.data;
+    let day = calendarData[current].date.split('-')[2];
+    let changeBgColor = `dayStyle[0].color`;
+    let changeBg = `dayStyle[0].background`;
+    let changeDay = `dayStyle[1].day`;
+    let changeEndBg = `dayStyle[1].background`;
     this.setData({
-      activeIndex: e.detail.current
+      [changeDay]: day,
+      [changeBg]: "rgba(255,255,255,0)",
+      [changeBgColor]: "black",
+      [changeEndBg]: "#FF75A0",
+      activeIndex: current
     })
   },
 
   //给点击的日期设置一个背景颜色
   dayClick: function (event) {
-    const day = event.detail.year + '.' + event.detail.month + '.' + event.detail.day;
-    console.log(day);
+    const day = event.detail.year + '-0' + event.detail.month + '-' + event.detail.day;
+    const { calendarData } = this.data;
     let clickDay = event.detail.day;
     let changeBgColor = `dayStyle[0].color`;
     let changeBg = `dayStyle[0].background`;
     let changeDay = `dayStyle[1].day`;
     let changeEndBg = `dayStyle[1].background`;
-
+    calendarData.forEach((v, i) => {
+      if (v.date === day) {
+        this.setData({
+          cur: i
+        })
+      }
+    });
+    console.log('calendar', calendarData);
     this.setData({
       [changeDay]: clickDay,
       [changeBg]: "rgba(255,255,255,0)",
       [changeBgColor]: "black",
-      [changeEndBg]: "#FF75A0"
+      [changeEndBg]: "#FF75A0",
+    })
+  },
+
+  /* 切换上个月的点击事件 */
+  prevMonth(e) {
+    const date = e.detail.currentYear + '-0' + e.detail.currentMonth
+    this.getCalendarData(date);
+  },
+
+  /* 切换下个月的点击事件 */
+  nextMonth(e) {
+    const date = e.detail.currentYear + '-0' + e.detail.currentMonth
+    this.getCalendarData(date);
+  },
+
+  /* 获取卡片历史记录数据 */
+  getCalendarData(date) {
+    let that = this;
+    app.appRequest('POST', 'analyze/calendarData', { date }).then(res => {
+      if (res.statusCode === 200 && res.data.data.length > 0) {
+        let calendarData = res.data.data;
+        calendarData.reverse();
+        that.setData({
+          calendarData,
+          cur: 0,
+          activeIndex: 0
+        })
+      } else {
+        console.log(res);
+        Dialog.alert({
+          context: that,//代表的当前页面
+          selector: "#van-dialog",//选择器
+          title: '温馨提示',
+          message: '出现了点错误，请稍后重试吧',
+          theme: 'round-button',
+        })
+      }
+    }).catch(error => {
+      Dialog.alert({
+        context: that,//代表的当前页面
+        selector: "#van-dialog",//选择器
+        title: '温馨提示',
+        message: '出现了点错误，请稍后重试吧',
+        theme: 'round-button',
+      })
     })
   },
 
@@ -59,6 +121,7 @@ Page({
       index: 50
     }) */
     this.changeline(1);
+    this.getCalendarData(dateFormat(new Date()));
   },
 
   /**
@@ -110,6 +173,7 @@ Page({
 
   },
 
+  /* 自定义tab栏点击事件 */
   changeTab(e) {
     const { index } = e.currentTarget.dataset;
     this.setData({
@@ -123,10 +187,23 @@ Page({
     } else {
       userday = 90
     }
+    let day = userday;
+    /* app.appRequest('POST', 'analyze/trend', { day }).then(res => {
+      const result = res.data.data;
+      let file = [];
+      for (var i in result.trend) {
+        let obj = {};
+        obj.date = i;
+        obj.steps = result.trend[i].score;
+        file.push(obj);
+      }
+      chart.changeData(file);
+    }) */
     this.ecComponent = this.selectComponent('#column-dom');
     this.ecComponent.init(initChart);
   },
 
+  /* 自定义tab栏下划线位置改变事件 */
   changeline: function () {
     var that = this
     const query = wx.createSelectorQuery()
@@ -176,7 +253,7 @@ function initChart(canvas, width, height, F2) { // 使用 F2 绘制图表
     chart = new F2.Chart({
       el: canvas,
       width,
-      height
+      height: height - 20
     });
 
     chart.source(data, {
@@ -240,6 +317,12 @@ function initChart(canvas, width, height, F2) { // 使用 F2 绘制图表
         items[0].name = null;
         items[0].name = items[0].title;
         items[0].value = items[0].value + '分';
+        score = ev.items[0].origin.steps
+        var pages = getCurrentPages()
+        var currentPage = pages[pages.length - 1]
+        currentPage.setData({
+          score
+        })
       },
     });
 
@@ -286,5 +369,21 @@ function initChart(canvas, width, height, F2) { // 使用 F2 绘制图表
     chart.interaction('pan'); */
     chart.render();
     return chart;
+  }).catch(error => {
+    Dialog.alert({
+      context: this,//代表的当前页面
+      selector: "#van-dialog",//选择器
+      title: '温馨提示',
+      message: '出现了点错误，请稍后重试吧',
+      theme: 'round-button',
+    })
   })
+}
+
+/* 格式化时间 */
+function dateFormat(date) {
+  var year = date.getFullYear()
+  var month = date.getMonth() + 1
+
+  return year + '-0' + month
 }

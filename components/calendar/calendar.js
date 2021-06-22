@@ -498,21 +498,6 @@ Component({
                 });
             }
 
-            /**
-             * 给本月的突出日期增加颜色
-             */
-            var num = this.data.num;
-            num.forEach(v => {
-                temp.forEach(y => {
-                    if (y.day.toString().length === 1) {
-                        y.day = '0' + y.day
-                    }
-                    if (v === y.year + '-0' + y.month + '-' + y.day) {
-                        y.color = '#FF75A0'
-                    }
-                })
-            })
-
             const days_range = temp;                                   // 本月
             let days = empty_days.concat(days_range, empty_days_last); // 上个月 + 本月 + 下个月            
             // 如果要显示前后月份的日期
@@ -545,6 +530,7 @@ Component({
                 const background = item.background ? item.background : 'transparent';
                 for (let j = 0; j < days.length; j++) {
                     if (days[j].info == item.month && days[j].day == item.day) {
+                        console.log(item);
                         if (item.color) {
                             days[j].color = item.color + '!important';
                         }
@@ -586,6 +572,27 @@ Component({
             if (week.length > 0) {
                 days_array.push(week);
             }
+
+            /**
+             * 给本月的突出日期增加颜色
+             */
+            var num = this.data.num;
+            num.forEach(v => {
+                temp.forEach(y => {
+                    if (y.day.toString().length === 1) {
+                        y.day = '0' + y.day
+                    }
+                    if (v === y.year + '-0' + y.month + '-' + y.day) {
+                        console.log('y',y);
+                        if (y.background === '#FF75A0!important') {
+                            y.color = '#FFFFFF'
+                        } else {
+                            y.color = '#FF75A0'
+                        }
+                    }
+                })
+            })
+
             return days_array;
         },
 
