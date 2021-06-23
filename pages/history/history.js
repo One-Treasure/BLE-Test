@@ -29,18 +29,20 @@ Page({
   swiperChange(e) {
     const { current } = e.detail;
     const { calendarData } = this.data;
-    let day = calendarData[current].date.split('-')[2];
-    let changeBgColor = `dayStyle[0].color`;
-    let changeBg = `dayStyle[0].background`;
-    let changeDay = `dayStyle[1].day`;
-    let changeEndBg = `dayStyle[1].background`;
-    this.setData({
-      [changeDay]: day,
-      [changeBg]: "rgba(255,255,255,0)",
-      [changeBgColor]: "black",
-      [changeEndBg]: "#FF75A0",
-      activeIndex: current
-    })
+    if (calendarData.length > 0) {
+      let day = calendarData[current].date.split('-')[2];
+      let changeBgColor = `dayStyle[0].color`;
+      let changeBg = `dayStyle[0].background`;
+      let changeDay = `dayStyle[1].day`;
+      let changeEndBg = `dayStyle[1].background`;
+      this.setData({
+        [changeDay]: day,
+        [changeBg]: "rgba(255,255,255,0)",
+        [changeBgColor]: "black",
+        [changeEndBg]: "#FF75A0",
+        activeIndex: current
+      })
+    }
   },
 
   //给点击的日期设置一个背景颜色
@@ -59,7 +61,6 @@ Page({
         })
       }
     });
-    console.log('calendar', calendarData);
     this.setData({
       [changeDay]: clickDay,
       [changeBg]: "rgba(255,255,255,0)",
@@ -84,7 +85,7 @@ Page({
   getCalendarData(date) {
     let that = this;
     app.appRequest('POST', 'analyze/calendarData', { date }).then(res => {
-      if (res.statusCode === 200 && res.data.data.length > 0) {
+      if (res.statusCode === 200) {
         let calendarData = res.data.data;
         calendarData.reverse();
         that.setData({
@@ -92,8 +93,13 @@ Page({
           cur: 0,
           activeIndex: 0
         })
+        setTimeout(() => {
+          that.setData({
+            cur: 1,
+            activeIndex: 1
+          })
+        }, 100);
       } else {
-        console.log(res);
         Dialog.alert({
           context: that,//代表的当前页面
           selector: "#van-dialog",//选择器
@@ -235,7 +241,6 @@ function initChart(canvas, width, height, F2) { // 使用 F2 绘制图表
       obj.steps = result.trend[i].score;
       file.push(obj);
     }
-    console.log(file);
     const data = file;
     const originDates = [];
     const originSteps = [];
@@ -314,10 +319,12 @@ function initChart(canvas, width, height, F2) { // 使用 F2 绘制图表
       },
       onShow(ev) {
         const { items } = ev;
-        items[0].name = null;
-        items[0].name = items[0].title;
-        items[0].value = items[0].value + '分';
+        items[0].name = '日期：' + items[0].title;
+        items[0].value = '';
+        items[1].name = '得分';
+        items[1].value = items[1].value + '分';
         score = ev.items[0].origin.steps
+        console.log('ev',ev);
         var pages = getCurrentPages()
         var currentPage = pages[pages.length - 1]
         currentPage.setData({

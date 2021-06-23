@@ -4,7 +4,8 @@
     "van-tabs": "@vant/weapp/tabs/index",
     "calendar": "/components/calendar/calendar",
     "ff-canvas": "@antv/f2-canvas",
-    "van-circle": "@vant/weapp/circle/index"
+    "van-circle": "@vant/weapp/circle/index",
+    "van-dialog": "@vant/weapp/dialog/index"
   },
   "navigationBarTitleText": "历史记录"
 }

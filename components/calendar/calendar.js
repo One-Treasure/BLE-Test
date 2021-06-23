@@ -530,7 +530,6 @@ Component({
                 const background = item.background ? item.background : 'transparent';
                 for (let j = 0; j < days.length; j++) {
                     if (days[j].info == item.month && days[j].day == item.day) {
-                        console.log(item);
                         if (item.color) {
                             days[j].color = item.color + '!important';
                         }
@@ -583,7 +582,6 @@ Component({
                         y.day = '0' + y.day
                     }
                     if (v === y.year + '-0' + y.month + '-' + y.day) {
-                        console.log('y',y);
                         if (y.background === '#FF75A0!important') {
                             y.color = '#FFFFFF'
                         } else {
@@ -739,7 +737,6 @@ Component({
         app.appRequest('POST', 'analyze/getDate').then(res => {
             if (res.statusCode === 200) {
                 const num = res.data.data;
-                console.log(res);
                 that.setData({
                     num
                 })
