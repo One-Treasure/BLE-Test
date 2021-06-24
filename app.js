@@ -72,17 +72,19 @@ App({
       complete: () => { }
     });
 
-    if (!wx.getStorageSync('session')) {
-      // 登录
-      this.login().then(() => {
-        // 把hasLogin设置为 true
-        this.globalData.hashLogin = true;
-      })
-        // 把hasLogin设置为 false
-        .catch(() => {
-          this.globalData.hashLogin = false;
-        });
-    }
+    setTimeout(() => {
+      if (!wx.getStorageSync('session')) {
+        // 登录
+        this.login().then(() => {
+          // 把hasLogin设置为 true
+          this.globalData.hashLogin = true;
+        })
+          // 把hasLogin设置为 false
+          .catch(() => {
+            this.globalData.hashLogin = false;
+          });
+      }
+    }, 2000);
   },
 
   // 设置监听器

@@ -32,6 +32,7 @@ Page({
 
   /* 获取用户信息（头像、昵称等） */
   getUserInfo() {
+    const that = this;
     wx.getUserProfile({
       desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
       success: (res) => {
@@ -51,6 +52,7 @@ Page({
             avatarUrl: data.avatar,
             nickName: data.nickname
           })
+          that.getCalendarData(dateFormat(new Date()));
         }, err => {
           Dialog.alert({
             context: this,//代表的当前页面
@@ -251,12 +253,18 @@ Page({
     helper.checkOrientation('judgeCanvas');
     // 外层元素大小或组件显示状态变化时，可以调用此方法来触发重绘
     // this.selectComponent('#tabs').resize();
-    console.log(2);
   },
   onShow: function () {
-    console.log('app.globalData.hasLogin3', app.globalData);
-    console.log('file', this.data.file);
-    this.getCalendarData(dateFormat(new Date()));
+    if (app.globalData.hashLogin) { // 登录已完成
+      this.getCalendarData(dateFormat(new Date()));
+      console.log('1',app.globalData);
+    } else {
+      console.log('2',app.globalData);
+      this.getCalendarData(dateFormat(new Date()));
+      app.watch((value) => {
+        console.log(value);
+      })
+    }
     // 调用监听器，监听需要分析的图片的数据变化，解决从其他页面切换回首页重复分析图片的bug，只在用户重新拍照后才进行分析
     app.watch1(this, {
       file: function (newVal) {
