@@ -180,11 +180,15 @@
         </view>
         <!-- 皮肤分析皮肤缺陷气泡上 -->
         <!-- <view class="outer" style="{{overflow}}"> -->
-        <view class="analysis-bubble-up" wx:if="{{library.tips[0]}}" animation="{{slide_up1}}">{{library.tips[0]}}</view>
+        <view class="analysis-bubble-up" wx:if="{{library.tips[0]}}" animation="{{slide_up1}}">
+            {{library.tips[0]}}
+        </view>
         <!-- </view> -->
         <!-- 皮肤分析皮肤缺陷气泡下 -->
         <!-- <view class="outer" style="{{overflow}}"> -->
-        <view class="analysis-bubble-down" wx:if="{{library.tips[1]}}" animation="{{slide_up1}}">{{library.tips[1]}}</view>
+        <view class="analysis-bubble-down" wx:if="{{library.tips[1]}}" animation="{{slide_up1}}">
+            {{library.tips[1]}}
+        </view>
         <!-- </view> -->
         <!-- 皮肤分析用户照片区域 -->
         <view class="analysis-face">
@@ -199,28 +203,30 @@
             <image class="analysis-face-image" mode="aspectFill" src="{{imgurl}}" bind:tap="bindAnim" />
             <view class="wrapper" hidden="{{hidden_wrapper}}"></view>
         </view>
-        <!-- 皮肤分析用户历史分析记录区域 -->
-        <scroll-view class="history" scroll-x>
-            <!-- 皮肤分析用户历史分析记录单个区域 -->
-            <view class="history-item" wx:for="{{calendarData}}" wx:key="index">
-                <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-                <view class="history-item-face">
+        <block wx:if="{{calendarData.length>0}}">
+            <!-- 皮肤分析用户历史分析记录区域 -->
+            <scroll-view class="history" scroll-x>
+                <!-- 皮肤分析用户历史分析记录单个区域 -->
+                <view class="history-item" wx:for="{{calendarData}}" wx:key="index" bind:tap="onHistory" data-item="{{item}}">
                     <!-- 皮肤分析用户历史分析记录单个区域图片 -->
-                    <image src="{{item.path}}" mode="aspectFill" />
+                    <view class="history-item-face">
+                        <!-- 皮肤分析用户历史分析记录单个区域图片 -->
+                        <image src="{{item.path}}" mode="aspectFill" />
+                    </view>
+                    <!-- 皮肤分析用户历史分析记录单个区域日期 -->
+                    <view class="history-item-date">{{item.date}}</view>
+                    <!-- 皮肤分析用户历史分析记录单个区域状态 -->
+                    <view class="history-item-state">
+                        <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
+                        <text class="history-item-state-title">肌肤状态：</text>
+                        <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
+                        <text class="history-item-state-num">{{item.score}}</text>
+                        <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
+                        <text class="history-item-state-unit">分</text>
+                    </view>
                 </view>
-                <!-- 皮肤分析用户历史分析记录单个区域日期 -->
-                <view class="history-item-date">{{item.date}}</view>
-                <!-- 皮肤分析用户历史分析记录单个区域状态 -->
-                <view class="history-item-state">
-                    <!-- 皮肤分析用户历史分析记录单个区域状态标题 -->
-                    <text class="history-item-state-title">肌肤状态：</text>
-                    <!-- 皮肤分析用户历史分析记录单个区域状态分数 -->
-                    <text class="history-item-state-num">{{item.score}}</text>
-                    <!-- 皮肤分析用户历史分析记录单个区域状态单位 -->
-                    <text class="history-item-state-unit">分</text>
-                </view>
-            </view>
-        </scroll-view>
+            </scroll-view>
+        </block>
     </view>
     <!-- 皮肤详细分析模块 -->
     <view class="detailed-analysis">

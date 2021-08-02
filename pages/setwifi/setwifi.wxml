@@ -1,2 +1,3 @@
-<!--pages/setwifi/setwifi.wxml-->
-<text>pages/setwifi/setwifi.wxml</text>
+<!-- 已连接设备信息区域 -->
+<view class="setwifi">
+</view>

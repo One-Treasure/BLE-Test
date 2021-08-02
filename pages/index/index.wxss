@@ -311,7 +311,6 @@ page {
 /* 皮肤分析区域样式 */
 .analysis {
     width: 694rpx;
-    height: 1000rpx;
     background: #FFFFFF;
     opacity: 1;
     border-top-left-radius: 30rpx;

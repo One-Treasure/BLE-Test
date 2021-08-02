@@ -19,7 +19,7 @@ Page({
     pm25cdata: { icon: '/icon/pm2.5_m.png' },
     overflow: 'overflow: hidden;',
     bool: true,
-    leadshow: true,
+    leadshow: false,
     bluetooth: '',
     leadTitle: '打开手机蓝牙',
     leadTips: '长按蜜镜开关开启配对模式',
@@ -193,6 +193,7 @@ Page({
               library: data.library
             })
             app.slideupshow(this, 'slide_up1', -80, 1)
+            that.getCalendarData(dateFormat(new Date()));
           }, 5000)
         } else {
           Dialog.alert({
@@ -215,6 +216,19 @@ Page({
       },
       complete: () => { }
     });
+  },
+
+  /* 单个历史记录点击事件 */
+  onHistory(e){
+    console.log(e);
+    const {library,path} = e.currentTarget.dataset.item;
+    this.setData({
+      library,
+      imgurl: path
+    })
+    setTimeout(() => {
+      app.slideupshow(this, 'slide_up1', -80, 1)
+    }, 200);
   },
 
   /* 点击遮罩层 */
@@ -241,10 +255,11 @@ Page({
   onLoad: function (options) {
     if (app.globalData.hashLogin) { // 登录已完成
       this.getLocation(wx.getStorageSync('weather'));
+      this.getCalendarData(dateFormat(new Date()));
     } else {
-      this.getLocation(wx.getStorageSync('weather'));
-      app.watch((value) => {
-        console.log(value);
+      app.watch(() => {
+        this.getLocation(wx.getStorageSync('weather'));
+        this.getCalendarData(dateFormat(new Date()));
       })
     }
   },
@@ -255,16 +270,6 @@ Page({
     // this.selectComponent('#tabs').resize();
   },
   onShow: function () {
-    if (app.globalData.hashLogin) { // 登录已完成
-      this.getCalendarData(dateFormat(new Date()));
-      console.log('1',app.globalData);
-    } else {
-      console.log('2',app.globalData);
-      this.getCalendarData(dateFormat(new Date()));
-      app.watch((value) => {
-        console.log(value);
-      })
-    }
     // 调用监听器，监听需要分析的图片的数据变化，解决从其他页面切换回首页重复分析图片的bug，只在用户重新拍照后才进行分析
     app.watch1(this, {
       file: function (newVal) {
@@ -308,31 +313,33 @@ Page({
   /* 获取卡片历史记录数据 */
   getCalendarData(date) {
     let that = this;
-    app.appRequest('POST', 'analyze/calendarData', { date }).then(res => {
-      if (res.statusCode === 200) {
-        let calendarData = res.data.data;
-        calendarData.reverse();
-        that.setData({
-          calendarData
-        })
-      } else {
+    if (wx.getStorageSync('avatarUrl')) {
+      app.appRequest('POST', 'analyze/calendarData', { date }).then(res => {
+        if (res.statusCode === 200) {
+          let calendarData = res.data.data;
+          calendarData.reverse();
+          that.setData({
+            calendarData
+          })
+        } else {
+          Dialog.alert({
+            context: this,//代表的当前页面
+            selector: "#van-dialog",//选择器
+            title: '温馨提示',
+            message: res.data.errors,
+            theme: 'round-button',
+          })
+        }
+      }).catch(error => {
         Dialog.alert({
           context: this,//代表的当前页面
           selector: "#van-dialog",//选择器
           title: '温馨提示',
-          message: res.data.errors,
+          message: '出现了点错误，请稍后重试吧',
           theme: 'round-button',
         })
-      }
-    }).catch(error => {
-      Dialog.alert({
-        context: this,//代表的当前页面
-        selector: "#van-dialog",//选择器
-        title: '温馨提示',
-        message: '出现了点错误，请稍后重试吧',
-        theme: 'round-button',
       })
-    })
+    }
   },
 
   /* 获取天气状况的方法 */

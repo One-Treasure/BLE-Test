@@ -1,30 +1,30 @@
 <view class="all" style="height: {{windowHeight}}rpx">
-    <camera class="camera" binderror="handleCameraError" device-position="{{devicePosition}}" flash="off" wx:if="{{!file}}">
+    <camera class="camera" binderror="handleCameraError" device-position="{{devicePosition}}" flash="off" style="height: {{windowHeight - 260}}rpx" wx:if="{{!file}}">
         <!-- <cover-view class="photo" style="height: {{windowHeight-260}}rpx;" wx:if="{{devicePosition=='front'}}">
             <cover-image src="../../icon/photo.png" style="height: 600rpx;width: 600rpx;" />
         </cover-view> -->
         <!-- <view class="photo" style="height: {{windowHeight-260}}rpx;">
             <canvas type="2d" id="canvas" style="height: {{windowHeight - 260}}rpx;width: 100%;" class="mycanvas"></canvas>
         </view> -->
-        <view class="btn">
-            <!-- <button type="primary" bindtap="takePhoto">拍照</button>
+    </camera>
+    <view class="btn">
+        <!-- <button type="primary" bindtap="takePhoto">拍照</button>
             <button type="primary" bindtap="reverseCamera">摄像头切换</button> -->
-            <view class="bottom">
-                <view class="center">
-                    <image class="change-camera" src="../../icon/change_camera.png" mode="aspectFit" bindtap="reverseCamera"></image>
-                </view>
-                <view class="center">
-                    <image class="camera-btn" src="../../icon/camera_btn.png" mode="aspectFit" bindtap="takePhoto"></image>
-                </view>
-                <view class="center">
-                    <image class="change-camera" src="../../icon/del.png" mode="aspectFit" bindtap="back"></image>
-                </view>
+        <view class="bottom">
+            <view class="center">
+                <image class="change-camera" src="../../icon/change_camera.png" mode="aspectFit" bindtap="reverseCamera"></image>
             </view>
-            <view class="error-handler" wx:if="{{!authCamera}}">
-                <button class="nobtn" openType="openSetting">打开相机授权</button>
+            <view class="center">
+                <image class="camera-btn" src="../../icon/camera_btn.png" mode="aspectFit" bindtap="takePhoto"></image>
+            </view>
+            <view class="center">
+                <image class="change-camera" src="../../icon/del.png" mode="aspectFit" bindtap="back"></image>
             </view>
         </view>
-    </camera>
+        <view class="error-handler" wx:if="{{!authCamera}}">
+            <button class="nobtn" openType="openSetting">打开相机授权</button>
+        </view>
+    </view>
     <!-- <view class="photo" wx:else>
         <image src="{{file}}" style="width: 100%;height: {{windowHeight}}rpx" animation="{{ani}}" />
     </view> -->

@@ -1,6 +1,8 @@
 import Dialog from '@vant/weapp/dialog/dialog';
 var app = getApp();
 var score = 0;
+var tips = [];
+var recent = {};
 
 // pages/history/history.js
 Page({
@@ -22,7 +24,10 @@ Page({
     sel_time: ['近一周', '近一月', '近90天'],
     curIndex: 0,
     left: '',
-    score: score
+    score: score,
+    tips: tips,
+    recent: recent,
+    windowHeight: wx.getStorageSync('windowHeight')
   },
 
   /* 切换卡片事件 */
@@ -81,25 +86,44 @@ Page({
     this.getCalendarData(date);
   },
 
+  /* 使用日期选择器切换月份时间 */
+  dateChange(e) {
+    const date = e.detail.currentYear + '-0' + e.detail.currentMonth
+    this.getCalendarData(date);
+  },
+
   /* 获取卡片历史记录数据 */
   getCalendarData(date) {
     let that = this;
-    app.appRequest('POST', 'analyze/calendarData', { date }).then(res => {
-      if (res.statusCode === 200) {
-        let calendarData = res.data.data;
-        calendarData.reverse();
-        that.setData({
-          calendarData,
-          cur: 0,
-          activeIndex: 0
-        })
-        setTimeout(() => {
+    return new Promise(resolve => {
+      app.appRequest('POST', 'analyze/calendarData', { date }).then(res => {
+        if (res.statusCode === 200) {
+          let calendarData = res.data.data;
+          calendarData.reverse();
           that.setData({
-            cur: 1,
-            activeIndex: 1
+            calendarData,
+            cur: 0,
+            activeIndex: 0
           })
-        }, 100);
-      } else {
+          setTimeout(() => {
+            if (calendarData.length >= 2) {
+              that.setData({
+                cur: 1,
+                activeIndex: 1
+              })
+            }
+          }, 100);
+          resolve();
+        } else {
+          Dialog.alert({
+            context: that,//代表的当前页面
+            selector: "#van-dialog",//选择器
+            title: '温馨提示',
+            message: '出现了点错误，请稍后重试吧',
+            theme: 'round-button',
+          })
+        }
+      }).catch(error => {
         Dialog.alert({
           context: that,//代表的当前页面
           selector: "#van-dialog",//选择器
@@ -107,14 +131,6 @@ Page({
           message: '出现了点错误，请稍后重试吧',
           theme: 'round-button',
         })
-      }
-    }).catch(error => {
-      Dialog.alert({
-        context: that,//代表的当前页面
-        selector: "#van-dialog",//选择器
-        title: '温馨提示',
-        message: '出现了点错误，请稍后重试吧',
-        theme: 'round-button',
       })
     })
   },
@@ -126,8 +142,9 @@ Page({
     /* this.setData({
       index: 50
     }) */
-    this.changeline(1);
-    this.getCalendarData(dateFormat(new Date()));
+    this.getCalendarData(dateFormat(new Date())).then(() => {
+      this.changeline(1);
+    });
   },
 
   /**
@@ -234,11 +251,18 @@ function initChart(canvas, width, height, F2) { // 使用 F2 绘制图表
   const day = userday;
   app.appRequest('POST', 'analyze/trend', { day }).then(res => {
     const result = res.data.data;
+    recent = result.recent;
+    var pages = getCurrentPages()
+    var currentPage = pages[pages.length - 1]
+    currentPage.setData({
+      recent
+    })
     let file = [];
     for (var i in result.trend) {
       let obj = {};
       obj.date = i;
       obj.steps = result.trend[i].score;
+      obj.tips = result.trend[i].tips;
       file.push(obj);
     }
     const data = file;
@@ -324,11 +348,13 @@ function initChart(canvas, width, height, F2) { // 使用 F2 绘制图表
         items[1].name = '得分';
         items[1].value = items[1].value + '分';
         score = ev.items[0].origin.steps
-        console.log('ev',ev);
+        tips = ev.items[0].origin.tips
+        console.log('ev', ev);
         var pages = getCurrentPages()
         var currentPage = pages[pages.length - 1]
         currentPage.setData({
-          score
+          score,
+          tips
         })
       },
     });

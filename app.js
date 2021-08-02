@@ -53,7 +53,7 @@ App({
   groupData: "",
   globalData: {
     userInfo: null,
-    hashLogin: false
+    _hashLogin: false
   },
   onLaunch() {
     this.appUpdate();
@@ -72,8 +72,24 @@ App({
       complete: () => { }
     });
 
-    setTimeout(() => {
-      if (!wx.getStorageSync('session')) {
+    // 校验登录是否过期
+    wx.checkSession({
+      success: (result) => {
+        if (wx.getStorageSync('session')) {
+          this.globalData.hashLogin = true;
+        } else {
+          // 登录
+          this.login().then(() => {
+            // 把hasLogin设置为 true
+            this.globalData.hashLogin = true;
+          })
+            // 把hasLogin设置为 false
+            .catch(() => {
+              this.globalData.hashLogin = false;
+            });
+        }
+      },
+      fail: () => {
         // 登录
         this.login().then(() => {
           // 把hasLogin设置为 true
@@ -83,8 +99,9 @@ App({
           .catch(() => {
             this.globalData.hashLogin = false;
           });
-      }
-    }, 2000);
+      },
+      complete: () => { }
+    });
   },
 
   // 设置监听器
@@ -114,6 +131,7 @@ App({
   // 监听hasLogin属性
   watch: function (fn) {
     var obj = this.globalData
+    const that = this;
     Object.defineProperty(obj, 'hashLogin', {
       configurable: true,
       enumerable: true,
@@ -223,44 +241,34 @@ App({
     * @return {Promise}    promise 返回promise供后续操作
     */
   appRequest: function (method, url, data) {
-
     wx.showLoading({
       title: '加载中...',
       mask: true
     });
     var promise = new Promise((resolve, reject) => {
-      // 判断session是否过期，如果过期则重新请求登录接口
-      wx.checkSession({
-        success: (result) => {
-          //网络请求
-          wx.request({
-            url: this.siteUrl + url,
-            data: data,
-            method: method,
-            header: {
-              // 'content-type': method == 'GET' ? 'application/json' : 'application/x-www-form-urlencoded',
-            },
-            dataType: 'json',
-            success: function (res) {//服务器返回数据
-              if (res.statusCode === 200) {//res.data 为 后台返回数据，格式为{"data":{...}, "info":"成功", "status":1}, 后台规定：如果status为1,既是正确结果。可以根据自己业务逻辑来设定判断条件
-                resolve(res);
-              } else {//返回错误提示信息
-                reject(res);
-              }
-            },
-            error: function (e) {
-              reject('网络出错');
-            },
-            complete: () => {
-              wx.hideLoading();
-            }
-          })
+      //网络请求
+      wx.request({
+        url: this.siteUrl + url,
+        data: data,
+        method: method,
+        header: {
+          // 'content-type': method == 'GET' ? 'application/json' : 'application/x-www-form-urlencoded',
         },
-        fail: () => {
-          this.login();
+        dataType: 'json',
+        success: function (res) {//服务器返回数据
+          if (res.statusCode === 200) {//res.data 为 后台返回数据，格式为{"data":{...}, "info":"成功", "status":1}, 后台规定：如果status为1,既是正确结果。可以根据自己业务逻辑来设定判断条件
+            resolve(res);
+          } else {//返回错误提示信息
+            reject(res);
+          }
         },
-        complete: () => { }
-      });
+        error: function (e) {
+          reject('网络出错');
+        },
+        complete: () => {
+          wx.hideLoading();
+        }
+      })
     });
     return promise;
   }

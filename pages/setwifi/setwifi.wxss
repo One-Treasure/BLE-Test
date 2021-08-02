@@ -1,1 +1,17 @@
-/* pages/setwifi/setwifi.wxss */
+/* 全局样式 */
+page {
+    background-color: #f8f8f8;
+}
+
+/* 已连接设备信息区域样式 */
+.setwifi {
+    width: 694rpx;
+    height: 352rpx;
+    background: #FFFFFF;
+    opacity: 1;
+    border-radius: 30rpx;
+    margin: 16rpx 28rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -7,6 +7,7 @@ Page({
   data: {
     devicePosition: 'front',
     authCamera: false,//用户是否运行授权拍照
+    windowHeight: wx.getStorageSync('windowHeight')
   },
 
   onLoad: function () {
